@@ -1,8 +1,9 @@
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import java.util.Date;
 /**
  *
  * @author Amund
@@ -23,8 +24,8 @@ public class Treningsokt implements Serializable{
     }
             
     private void setDagens(){
-        Date d = new Date();
-        dato = d.getDate()+"/"+d.getMonth()+"-"+d.getYear();
+        Calendar cal = Calendar.getInstance();
+        dato = new SimpleDateFormat(dato.split(" ")[0]).format(cal.getTime()).toString();
     }
     /**
      * @return the oktnr
