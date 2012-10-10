@@ -14,7 +14,7 @@ public class Treningsokt implements Serializable{
     private int oktnr;
     private String dato;
     private int varighet;
-    private String[] kategori = {"styrke", "kondis", "gaming", "ALL the things!"};
+    private String kategori;
     private String tekst;
     
     public Treningsokt(){
@@ -70,11 +70,11 @@ public class Treningsokt implements Serializable{
     /**
      * @return the kategori
      */
-    public String[] getKategori() {
+    public String getKategori() {
         return kategori;
     }
 
-    public String getKat(int i){ return i<kategori.length?kategori[i]:"fail"; }
+    public void setKategori(String k){ kategori = k; }
     /**
      * @return the tekst
      */
