@@ -16,10 +16,14 @@ public class Treningsokt implements Serializable{
     private int varighet;
     private String[] kategori = {"styrke", "kondis", "gaming", "ALL the things!"};
     private String tekst;
-
+    
+    public Treningsokt(){
+        setDagens();
+    }
+            
     private void setDagens(){
         Date d = new Date();
-        dato += d.getDate();
+        dato = d.getDate()+"/"+d.getMonth()+"-"+d.getYear();
     }
     /**
      * @return the oktnr
