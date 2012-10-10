@@ -16,6 +16,7 @@ public class Treningsokt implements Serializable{
     private int varighet;
     private String kategori;
     private String tekst;
+    private String sprak;
     
     public Treningsokt(){
         setDagens();
@@ -89,5 +90,6 @@ public class Treningsokt implements Serializable{
         this.tekst = tekst;
     }
     
-    public String sprak(int arg){ return arg==0?"norsk":"engelsk"; }
+    public void setSprak(String s){ sprak = s; }
+    public String getSprak(){ return sprak; }
 }
