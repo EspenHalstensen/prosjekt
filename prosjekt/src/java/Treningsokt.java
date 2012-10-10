@@ -24,9 +24,7 @@ public class Treningsokt implements Serializable{
     }
             
     private void setDagens(){
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat(dato.split(" ")[0]);
-        dato = sdf.format(cal.getTime()).toString();
+     dato = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
     }
     /**
      * @return the oktnr
