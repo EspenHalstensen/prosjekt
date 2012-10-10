@@ -85,5 +85,6 @@ public class Treningsokt implements Serializable{
         this.tekst = tekst;
     }
     
+    
     public String sprak(int arg){ return arg==0?"norsk":"engelsk"; }
 }
