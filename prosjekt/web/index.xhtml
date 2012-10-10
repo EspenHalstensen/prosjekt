@@ -1,13 +1,46 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Registrere en ny treningsøkt</title>
     </h:head>
     <h:body>
-        Hello from Facelets
-        asd
+        <h:form>
+            <h1>Registrere ny treningsøk</h1>
+            <P align="right">
+                <h:selectOneMenu value="Språk">
+                            <f:selectItem itemLabel="Norsk" itemValue="0"/>
+                            <f:selectItem itemLabel="Engelsk" itemValue="1"/>
+                </h:selectOneMenu>
+            </P>
+            <table>
+                
+                <tr>
+                    <td>Dato:</td> 
+                    <td><h:inputText value="Dato"/></td>
+                </tr>
+                <tr>
+                    <td>Varighet:</td> 
+                    <td><h:inputText value=""/></td>
+                </tr>
+                <tr>
+
+                    <td>Kategori:</td>
+                    <td><h:selectOneMenu value="Kategori">
+                            <f:selectItem itemLabel="" itemValue="1"/>
+                        </h:selectOneMenu></td>
+                </tr>
+                <tr>
+                    <td>Tekst:</td>
+                    <td><h:inputText value="Tekst"/></td>
+                </tr>   
+                <tr>
+                    <td><h:commandButton value="Send" action="submit"/></td>
+                </tr>
+            </table>
+        </h:form>
     </h:body>
 </html>
 
