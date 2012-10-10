@@ -1,8 +1,9 @@
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import java.util.Date;
 /**
  *
  * @author Amund
@@ -14,12 +15,16 @@ public class Treningsokt implements Serializable{
     private int oktnr;
     private String dato;
     private int varighet;
-    private String[] kategori = {"styrke", "kondis", "gaming", "ALL the things!"};
+    private String kategori;
     private String tekst;
-
+    private String sprak;
+    
+    public Treningsokt(){
+        setDagens();
+    }
+            
     private void setDagens(){
-        Date d = new Date();
-        dato += d.getDate();
+     dato = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
     }
     /**
      * @return the oktnr
@@ -66,11 +71,11 @@ public class Treningsokt implements Serializable{
     /**
      * @return the kategori
      */
-    public String[] getKategori() {
+    public String getKategori() {
         return kategori;
     }
 
-    public String getKat(int i){ return i<kategori.length?kategori[i]:"fail"; }
+    public void setKategori(String k){ kategori = k; }
     /**
      * @return the tekst
      */
@@ -85,6 +90,6 @@ public class Treningsokt implements Serializable{
         this.tekst = tekst;
     }
     
-    
-    public String sprak(int arg){ return arg==0?"norsk":"engelsk"; }
+    public void setSprak(String s){ sprak = s; }
+    public String getSprak(){ return sprak; }
 }
