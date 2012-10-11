@@ -1,23 +1,16 @@
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
 /**
  *
  * @author Amund
  */
-@SessionScoped
-@Named("Treningsokt")
-
-public class Treningsokt implements Serializable{
+public class Treningsokt{
     private int oktnr;
     private String dato;
     private int varighet;
     private String kategori;
     private String tekst;
-    private String sprak;
     
     public Treningsokt(){
         setDagens();
@@ -89,7 +82,4 @@ public class Treningsokt implements Serializable{
     public void setTekst(String tekst) {
         this.tekst = tekst;
     }
-    
-    public void setSprak(String s){ sprak = s; }
-    public String getSprak(){ return sprak; }
 }

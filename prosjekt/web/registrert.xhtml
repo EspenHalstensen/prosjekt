@@ -8,37 +8,32 @@
     </h:head>
     <h:body>
         <h:form>
-            <h1>Registrere ny treningsøk</h1>
+            <h1>Følgende treningsøkt er registrert:</h1>
             <P align="right">
-                <h:selectOneMenu value="Språk">
-                            <f:selectItem itemLabel="Norsk" itemValue="0"/>
-                            <f:selectItem itemLabel="Engelsk" itemValue="1"/>
-                </h:selectOneMenu>
+                <h:commandLink action="#{sprakbytte.englishAction}"> engelsk
+                </h:commandLink>
+                <h:commandLink action="#{sprakbytte.norwegianAction}"> norsk</h:commandLink>
             </P>
             <table>
                 
                 <tr>
                     <td>Dato:</td> 
-                    <td><h:inputText value="Dato"/></td>
+                    <td>#{bruker.treningsokt.dato}</td>
+                    
                 </tr>
                 <tr>
                     <td>Varighet:</td> 
-                    <td><h:inputText value=""/></td>
+                    <td>#{bruker.treningsokt.varighet}</td>
                 </tr>
                 <tr>
 
                     <td>Kategori:</td>
-                    <td><h:selectOneMenu value="Kategori">
-                            <f:selectItem itemLabel="" itemValue="1"/>
-                        </h:selectOneMenu></td>
+                    <td>#{bruker.treningsokt.kategori}</td>
                 </tr>
                 <tr>
                     <td>Tekst:</td>
-                    <td><h:inputText value="Tekst"/></td>
+                    <td> #{bruker.treningsokt.tekst}</td>
                 </tr>   
-                <tr>
-                    <td><h:commandButton value="Send" action="submit"/></td>
-                </tr>
             </table>
         </h:form>
     </h:body>

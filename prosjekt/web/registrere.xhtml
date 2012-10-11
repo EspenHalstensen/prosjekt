@@ -10,30 +10,36 @@
         <h:form>
             <h1>Registrere ny treningsøk</h1>
             <P align="right">
-                <h:selectOneMenu value="Språk">
-                            <f:selectItem itemLabel="Norsk" itemValue="0"/>
-                            <f:selectItem itemLabel="Engelsk" itemValue="1"/>
-                </h:selectOneMenu>
+                <h:commandLink action="#{sprakbyttebean.englishAction}"> engelsk
+                </h:commandLink>
+                <h:commandLink action="#{sprakbyttebean.norwegianAction}"> norsk</h:commandLink>
             </P>
             <table>
-                
+                <tr>
+                    <td> Øktnummer:</td>
+                    <td><h:outputText value="#{bruker.treningsokt.oktnr}"/></td>
+                </tr>
+
                 <tr>
                     <td>Dato:</td> 
-                    <td>#{Treningsokt.dato}</td>
-                    
+                    <td><h:inputText value="#{bruker.treningsokt.dato}"/></td>
                 </tr>
                 <tr>
                     <td>Varighet:</td> 
-                    <td>#{Treningsokt.varighet}</td>
+                    <td><h:inputText value="#{bruker.treningsokt.varighet}"/></td>
                 </tr>
                 <tr>
 
                     <td>Kategori:</td>
-                    <td>#{Treningsokt.kategori}</td> // THIS NEEDS FIXING
+                    <td><h:selectOneMenu value="#{bruker.treningsokt.kategori}">
+                            <f:selectItem itemLabel="Styrke" itemValue="Styrke"/>
+                            <f:selectItem itemLabel="Kondisjon" itemValue="Kondisjon"/>
+                            <f:selectItem itemLabel="Annet" itemValue="Annet"/>
+                        </h:selectOneMenu></td>
                 </tr>
                 <tr>
                     <td>Tekst:</td>
-                    <td> #{Treningsokt.tekst}</td>
+                    <td><h:inputText value="#{bruker.treningsokt.tekst}"/></td>
                 </tr>   
                 <tr>
                     <td><h:commandButton value="Send" action="submit"/></td>
