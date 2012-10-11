@@ -3,15 +3,25 @@
 <!-- =========== FULL CONFIGURATION FILE ================================== -->
 
 <faces-config version="2.1"
-    xmlns="http://java.sun.com/xml/ns/javaee"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
-<navigation-rule>
-  <from-view-id>/registrere.xhtml</from-view-id>
-  <navigation-case>
-    <from-outcome>submit</from-outcome>
-    <to-view-id>/registrert.xhtml</to-view-id>
-  </navigation-case>
-</navigation-rule>
+              xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+    <navigation-rule>
+        <from-view-id>/registrere.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>submit</from-outcome>
+            <to-view-id>/registrert.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <application>
+        <locale-config>
+            <default-locale>no</default-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+        <resource-bundle>
+            <base-name>treningsoktTekst</base-name>
+            <var>tekster</var>
+        </resource-bundle>
+    </application>
 
 </faces-config>
