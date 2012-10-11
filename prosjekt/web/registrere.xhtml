@@ -1,18 +1,18 @@
-<?xml version='1.0' encoding='ISO-8859-1' ?>
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <title>Registrere en ny treningsøkt</title>
+        <title>#{tekster.tittel}</title>
     </h:head>
     <h:body>
         <h:form>
-            <h1>Registrere ny treningsøk</h1>
+            <h1>#{tekster.tittel}</h1>
             <P align="right">
-                <h:commandLink action="#{sprakbyttebean.englishAction}"> engelsk
+                <h:commandLink action="#{bruker.setEngelsk()}"> engelsk
                 </h:commandLink>
-                <h:commandLink action="#{sprakbyttebean.norwegianAction}"> norsk</h:commandLink>
+                <h:commandLink action="#{bruker.setNorsk()}"> norsk</h:commandLink>
             </P>
             <table>
                 <tr>
@@ -32,9 +32,9 @@
 
                     <td>#{tekster.kategori}</td>
                     <td><h:selectOneMenu value="#{bruker.treningsokt.kategori}">
-                            <f:selectItem itemLabel="Styrke" itemValue="Styrke"/>
-                            <f:selectItem itemLabel="Kondisjon" itemValue="Kondisjon"/>
-                            <f:selectItem itemLabel="Annet" itemValue="Annet"/>
+                            <f:selectItem itemLabel="#{tekster.styrke}" itemValue="#{tekster.styrke}"/>
+                            <f:selectItem itemLabel="#{tekster.kondisjon}" itemValue="#{tekster.kondisjon}"/>
+                            <f:selectItem itemLabel="#{tekster.annet}" itemValue="#{tekster.annet}"/>
                         </h:selectOneMenu></td>
                 </tr>
                 <tr>
