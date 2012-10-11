@@ -16,21 +16,21 @@
             </P>
             <table>
                 <tr>
-                    <td> Øktnummer:</td>
+                    <td> #{tekster.oktnr}</td>
                     <td><h:outputText value="#{bruker.treningsokt.oktnr}"/></td>
                 </tr>
 
                 <tr>
-                    <td>Dato:</td> 
+                    <td>#{tekster.dato}</td> 
                     <td><h:inputText value="#{bruker.treningsokt.dato}"/></td>
                 </tr>
                 <tr>
-                    <td>Varighet:</td> 
+                    <td>#{tekster.varighet}</td> 
                     <td><h:inputText value="#{bruker.treningsokt.varighet}"/></td>
                 </tr>
                 <tr>
 
-                    <td>Kategori:</td>
+                    <td>#{tekster.kategori}</td>
                     <td><h:selectOneMenu value="#{bruker.treningsokt.kategori}">
                             <f:selectItem itemLabel="Styrke" itemValue="Styrke"/>
                             <f:selectItem itemLabel="Kondisjon" itemValue="Kondisjon"/>
@@ -38,7 +38,7 @@
                         </h:selectOneMenu></td>
                 </tr>
                 <tr>
-                    <td>Tekst:</td>
+                    <td>#{tekster.tekst}</td>
                     <td><h:inputText value="#{bruker.treningsokt.tekst}"/></td>
                 </tr>   
                 <tr>
