@@ -1,7 +1,9 @@
 
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import java.util.Locale;
 
 /**
  *
@@ -25,9 +27,16 @@ public class brukerBean implements Serializable {
     public int varighet(){return treningsokt.getVarighet();}
     public String kategori(){return treningsokt.getKategori();}
     public String tekst(){ return treningsokt.getTekst();}
-    public Treningsokt getTreningsokt(){return treningsokt;
-    
+    public Treningsokt getTreningsokt(){return treningsokt;}
+    public void setNorsk(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getViewRoot().setLocale(new Locale("no"));
     }
+    public void setEngelsk(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getViewRoot().setLocale(new Locale("en"));
+    }
+    
     
     
     
