@@ -82,18 +82,4 @@ public class Treningsokt{
     public void setTekst(String tekst) {
         this.tekst = tekst;
     }
-
-    /**
-     * @return the kategorier
-     */
-    public Kategorier getKategorier() {
-        return kategorier;
-    }
-
-    /**
-     * @param kategorier the kategorier to set
-     */
-    public void setKategorier(Kategorier kategorier) {
-        this.kategorier = kategorier;
-    }
 }
