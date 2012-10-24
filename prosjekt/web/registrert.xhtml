@@ -9,48 +9,51 @@
     </h:head>
     <h:body>
         <ui:composition template="newTemplate.xhtml">
-        <ui:define name="top">
-            <h:form>
-                <h1>#{tekster.tittel2}</h1>
+            <ui:define name="top">
+                <h:form>
+                    <h1>#{tekster.tittel2}</h1>
                     <h:commandLink action="#{bruker.setEngelsk()}">
                         <h:graphicImage library="images" name="engelsk.jpg" style="border:0px; margin-right: 1em;" height="20" width="30"/>
                     </h:commandLink>
                     <h:commandLink action="#{bruker.setNorsk()}">
                         <h:graphicImage library="images" name="norsk.jpg" style="border:0px; margin-right: 1em;" height="20" width="30"/>
                     </h:commandLink>
-            </h:form>
-        </ui:define>
-        <ui:define name="content">
-            <h:form>
-        <table border="1">
-            <tr>
-                <td>#{tekster.oktnr}</td>
-                <td>#{bruker.treningsokt.oktnr}</td>
-            </tr>
-            <tr>
-                <td>#{tekster.dato}</td> 
-                <td>#{bruker.treningsokt.dato}</td>
+                </h:form>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <table border="1">
+                        <tr>
+                            <td>#{tekster.oktnr}</td>
+                            <td>#{bruker.treningsokt.oktnr}</td>
+                        </tr>
+                        <tr>
+                            <td>#{tekster.dato}</td> 
+                            <td>#{bruker.treningsokt.dato}</td>
 
-            </tr>
-            <tr>
-                <td>#{tekster.varighet}</td> 
-                <td>#{bruker.treningsokt.varighet}</td>
-            </tr>
-            <tr>
+                        </tr>
+                        <tr>
+                            <td>#{tekster.varighet}</td> 
+                            <td>#{bruker.treningsokt.varighet}</td>
+                        </tr>
+                        <tr>
 
-                <td>#{tekster.kategori}</td>
-                <td>#{bruker.treningsokt.kategori}</td>
-            </tr>
-            <tr>
-                <td>#{tekster.tekst}</td>
-                <td> #{bruker.treningsokt.tekst}</td>
-            </tr>
-            <table>
-                <td><h:commandButton value="#{tekster.kommandoknapp}" action="send"/></td>
-            </table>
-        </table>
-        </h:form>
-        </ui:define>
+                            <td>#{tekster.kategori}</td>
+                            <td>#{bruker.treningsokt.kategori}</td>
+                        </tr>
+                        <tr>
+                            <td>#{tekster.tekst}</td>
+                            <td> #{bruker.treningsokt.tekst}</td>
+                        </tr>
+                        <table>
+                            <td><h:commandButton value="#{tekster.kommandoknapp}" action="send"/></td>
+                        </table>
+                    </table>
+                </h:form>
+            </ui:define>
+            <ui:define name="bottom">
+                    &copy;#{tekster.kopirett}
+            </ui:define>
         </ui:composition>
     </h:body>
 </html>

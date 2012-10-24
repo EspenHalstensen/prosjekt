@@ -11,6 +11,11 @@
     background-color: antiquewhite;
     padding: 5px;
 }
+#wrapper{
+    width: 960px;
+    display:-moz-box;
+    -moz-box-orient: vertical;
+}
 
 #left {
     float: left;
