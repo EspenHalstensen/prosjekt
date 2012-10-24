@@ -6,13 +6,23 @@
               xmlns="http://java.sun.com/xml/ns/javaee"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+    <!-- Navigasjoner--> 
     <navigation-rule>
         <from-view-id>/registrere.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>submit</from-outcome>
+            <from-outcome>send</from-outcome>
             <to-view-id>/registrert.xhtml</to-view-id>
         </navigation-case>
+         </navigation-rule>
+         <navigation-rule>
+        <from-view-id>/registrert.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>send</from-outcome>
+            <to-view-id>/registrere.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
+    
+    <!--Applikasjoner-->
     <application>
         <locale-config>
             <default-locale>no</default-locale>

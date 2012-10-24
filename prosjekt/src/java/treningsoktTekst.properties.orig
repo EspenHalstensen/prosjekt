@@ -1,6 +1,5 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
-tittel=Registrere treningsøkt:
 oktnr=Økt nummer:
 dato=Dato:
 varighet=Varighet:
@@ -9,5 +8,8 @@ tekst=Tekst:
 styrke=Styrke
 kondisjon=kondison
 annet=Annet
+tittel=Registrere treningsøkt:
+tittel2=Følgende er registrert:
+kommandoknapp=Ny registrering
 
 

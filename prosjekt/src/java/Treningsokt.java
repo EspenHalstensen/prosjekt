@@ -1,7 +1,6 @@
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Properties;
+import java.util.GregorianCalendar;
 /**
  *
  * @author Amund
@@ -12,14 +11,14 @@ public class Treningsokt{
     private int varighet;
     private String kategori;
     private String tekst;
+    private final String datoformat = "dd/MM/yyyy";
     
     public Treningsokt(){
-        setDagens();
+        dato = new SimpleDateFormat(datoformat).format(new GregorianCalendar().getTime());
+        oktnr++;
     }
             
-    private void setDagens(){
-     dato = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
-    }
+    public String getDatoformat(){ return datoformat.toLowerCase(); }
     /**
      * @return the oktnr
      */
@@ -82,5 +81,19 @@ public class Treningsokt{
      */
     public void setTekst(String tekst) {
         this.tekst = tekst;
+    }
+
+    /**
+     * @return the kategorier
+     */
+    public Kategorier getKategorier() {
+        return kategorier;
+    }
+
+    /**
+     * @param kategorier the kategorier to set
+     */
+    public void setKategorier(Kategorier kategorier) {
+        this.kategorier = kategorier;
     }
 }
