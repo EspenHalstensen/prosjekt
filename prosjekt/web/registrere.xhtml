@@ -10,55 +10,55 @@
     </h:head>
     <h:body>
         <ui:composition template="newTemplate.xhtml">
-            <ui:define name ="top">
-                <h:form>
-                    <h1>#{tekster.tittel}</h1>
-                    <h:commandLink action="#{bruker.setEngelsk()}">
-                        <h:graphicImage library="images" name="engelsk.jpg" style="border:0px; margin-right: 1em;" height="20" width="30"/>
-                    </h:commandLink>
-                    <h:commandLink action="#{bruker.setNorsk()}">
-                        <h:graphicImage library="images" name="norsk.jpg" style="border:0px; margin-right: 1em;" height="20" width="30"/>
-                    </h:commandLink>
-                </h:form>
-            </ui:define>
-            <ui:define name ="content">
-                <h:form>
-                    <table>
-                        <tr>
-                            <td> #{tekster.oktnr}</td>
-                            <td><h:outputText  value="#{bruker.treningsokt.oktnr}"/></td>
-                        </tr>
+                <ui:define name ="top">
+                    <h:form>
+                        <h1>#{tekster.tittel}</h1>
+                        <h:commandLink action="#{bruker.setEngelsk()}">
+                            <h:graphicImage library="images" name="engelsk.jpg" style="border:0px; margin-right: 1em;" height="20" width="30"/>
+                        </h:commandLink>
+                        <h:commandLink action="#{bruker.setNorsk()}">
+                            <h:graphicImage library="images" name="norsk.jpg" style="border:0px; margin-right: 1em;" height="20" width="30"/>
+                        </h:commandLink>
+                    </h:form>
+                </ui:define>
+                <ui:define name ="content">
+                    <h:form>
+                        <table>
+                            <tr>
+                                <td> #{tekster.oktnr}</td>
+                                <td><h:outputText  value="#{bruker.treningsokt.oktnr}"/></td>
+                            </tr>
 
-                        <tr>
-                            <td>#{tekster.dato}</td> 
-                            <td><h:inputText value="#{bruker.treningsokt.dato}"/> <font color="#FF0000">#{bruker.treningsokt.datoformat}</font></td>
-                        </tr>
-                        <tr>
-                            <td>#{tekster.varighet}</td> 
-                            <td><h:inputText value="#{bruker.treningsokt.varighet}"/> <font color="#FF0000">#{tekster.minutter}</font></td>
-                        </tr>
-                        <tr>
+                            <tr>
+                                <td>#{tekster.dato}</td> 
+                                <td><h:inputText value="#{bruker.treningsokt.dato}"/> <font color="#FF0000">#{bruker.treningsokt.datoformat}</font></td>
+                            </tr>
+                            <tr>
+                                <td>#{tekster.varighet}</td> 
+                                <td><h:inputText value="#{bruker.treningsokt.varighet}"/> <font color="#FF0000">#{tekster.minutter}</font></td>
+                            </tr>
+                            <tr>
 
-                            <td>#{tekster.kategori}</td>
-                            <td><h:selectOneMenu value="#{bruker.treningsokt.kategori}">
-                                    <f:selectItem itemLabel="#{tekster.styrke}" itemValue="#{tekster.styrke}"/>
-                                    <f:selectItem itemLabel="#{tekster.kondisjon}" itemValue="#{tekster.kondisjon}"/>
-                                    <f:selectItem itemLabel="#{tekster.annet}" itemValue="#{tekster.annet}"/>
-                                </h:selectOneMenu></td>
-                        </tr>
-                        <tr>
-                            <td>#{tekster.tekst}</td>
-                            <td><h:inputText value="#{bruker.treningsokt.tekst}"/></td>
-                        </tr>
-                        <tr>
-                            <td><h:commandButton value="Send" action="send"/></td>
-                        </tr>
-                    </table>
-                </h:form>
-            </ui:define>
-            <ui:define name="bottom">
+                                <td>#{tekster.kategori}</td>
+                                <td><h:selectOneMenu value="#{bruker.treningsokt.kategori}">
+                                        <f:selectItem itemLabel="#{tekster.styrke}" itemValue="#{tekster.styrke}"/>
+                                        <f:selectItem itemLabel="#{tekster.kondisjon}" itemValue="#{tekster.kondisjon}"/>
+                                        <f:selectItem itemLabel="#{tekster.annet}" itemValue="#{tekster.annet}"/>
+                                    </h:selectOneMenu></td>
+                            </tr>
+                            <tr>
+                                <td>#{tekster.tekst}</td>
+                                <td><h:inputText value="#{bruker.treningsokt.tekst}"/></td>
+                            </tr>
+                            <tr>
+                                <td><h:commandButton value="Send" action="send"/></td>
+                            </tr>
+                        </table>
+                    </h:form>
+                </ui:define>
+                <ui:define name="bottom">
                     &copy;#{tekster.kopirett}
-            </ui:define>
+                </ui:define>
         </ui:composition>
     </h:body>
 </html>
