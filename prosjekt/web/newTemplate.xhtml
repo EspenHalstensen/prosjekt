@@ -12,8 +12,16 @@
         <title>Facelets Template</title>
     </h:head>
     <h:body>
-            <div class="drop-shadow curved curved-hz-2 ">
+            <div class="drop-shadow curved center_content">
                 <div id="top">
+                            <h:form>
+                        <h:commandLink action="#{bruker.setEngelsk()}">
+                            <h:graphicImage library="images" name="engelsk.jpg" style="border:0px; margin-right: 1em;" height="20" width="30"/>
+                        </h:commandLink>
+                        <h:commandLink action="#{bruker.setNorsk()}">
+                            <h:graphicImage library="images" name="norsk.jpg" style="border:0px; margin-right: 1em;" height="20" width="30"/>
+                        </h:commandLink>
+                    </h:form>
                     <ui:insert name="top">top</ui:insert>
                 </div>
 

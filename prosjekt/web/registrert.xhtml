@@ -10,15 +10,7 @@
     <h:body>
         <ui:composition template="newTemplate.xhtml">
             <ui:define name="top">
-                <h:form>
                     <h1>#{tekster.tittel2}</h1>
-                    <h:commandLink action="#{bruker.setEngelsk()}">
-                        <h:graphicImage library="images" name="engelsk.jpg" style="border:0px; margin-right: 1em;" height="20" width="30"/>
-                    </h:commandLink>
-                    <h:commandLink action="#{bruker.setNorsk()}">
-                        <h:graphicImage library="images" name="norsk.jpg" style="border:0px; margin-right: 1em;" height="20" width="30"/>
-                    </h:commandLink>
-                </h:form>
             </ui:define>
             <ui:define name="content">
                 <h:form>
