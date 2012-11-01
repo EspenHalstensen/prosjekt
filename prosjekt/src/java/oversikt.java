@@ -35,9 +35,9 @@ public class oversikt {
         return null;
     }
     
-    public boolean registrerNyOkt(int oktnr, String dato, int varighet, String kategori, String tekst) {
+    public boolean registrerNyOkt(int varighet, String kategori, String tekst) {
         if (treningsokter != null) {
-            treningsokter.add(new Treningsokt());
+            treningsokter.add(new Treningsokt(varighet, kategori, tekst));
             return true;
         }
         return false;
