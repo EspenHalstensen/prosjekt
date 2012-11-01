@@ -11,10 +11,10 @@ public class oversikt {
     private String brukernavn;
     ArrayList<Treningsokt> treningsokter = new ArrayList<Treningsokt>();
     
-    public oversikt(String brukernavn) {
-        this.brukernavn = brukernavn;
+    public String getBrukernavn() {
+        return brukernavn;
     }
-    
+
     public Treningsokt getAlleOkter() {
         if (treningsokter != null) {
             for (Treningsokt t : treningsokter) {
@@ -37,8 +37,8 @@ public class oversikt {
     
     public boolean registrerNyOkt(int oktnr, String dato, int varighet, String kategori, String tekst) {
         if (treningsokter != null) {
-                treningsokter.add(new Treningsokt(oktnr, dato, varighet, kategori, tekst));
-                return true;
+            treningsokter.add(new Treningsokt());
+            return true;
         }
         return false;
     }

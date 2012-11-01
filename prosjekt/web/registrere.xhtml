@@ -18,21 +18,21 @@
                         <table>
                             <tr>
                                 <td> #{tekster.oktnr}</td>
-                                <td><h:outputText  value="#{bruker.treningsokt.oktnr}"/></td>
+                                <td><h:outputText  value="#{bruker.oversikt.oktnr}"/></td>
                             </tr>
 
                             <tr>
                                 <td>#{tekster.dato}</td> 
-                                <td><h:inputText value="#{bruker.treningsokt.dato}"/> <font color="#FF0000">#{bruker.treningsokt.datoformat}</font></td>
+                                <td><h:inputText value="#{bruker.oversikt.dato}"/> <font color="#FF0000">#{bruker.oversikt.datoformat}</font></td>
                             </tr>
                             <tr>
                                 <td>#{tekster.varighet}</td> 
-                                <td><h:inputText value="#{bruker.treningsokt.varighet}"/> <font color="#FF0000">#{tekster.minutter}</font></td>
+                                <td><h:inputText value="#{bruker.oversikt.varighet}"/> <font color="#FF0000">#{tekster.minutter}</font></td>
                             </tr>
                             <tr>
 
                                 <td>#{tekster.kategori}</td>
-                                <td><h:selectOneMenu value="#{bruker.treningsokt.kategori}">
+                                <td><h:selectOneMenu value="#{bruker.oversikt.kategori}">
                                         <f:selectItem itemLabel="#{tekster.styrke}" itemValue="#{tekster.styrke}"/>
                                         <f:selectItem itemLabel="#{tekster.kondisjon}" itemValue="#{tekster.kondisjon}"/>
                                         <f:selectItem itemLabel="#{tekster.annet}" itemValue="#{tekster.annet}"/>
@@ -40,7 +40,7 @@
                             </tr>
                             <tr>
                                 <td>#{tekster.tekst}</td>
-                                <td><h:inputText value="#{bruker.treningsokt.tekst}"/></td>
+                                <td><h:inputText value="#{bruker.oversikt.tekst}"/></td>
                             </tr>
                             <tr>
                                 <td><h:commandButton value="Send" action="send"/></td>
