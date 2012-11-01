@@ -13,8 +13,11 @@ public class Treningsokt{
     private String tekst;
     private final String datoformat = "dd/MM/yyyy";
     
-    public Treningsokt(){
+    public Treningsokt(int varighet, String kategori, String tekst){
         dato = new SimpleDateFormat(datoformat).format(new GregorianCalendar().getTime());
+        this.varighet = varighet;
+        this.kategori = kategori;
+        this.tekst = tekst;
         oktnr++;
     }
             
