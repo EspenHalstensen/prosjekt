@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>#{tekster.tittel2}</title>
+    </h:head>
+    <body>
+        <ui:composition template="newTemplate.xhtml">
+            <ui:define name ="content">
+                <f:view>
+                    <h:form id="select">
+                        <h:panelGrid>
+                            <f:facet name="header">
+                                <h:outputText value="Treningsokter"/>
+                            </f:facet>
+                            <h:dataTable value="#{treningsoktBehandler.tabelldata}" var="loc">
+                                <h:column>
+                                    <f:facet name="header" >
+                                        <h:outputText value="Dato"/>
+                                    </f:facet>
+                                    <h:outputText value="#{loc.treningsokt.dato}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header" >
+                                        <h:outputText value="Kategori"/>
+                                    </f:facet>
+                                    <h:outputText value="#{loc.treningsokt.kategori}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header" >
+                                        <h:outputText value="Tekst"/>
+                                    </f:facet>
+                                    <h:outputText value="#{loc.treningsokt.tekst}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header" >
+                                        <h:outputText value="Varighet"/>
+                                    </f:facet>
+                                    <h:outputText value="#{loc.treningsokt.varighet}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header" >
+                                        <h:outputText value="Skal"/>
+                                    </f:facet>
+                                    <h:selectBooleanCheckbox value="#{loc.skalslettes}"/>
+                                </h:column>
+                            </h:dataTable>
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+            </ui:define>
+            <ui:define name="bottom">
+                <h:form>
+                    <table>
+                        <tr>
+                            <td> #{tekster.oktnr}</td>
+                            <td><h:outputText  value="#{treningsoktBehandler.tempOkt.oktnr}"/></td>
+                        </tr>
+
+                        <tr>
+                            <td>#{tekster.dato}</td> 
+                            <td><h:inputText value="#{treningsoktBehandler.tempOkt.dato}"/> <font color="#FF0000">#{treningsoktBehandler.tempOkt.datoformat}</font></td>
+                        </tr>
+                        <tr>
+                            <td>#{tekster.varighet}</td> 
+                            <td><h:inputText value="#{treningsoktBehandler.tempOkt.varighet}"/> <font color="#FF0000">#{tekster.minutter}</font></td>
+                        </tr>
+                        <tr>
+
+                            <td>#{tekster.kategori}</td>
+                            <td><h:selectOneMenu value="#{treningsoktBehandler.tempOkt.kategori}">
+                                    <f:selectItem itemLabel="#{tekster.styrke}" itemValue="#{tekster.styrke}"/>
+                                    <f:selectItem itemLabel="#{tekster.kondisjon}" itemValue="#{tekster.kondisjon}"/>
+                                    <f:selectItem itemLabel="#{tekster.annet}" itemValue="#{tekster.annet}"/>
+                                </h:selectOneMenu></td>
+                        </tr>
+                        <tr>
+                            <td>#{tekster.tekst}</td>
+                            <td><h:inputText value="#{treningsoktBehandler.tempOkt.tekst}"/></td>
+                        </tr>
+                        <tr>
+                            <td><h:commandButton value="Send" action="#{treningsoktBehandler.oppdater}"/></td>
+                        </tr>
+                    </table>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
+
