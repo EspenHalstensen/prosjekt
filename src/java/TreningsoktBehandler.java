@@ -7,8 +7,7 @@ import javax.inject.Named;
 
 /**
  *
- * @author
- * havardb
+ * @author havardb
  */
 @Named
 @SessionScoped
@@ -34,6 +33,13 @@ public class TreningsoktBehandler implements java.io.Serializable {
 
     public synchronized void setTempOkt(Treningsokt nyTempOkt) {
         tempOkt = nyTempOkt;
+    }
+
+    public synchronized double getSum() {
+        return oversikt.getSum();
+    }
+    public synchronized double getAntOkter(){
+        return oversikt.getAntOkter();
     }
 
     public synchronized void oppdater() {

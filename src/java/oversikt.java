@@ -3,8 +3,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author
- * havardb
+ * @author havardb
  */
 public class oversikt {
 
@@ -39,6 +38,17 @@ public class oversikt {
         if (treningsokter != null) {
             treningsokter.add(t);
         }
+    }
+    public int getAntOkter(){
+        return treningsokter.size();
+    }
+    public double getSum() {
+        double sum = 0.0;
+        for (Treningsokt t : treningsokter) {
+            sum += t.getVarighet();
+        }
+        sum = sum / treningsokter.size();
+        return sum;
     }
 
     public void slettOkt(Treningsokt t) {
