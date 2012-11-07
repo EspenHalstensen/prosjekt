@@ -24,6 +24,7 @@ public class oversikt {
         this.brukernavn = brukernavn;
         this.passord = passord;
         try {
+            Class.forName(databasedriver);
             forbindelse = DriverManager.getConnection(databasenavn);
             setning = forbindelse.createStatement();
             res = setning.executeQuery("select * from trening where brukernavn = '" + brukernavn + "'");
@@ -57,6 +58,7 @@ public class oversikt {
     
     public void aapneForbindelse(){
         try{
+        Class.forName(databasedriver);
         forbindelse = DriverManager.getConnection(databasenavn);
         }catch(Exception e){
             System.out.println("Trøbbel i aapneForbindelse()");
