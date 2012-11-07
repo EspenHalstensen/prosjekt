@@ -19,7 +19,7 @@
                     <tr><td>#{tekster.passord}</td>
                         <td><h:inputSecret value="#{treningsoktBehandler.passord}"/></td></tr>
                     <tr>
-                        <td><h:commandButton name="Logg på" action="send" value="send"/></td>
+                        <td><h:commandButton action="#{treningsoktBehandler.loggInn}" value="Logg inn"/></td>
                     </tr>
                 </table>
             </ui:define>

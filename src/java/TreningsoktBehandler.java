@@ -3,13 +3,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 /**
  *
- * @author havardb
+ * @author
+ * havardb
  */
 @Named
 @SessionScoped
@@ -32,12 +34,12 @@ public class TreningsoktBehandler implements java.io.Serializable {
     public synchronized Treningsokt getTempOkt() {
         return tempOkt;
     }
-    
-    public synchronized String getBrukernavn(){
+
+    public synchronized String getBrukernavn() {
         return oversikt.getBrukernavn();
     }
-    
-    public synchronized String getPassord(){
+
+    public synchronized String getPassord() {
         return oversikt.getPassord();
     }
 
@@ -48,31 +50,48 @@ public class TreningsoktBehandler implements java.io.Serializable {
     public synchronized double getSum() {
         return oversikt.getSum();
     }
-    public synchronized int getAntOkter(){
+
+    public synchronized int getAntOkter() {
         return oversikt.getAntOkter();
+    }
+    public synchronized ArrayList<String> getKategorier(){
+        return oversikt.kategorier();
+    }
+
+    @PostConstruct
+    public synchronized void setDatabaseTabell() {
+        List<TreningsoktStatus> temp = Collections.synchronizedList(new ArrayList<TreningsoktStatus>());
+        for (Treningsokt t : oversikt.getAlleOkter()) {
+            temp.add(new TreningsoktStatus(t));
+        }
+        tabelldata = temp;
     }
 
     public synchronized void oppdater() {
         if (!tempOkt.getTekst().trim().equals("")) {
-            Treningsokt nyOkt = new Treningsokt(tempOkt.getVarighet(), tempOkt.getKategori(), tempOkt.getTekst());
+            System.out.println("inn i Oppdater() løkka");
+            Treningsokt nyOkt = new Treningsokt(tempOkt.getOktnr(), tempOkt.getVarighet(), tempOkt.getKategori(), tempOkt.getTekst(), tempOkt.getDato());
             oversikt.registrerNyOkt(nyOkt);
             nyOkt.setOktnr(Treningsokt.setLopeNr());
             tabelldata.add(new TreningsoktStatus(nyOkt));
             tempOkt.nullstill();
+            
         }
+        System.out.println("Utafor Oppdater() løkka");
         int indeks = tabelldata.size() - 1;
         while (indeks >= 0) {
             TreningsoktStatus ts = tabelldata.get(indeks);
-            System.out.println(ts.getSkalslettes());
             if (ts.getSkalslettes()) { // sletter data, først i ...
                 oversikt.slettOkt(ts.getTreningsokt());// ... problemdomeneobj.
                 tabelldata.remove(indeks); // deretter i presentasjonsobjektet
+            }else{
+                oversikt.endreVerdier(ts.getTreningsokt());
             }
             indeks--;
         }
     }
-    
-      public void setNorsk() {
+
+    public void setNorsk() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.getViewRoot().setLocale(new Locale("no"));
     }

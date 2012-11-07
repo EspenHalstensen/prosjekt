@@ -10,14 +10,14 @@
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>send</from-outcome>
+            <from-outcome>true</from-outcome>
             <to-view-id>/registrert.xhtml</to-view-id>
         </navigation-case>
          </navigation-rule>
          <navigation-rule>
         <from-view-id>/registrert.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>send</from-outcome>
+            <from-outcome>true</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>

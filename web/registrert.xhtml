@@ -11,86 +11,89 @@
         <ui:composition template="newTemplate.xhtml">
             <ui:define name ="content">
                 <h:dataTable value="#{treningsoktBehandler.tabelldata}" var="loc" rendered="#{treningsoktBehandler.datafins}">
-                                <h:column>
-                                    <f:facet name="header" >
-                                        <h:outputText value="#{tekster.dato}"/>
-                                    </f:facet>
-                                    <h:inputText value="#{loc.treningsokt.dato}"/>
-                                     <f:facet name ="footer">
-                                         <h:outputText value="#{tekster.antOkt}"/>
-                                    </f:facet>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header" >
-                                        <h:outputText value="#{tekster.kategori}"/>
-                                    </f:facet>
-                                    <h:selectOneMenu value="#{bruker.treningsokt.kategori}">
-                                        <f:selectItem itemLabel="#{tekster.styrke}" itemValue="#{tekster.styrke}"/>
-                                        <f:selectItem itemLabel="#{tekster.kondisjon}" itemValue="#{tekster.kondisjon}"/>
-                                        <f:selectItem itemLabel="#{tekster.annet}" itemValue="#{tekster.annet}"/>
-                                    </h:selectOneMenu>
-                                    <f:facet name="footer">
-                                        <h:outputText value="#{treningsoktBehandler.antOkter}"/>
-                                    </f:facet>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header" >
-                                        <h:outputText value="#{tekster.tekst}"/>
-                                    </f:facet>
-                                    <h:inputText value="#{loc.treningsokt.tekst}"/>
-                                    <f:facet name ="footer">
-                                        <h:outputText value="Sum:"/>
-                                    </f:facet>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header" >
-                                        <h:outputText value="#{tekster.varighet}"/>
-                                    </f:facet>
-                                    <h:inputText value="#{loc.treningsokt.varighet}"/>
-                                    <f:facet name="footer">
-                                    <h:outputText value="#{treningsoktBehandler.sum}"/>
-                                    </f:facet>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="#{tekster.slett}"/>
-                                    </f:facet>
-                                    <h:selectBooleanCheckbox value="#{loc.skalslettes}"/>
-                                </h:column>
-                            </h:dataTable>
+                    <h:column>
+                        <f:facet name="header" >
+                            <h:outputText value="#{tekster.dato}"/>
+                        </f:facet>
+                        <h:inputText value="#{loc.treningsokt.dato}"/>
+                        <f:facet name ="footer">
+                            <h:outputText value="#{tekster.antOkt}"/>
+                        </f:facet>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header" >
+                            <h:outputText value="#{tekster.kategori}"/>
+                        </f:facet>
+                        <h:selectOneMenu value="#{loc.treningsokt.kategori}">
+                            <f:selectItems value="#{treningsoktBehandler.kategorier}" var="c"/>
+                        </h:selectOneMenu>
+
+                        <f:facet name="footer">
+                            <h:outputText value="#{treningsoktBehandler.antOkter}"/>
+                        </f:facet>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header" >
+                            <h:outputText value="#{tekster.tekst}"/>
+                        </f:facet>
+                        <h:inputText value="#{loc.treningsokt.tekst}"/>
+                        <f:facet name ="footer">
+                            <h:outputText value="Sum:"/>
+                        </f:facet>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header" >
+                            <h:outputText value="#{tekster.varighet}"/>
+                        </f:facet>
+                        <h:inputText value="#{loc.treningsokt.varighet}"/>
+                        <f:facet name="footer">
+                            <h:outputText value="#{treningsoktBehandler.sum}"/>
+                        </f:facet>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{tekster.slett}"/>
+                        </f:facet>
+                        <h:selectBooleanCheckbox value="#{loc.skalslettes}"/>
+                    </h:column>
+                </h:dataTable>
             </ui:define>
             <ui:define name="bottom">
-                    <table>
-                        <tr>
-                            <td> #{tekster.oktnr}</td>
-                            <td><h:outputText  value="#{treningsoktBehandler.tempOkt.oktnr}"/></td>
-                        </tr>
+                <table>
+                    <tr>
+                        <td>#{tekster.brukernavn}</td>
+                        <td><h:outputText value="#{treningsoktBehandler.brukernavn}"/></td>
+                    </tr>
+                    <tr>
+                        <td> #{tekster.oktnr}</td>
+                        <td><h:outputText  value="#{treningsoktBehandler.tempOkt.oktnr}"/></td>
+                    </tr>
 
-                        <tr>
-                            <td>#{tekster.dato}</td> 
-                            <td><h:inputText value="#{treningsoktBehandler.tempOkt.dato}"/> <font color="#FF0000">#{treningsoktBehandler.tempOkt.datoformat}</font></td>
-                        </tr>
-                        <tr>
-                            <td>#{tekster.varighet}</td> 
-                            <td><h:inputText value="#{treningsoktBehandler.tempOkt.varighet}"/> <font color="#FF0000">#{tekster.minutter}</font></td>
-                        </tr>
-                        <tr>
+                    <tr>
+                        <td>#{tekster.dato}</td> 
+                        <td><h:inputText value="#{treningsoktBehandler.tempOkt.dato}"/> <font color="#FF0000">#{treningsoktBehandler.tempOkt.datoformat}</font></td>
+                    </tr>
+                    <tr>
+                        <td>#{tekster.varighet}</td> 
+                        <td><h:inputText value="#{treningsoktBehandler.tempOkt.varighet}"/> <font color="#FF0000">#{tekster.minutter}</font></td>
+                    </tr>
+                    <tr>
 
-                            <td>#{tekster.kategori}</td>
-                            <td><h:selectOneMenu value="#{treningsoktBehandler.tempOkt.kategori}">
-                                    <f:selectItem itemLabel="#{tekster.styrke}" itemValue="#{tekster.styrke}"/>
-                                    <f:selectItem itemLabel="#{tekster.kondisjon}" itemValue="#{tekster.kondisjon}"/>
-                                    <f:selectItem itemLabel="#{tekster.annet}" itemValue="#{tekster.annet}"/>
-                                </h:selectOneMenu></td>
-                        </tr>
-                        <tr>
-                            <td>#{tekster.tekst}</td>
-                            <td><h:inputText value="#{treningsoktBehandler.tempOkt.tekst}"/></td>
-                        </tr>
-                        <tr>
-                        </tr>
-                        <td><h:commandButton value="Send" action="#{treningsoktBehandler.oppdater()}"/></td>
-                    </table>
+                        <td>#{tekster.kategori}</td>
+                        <td><h:selectOneMenu value="#{treningsoktBehandler.tempOkt.kategori}">
+                                <f:selectItems value="#{treningsoktBehandler.kategorier}" var="c"/>
+                        </h:selectOneMenu></td>
+                    </tr>
+                    <tr>
+                        <td>#{tekster.tekst}</td>
+                        <td><h:inputText value="#{treningsoktBehandler.tempOkt.tekst}"/></td>
+                    </tr>
+                    <tr>
+                    </tr>
+                    <td><h:commandButton value="Send" action="#{treningsoktBehandler.oppdater()}"/></td>
+
+
+                </table>
             </ui:define>
         </ui:composition>
     </body>
