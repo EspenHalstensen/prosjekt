@@ -21,6 +21,13 @@ public class Treningsokt{
         dato = new SimpleDateFormat(datoformat).format(new GregorianCalendar().getTime());
         oktnr++;
     }
+    public Treningsokt(int varighet, String kategori, String tekst,String dato){
+        this.varighet = varighet;
+        this.kategori = kategori;
+        this.tekst = tekst;
+        this.dato = dato;
+        oktnr++;
+    }
     
     public Treningsokt(){
         nullstill();
