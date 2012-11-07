@@ -2,26 +2,54 @@
 import java.util.ArrayList;
 import java.sql.*;
 
-
 /**
  *
- * @author
- * havardb
+ * @author havardb
  */
 public class oversikt {
 
     private String brukernavn = "";
     ArrayList<Treningsokt> treningsokter = new ArrayList<Treningsokt>();
+    private String passord = "";
 
     public oversikt() {
     }
 
-    public oversikt(String brukernavn){
+    public oversikt(String brukernavn, String passord) {
+        ResultSet res = null;
+        Statement setning = null;
+        Connection forbindelse = null;
         
+        try {
+            String databasedriver = "org.apache.derby.jdbc.ClientDriver";
+            Class.forName(databasedriver); // laster inn driverklassen
+            String databasenavn = "jdbc:derby://localhost:1527/waplj.prosjekt;user=asd;password=waplj";
+            forbindelse = DriverManager.getConnection(databasenavn);
+            setning = forbindelse.createStatement();
+            res = setning.executeQuery("select * from trening where brukernavn = '"+brukernavn+"'" );
+            while (res.next()) {
+                int varighet = res.getInt("varighet");
+                String kategori = res.getString("kategorinavn");
+                String tekst = res.getString("tekst");
+                //Treningsokt(int varighet, String kategori, String tekst)
+                treningsokter.add(new Treningsokt(varighet, kategori, tekst));
+            }
+        }
+         catch (Exception e) {
+            System.out.println("error under pålogging, konstruktør");
+        } finally {
+            Opprydder.lukkResSet(res);
+            Opprydder.lukkSetning(setning);
+            Opprydder.lukkForbindelse(forbindelse);
+        }
     }
-    
+
     public String getBrukernavn() {
         return brukernavn;
+    }
+
+    public String getPassord() {
+        return passord;
     }
 
     public Treningsokt getAlleOkter() {
