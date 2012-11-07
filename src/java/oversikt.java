@@ -11,22 +11,24 @@ public class oversikt {
     private String brukernavn = "";
     ArrayList<Treningsokt> treningsokter = new ArrayList<Treningsokt>();
     private String passord = "";
-
+    private ResultSet res = null;
+    private Statement setning = null;
+    private Connection forbindelse = null;
+    private String databasedriver = "org.apache.derby.jdbc.ClientDriver";
+    private String databasenavn = "jdbc:derby://localhost:1527/waplj.prosjekt;user=asd;password=waplj";
+    
     public oversikt() {
     }
 
     public oversikt(String brukernavn, String passord) {
-        ResultSet res = null;
-        Statement setning = null;
-        Connection forbindelse = null;
-        
+        this.brukernavn = brukernavn;
+        this.passord = passord;
+
         try {
-            String databasedriver = "org.apache.derby.jdbc.ClientDriver";
-            Class.forName(databasedriver); // laster inn driverklassen
-            String databasenavn = "jdbc:derby://localhost:1527/waplj.prosjekt;user=asd;password=waplj";
+            
             forbindelse = DriverManager.getConnection(databasenavn);
             setning = forbindelse.createStatement();
-            res = setning.executeQuery("select * from trening where brukernavn = '"+brukernavn+"'" );
+            res = setning.executeQuery("select * from trening where brukernavn = '" + brukernavn + "'");
             while (res.next()) {
                 int varighet = res.getInt("varighet");
                 String kategori = res.getString("kategorinavn");
@@ -34,8 +36,7 @@ public class oversikt {
                 //Treningsokt(int varighet, String kategori, String tekst)
                 treningsokter.add(new Treningsokt(varighet, kategori, tekst));
             }
-        }
-         catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("error under pålogging, konstruktør");
         } finally {
             Opprydder.lukkResSet(res);
@@ -51,6 +52,24 @@ public class oversikt {
     public String getPassord() {
         return passord;
     }
+    public void stengForbindelse(){
+        Opprydder.lukkForbindelse(forbindelse);
+        System.out.println("lukker databaseforbindelse");
+    }
+    
+    public void aapneForbindelse(){
+        try{
+        forbindelse = DriverManager.getConnection(databasenavn);
+        }catch(Exception e){
+            System.out.println("Trøbbel i aapneForbindelse()");
+            Opprydder.lukkForbindelse(forbindelse);
+        }
+    }
+    
+    
+    
+    
+    
 
     public Treningsokt getAlleOkter() {
         if (treningsokter != null) {
