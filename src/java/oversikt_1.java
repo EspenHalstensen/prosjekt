@@ -1,25 +1,15 @@
 
 import java.util.ArrayList;
-import java.sql.*;
-
 
 /**
  *
- * @author
- * havardb
+ * @author havardb
  */
-public class oversikt {
+public class oversikt_1 {
 
     private String brukernavn = "";
     ArrayList<Treningsokt> treningsokter = new ArrayList<Treningsokt>();
 
-    public oversikt() {
-    }
-
-    public oversikt(String brukernavn){
-        
-    }
-    
     public String getBrukernavn() {
         return brukernavn;
     }
@@ -49,11 +39,9 @@ public class oversikt {
             treningsokter.add(t);
         }
     }
-
-    public int getAntOkter() {
+    public int getAntOkter(){
         return treningsokter.size();
     }
-
     public double getSum() {
         double sum = 0.0;
         for (Treningsokt t : treningsokter) {
@@ -65,6 +53,6 @@ public class oversikt {
 
     public void slettOkt(Treningsokt t) {
         treningsokter.remove(t);
-
+        
     }
 }

@@ -15,7 +15,7 @@ public class TreningsoktBehandler implements java.io.Serializable {
 
     private oversikt oversikt = new oversikt();
     private List<TreningsoktStatus> tabelldata = Collections.synchronizedList(new ArrayList<TreningsoktStatus>());
-    private Treningsokt tempOkt = new Treningsokt(0, "", "");
+    private Treningsokt tempOkt = new Treningsokt();
 
     public synchronized boolean getDatafins() {
         return (tabelldata.size() > 0);
@@ -38,7 +38,7 @@ public class TreningsoktBehandler implements java.io.Serializable {
     public synchronized double getSum() {
         return oversikt.getSum();
     }
-    public synchronized double getAntOkter(){
+    public synchronized int getAntOkter(){
         return oversikt.getAntOkter();
     }
 
@@ -46,19 +46,19 @@ public class TreningsoktBehandler implements java.io.Serializable {
         if (!tempOkt.getTekst().trim().equals("")) {
             Treningsokt nyOkt = new Treningsokt(tempOkt.getVarighet(), tempOkt.getKategori(), tempOkt.getTekst());
             oversikt.registrerNyOkt(nyOkt);
+            nyOkt.setOktnr(Treningsokt.setLopeNr());
             tabelldata.add(new TreningsoktStatus(nyOkt));
             tempOkt.nullstill();
         }
         int indeks = tabelldata.size() - 1;
         while (indeks >= 0) {
             TreningsoktStatus ts = tabelldata.get(indeks);
+            System.out.println(ts.getSkalslettes());
             if (ts.getSkalslettes()) { // sletter data, først i ...
                 oversikt.slettOkt(ts.getTreningsokt());// ... problemdomeneobj.
                 tabelldata.remove(indeks); // deretter i presentasjonsobjektet
             }
             indeks--;
-
-
         }
     }
 }

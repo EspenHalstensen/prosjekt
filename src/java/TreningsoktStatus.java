@@ -18,20 +18,18 @@ public class TreningsoktStatus implements Serializable {
 
     public TreningsoktStatus(Treningsokt t) {
         this.treningsokt = t;
-         skalslettes = false;
+        skalslettes = false;
     }
 
     public synchronized boolean getSkalslettes() {
-       System.out.println("Get");
         return skalslettes;
     }
 
     public void setSkalslettes(boolean skalslettes) {
-        System.out.println("set");
         this.skalslettes = skalslettes;
     }
 
-    public  Treningsokt getTreningsokt() {
+    public Treningsokt getTreningsokt() {
         return treningsokt;
     }
 

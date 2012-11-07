@@ -11,7 +11,8 @@ public class Treningsokt{
     private int varighet;
     private String kategori;
     private String tekst;
-    private final String datoformat = "dd/MM/yyyy";
+    private static int lopeNr = 0;
+    private final String datoformat = "yyyy-MM-dd";
     
     public Treningsokt(int varighet, String kategori, String tekst){
         this.varighet = varighet;
@@ -39,6 +40,13 @@ public class Treningsokt{
     public void setOktnr(int oktnr) {
         this.oktnr = oktnr;
     }
+
+    public static int setLopeNr() {
+        lopeNr++;
+        return lopeNr;
+    }
+    
+    
 
     /**
      * @return the dato
