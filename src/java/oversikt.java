@@ -18,8 +18,27 @@ public class oversikt {
     private String databasedriver = "org.apache.derby.jdbc.ClientDriver";
     private String databasenavn = "jdbc:derby://localhost:1527/waplj_prosjekt;user=asd;password=waplj";
 
-
     public oversikt() {
+        try {
+            Class.forName(databasedriver);
+            forbindelse = DriverManager.getConnection(databasenavn);
+            setning = forbindelse.prepareStatement("select * from trening where brukernavn = 'anne'");
+            res = setning.executeQuery();
+            while (res.next()) {
+                int varighet = res.getInt("varighet");
+                String kategori = res.getString("kategorinavn");
+                String tekst = res.getString("tekst");
+                String dato = res.getString("dato");
+                //Treningsokt(int varighet, String kategori, String tekst)
+                treningsokter.add(new Treningsokt(varighet, kategori, tekst, dato));
+            }
+        } catch (Exception e) {
+            System.out.println("error under pålogging, konstruktør");
+        } finally {
+            Opprydder.lukkResSet(res);
+            Opprydder.lukkSetning(setning);
+            Opprydder.lukkForbindelse(forbindelse);
+        }
     }
 
     public oversikt(String brukernavn, String passord) {
@@ -57,13 +76,14 @@ public class oversikt {
 
     public void stengForbindelse() {
         Opprydder.lukkForbindelse(forbindelse);
-        System.out.println("lukker databaseforbindelse");
+        System.out.println("lukker databaseforbindelse\n");
     }
 
     public void aapneForbindelse() {
         try {
             Class.forName(databasedriver);
             forbindelse = DriverManager.getConnection(databasenavn);
+            System.out.println("Åpner dataforbindelse");
         } catch (Exception e) {
             System.out.println("Trøbbel i aapneForbindelse()\n" + e);
             Opprydder.lukkForbindelse(forbindelse);
@@ -96,39 +116,47 @@ public class oversikt {
     }
 
     public int getSum() {
-        /*double sum = 0.0;
-         for (Treningsokt t : treningsokter) {
-         sum += t.getVarighet();
-         }
-         sum = sum / treningsokter.size();
-         return sum;*/
         aapneForbindelse();
         double sum = 0;
         int okter = -1;
         try {
-            setning = forbindelse.prepareStatement("select sum(VARIGHET),count(OKTNR) from TRENING where BRUKERNAVN = '"+brukernavn+"'");
-            res = setning.executeQuery(); 
-            while(res.next()){
-            sum = res.getDouble(1);
-            okter = res.getInt(2);
+            setning = forbindelse.prepareStatement("select sum(VARIGHET),count(OKTNR) from TRENING where BRUKERNAVN = '" + brukernavn + "'");
+            res = setning.executeQuery();
+            while (res.next()) {
+                sum = res.getDouble(1);
+                okter = res.getInt(2);
+                System.out.println("Total varighet/antall okter:\n"+(int)(sum/okter));
             }
         } catch (SQLException e) {
             System.out.println("Feil i getSum()\n" + e);
         } finally {
             Opprydder.lukkSetning(setning);
+            stengForbindelse();
         }
-        stengForbindelse();
-        return (int)sum / okter;
+        return (int) sum / okter;
     }
 
+    //Bruker oktnr (primærnøkkel)
     public void slettOkt(Treningsokt t) {
-        treningsokter.remove(t);
+        aapneForbindelse();
+        try {
+            treningsokter.remove(t);
+            setning = forbindelse.prepareStatement("delete from Trening where oktnr=?");
+            setning.setInt(1, t.getOktnr());
+            setning.executeUpdate(); //kjører setningen og returnerer 0 (false), >0 (true)
+            System.out.println("slettet treningsokt: "+t.getOktnr());
+                    } catch (SQLException e) {
+            System.out.println("Feil i slettOkt\n" + e);
+        } finally {
+            Opprydder.lukkSetning(setning);
+            stengForbindelse();
+        }
 
     }
 
     public static void main(String[] args) {
         oversikt over = new oversikt("anne", "xyz_1b");
-        System.out.println(over.getSum());
+        
         /* for(Treningsokt t:over.getAlleOkter()){
          System.out.println(t.getDato());
          }    */
