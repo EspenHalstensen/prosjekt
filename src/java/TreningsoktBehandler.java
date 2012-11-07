@@ -2,7 +2,9 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 /**
@@ -29,6 +31,14 @@ public class TreningsoktBehandler implements java.io.Serializable {
     /* EGENSKAP: tempTrans*/ // for midlertidig lagring av transaksjonsdata
     public synchronized Treningsokt getTempOkt() {
         return tempOkt;
+    }
+    
+    public synchronized String getBrukernavn(){
+        return oversikt.getBrukernavn();
+    }
+    
+    public synchronized String getPassord(){
+        return oversikt.getPassord();
     }
 
     public synchronized void setTempOkt(Treningsokt nyTempOkt) {
@@ -60,5 +70,15 @@ public class TreningsoktBehandler implements java.io.Serializable {
             }
             indeks--;
         }
+    }
+    
+      public void setNorsk() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getViewRoot().setLocale(new Locale("no"));
+    }
+
+    public void setEngelsk() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getViewRoot().setLocale(new Locale("en"));
     }
 }

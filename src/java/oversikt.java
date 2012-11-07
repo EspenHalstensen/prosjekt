@@ -8,7 +8,7 @@ import java.sql.*;
  */
 public class oversikt {
 
-    private String brukernavn = "";
+    private String brukernavn = "anne"; //For øving10
     ArrayList<Treningsokt> treningsokter = new ArrayList<Treningsokt>();
     private String passord = "";
     private ResultSet res = null;
@@ -23,9 +23,7 @@ public class oversikt {
     public oversikt(String brukernavn, String passord) {
         this.brukernavn = brukernavn;
         this.passord = passord;
-
         try {
-            
             forbindelse = DriverManager.getConnection(databasenavn);
             setning = forbindelse.createStatement();
             res = setning.executeQuery("select * from trening where brukernavn = '" + brukernavn + "'");
@@ -65,12 +63,6 @@ public class oversikt {
             Opprydder.lukkForbindelse(forbindelse);
         }
     }
-    
-    
-    
-    
-    
-
     public Treningsokt getAlleOkter() {
         if (treningsokter != null) {
             for (Treningsokt t : treningsokter) {
@@ -102,16 +94,44 @@ public class oversikt {
     }
 
     public double getSum() {
-        double sum = 0.0;
+        /*double sum = 0.0;
         for (Treningsokt t : treningsokter) {
             sum += t.getVarighet();
         }
         sum = sum / treningsokter.size();
-        return sum;
-    }
+        return sum;*/
+        
+       aapneForbindelse();
+       double sum = 0.0;
+       int okter =-1;
+           PreparedStatement sqlSelectSum = null;
+           PreparedStatement sqlSelectOkt = null;
+           try{
+               sqlSelectSum = forbindelse.prepareStatement("select sum(VARIGHET) from TRENING");
+               sqlSelectOkt = forbindelse.prepareStatement("select count(OKTNR) from TRENING where BRUKERNAVN='"+brukernavn+"'");
+               sqlSelectSum.setDouble(0, sum);
+               sqlSelectOkt.setInt(0, okter);
+           }catch(SQLException e){
+               System.out.println("Feil i getSum()");
+           }finally{
+               Opprydder.lukkSetning(sqlSelectOkt);
+               Opprydder.lukkSetning(sqlSelectSum);
+               
+           }
+           stengForbindelse();
+           return sum/okter;
+       }
+       
+    
 
     public void slettOkt(Treningsokt t) {
         treningsokter.remove(t);
 
     }
+    
+    public static void main(String[] args) {
+        oversikt over = new oversikt();
+        System.out.println(over.getSum());
+    }
 }
+

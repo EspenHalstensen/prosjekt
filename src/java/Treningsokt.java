@@ -83,7 +83,7 @@ public class Treningsokt{
         return kategori;
     }
 
-    public void setKategori(String k){ kategori = k; }
+    public void setKategori(String k){ this.kategori = k; }
     /**
      * @return the tekst
      */
