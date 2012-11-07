@@ -133,6 +133,7 @@ public class oversikt {
             System.out.println("Error i registrer økt \n" + e);
             
         }finally{
+            forbindelse.setAutoCommit(true);
             stengForbindelse();
             Opprydder.lukkResSet(res);
             Opprydder.lukkSetning(setning);

@@ -22,7 +22,7 @@ public class Treningsokt{
         this.oktnr = oktnr;
         
     }
-    public Treningsokt(int oktnr, int varighet, String kategori, String tekst,String dato){
+    public Treningsokt(int varighet, String kategori, String tekst,String dato){
         this.varighet = varighet;
         this.kategori = kategori;
         this.tekst = tekst;
