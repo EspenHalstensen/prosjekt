@@ -14,14 +14,15 @@ public class Treningsokt{
     private static int lopeNr = 0;
     private final String datoformat = "yyyy-MM-dd";
     
-    public Treningsokt(int varighet, String kategori, String tekst){
+    public Treningsokt(int oktnr, int varighet, String kategori, String tekst){
         this.varighet = varighet;
         this.kategori = kategori;
         this.tekst = tekst;
         dato = new SimpleDateFormat(datoformat).format(new GregorianCalendar().getTime());
-        oktnr++;
+        this.oktnr = oktnr;
+        
     }
-    public Treningsokt(int varighet, String kategori, String tekst,String dato){
+    public Treningsokt(int oktnr, int varighet, String kategori, String tekst,String dato){
         this.varighet = varighet;
         this.kategori = kategori;
         this.tekst = tekst;

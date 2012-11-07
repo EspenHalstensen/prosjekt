@@ -106,9 +106,36 @@ public class oversikt {
     }
 
     public void registrerNyOkt(Treningsokt t) {
-        if (treningsokter != null) {
+        /*if (treningsokter != null) {
             treningsokter.add(t);
+        }*/
+        
+        try{
+        aapneForbindelse();
+        forbindelse.setAutoCommit(false);
+        setning = forbindelse.prepareStatement("select max(oktnr) from trening");
+        res = setning.executeQuery();
+        res.next();
+        int tempOktnr = res.getInt(1)+1;
+        stengForbindelse();
+        // Treningsokt(int oktnr, int varighet, String kategori, String tekst,String dato){
+        setning = forbindelse.prepareStatement("insert into trening values (?,?,?,?,?)");
+        if (setning.executeUpdate()> 0){
+            setning.setInt(1, tempOktnr);
+            setning.setInt(2, t.getVarighet());
+            setning.setString(3, t.getKategori());
+            setning.setString(4, t.getTekst());
+            setning.setString(5, t.getDato());
         }
+        Opprydder.lukkSetning(setning);
+        
+        }catch(Exception e){
+            System.out.println("Error i registrer økt \n" + e);
+            
+        }finally{
+            stengForbindelse();
+            Opprydder.lukkResSet(res);
+            Opprydder.lukkSetning(setning);
     }
 
     public int getAntOkter() {
