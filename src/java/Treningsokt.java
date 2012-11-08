@@ -11,23 +11,15 @@ public class Treningsokt{
     private int varighet;
     private String kategori;
     private String tekst;
-    private static int lopeNr = 0;
     private final String datoformat = "yyyy-MM-dd";
     
-    public Treningsokt(int varighet, String kategori, String tekst){
-        this.varighet = varighet;
-        this.kategori = kategori;
-        this.tekst = tekst;
-        dato = new SimpleDateFormat(datoformat).format(new GregorianCalendar().getTime());
-        oktnr++;
-        
-    }
     public Treningsokt(int oktnr, int varighet, String kategori, String tekst,String dato){
         this.varighet = varighet;
         this.kategori = kategori;
         this.tekst = tekst;
         this.dato = dato;
         this.oktnr = oktnr;
+        System.out.println("konstruktør 2");
     }
     
     public Treningsokt(){
@@ -49,10 +41,6 @@ public class Treningsokt{
         this.oktnr = oktnr;
     }
 
-    public static int setLopeNr() {
-        lopeNr++;
-        return lopeNr;
-    }
     
     
 
@@ -111,6 +99,5 @@ public class Treningsokt{
         dato = new SimpleDateFormat(datoformat).format(new GregorianCalendar().getTime());
         tekst = "";
         kategori = "";
-        oktnr++;
     }
 }

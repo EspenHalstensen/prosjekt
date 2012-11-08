@@ -86,7 +86,6 @@ public class TreningsoktBehandler implements java.io.Serializable {
             System.out.println("inn i Oppdater() løkka");
             Treningsokt nyOkt = new Treningsokt(tempOkt.getOktnr(), tempOkt.getVarighet(), tempOkt.getKategori(), tempOkt.getTekst(), tempOkt.getDato());
             oversikt.registrerNyOkt(nyOkt);
-            nyOkt.setOktnr(Treningsokt.setLopeNr());
             tabelldata.add(new TreningsoktStatus(nyOkt));
             tempOkt.nullstill();
             
