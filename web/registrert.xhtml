@@ -8,6 +8,7 @@
         <title>#{tekster.tittel2}</title>
     </h:head>
     <body>
+        <!-- Det som er registrert-->
         <ui:composition template="newTemplate.xhtml">
             <ui:define name ="content">
                 <h:dataTable value="#{treningsoktBehandler.tabelldata}" var="loc" rendered="#{treningsoktBehandler.datafins}">
@@ -58,6 +59,7 @@
                     </h:column>
                 </h:dataTable>
             </ui:define>
+            <!-- Det du skal registrere-->
             <ui:define name="bottom">
                 <table>
                     <tr>
@@ -90,10 +92,12 @@
                     </tr>
                     <tr>
                     </tr>
-                    <td><h:commandButton value="Send" action="#{treningsoktBehandler.oppdater()}"/></td>
-
-
-                </table>
+                    </table>
+                    <td><h:commandButton value="Send" action="#{treningsoktBehandler.oppdater()}"/>
+                        <h:inputText value="#{treningsoktBehandler.nyKategori}"/>
+                        <h:commandButton value="Legg til kategori" action="#{treningsoktBehandler.fiksKategorier()}"/>
+                    </td>
+                
             </ui:define>
         </ui:composition>
     </body>

@@ -106,6 +106,20 @@ public class oversikt {
         }
         return null;
     }
+    
+    public void leggtilKategorier(String k){
+        try{
+            aapneForbindelse();
+            setning = forbindelse.prepareStatement("insert into KATEGORI(KATEGORINAVN) values(?)");
+            setning.setString(1, k);
+            setning.executeUpdate();
+        }catch(SQLException e){
+            System.out.println("Feil i leggtilKategorier()\n"+e);
+        }finally{
+            Opprydder.lukkSetning(setning);
+            stengForbindelse();
+        }
+    }
 
     public ArrayList<String> kategorier() {
         ArrayList<String> kategorier = new ArrayList<String>();
@@ -131,8 +145,8 @@ public class oversikt {
         try {
             System.out.println("ENDREVERDIER()");
             aapneForbindelse();
+            forbindelse.setAutoCommit(false); //unødvendig? preparestatement
             setning = forbindelse.prepareStatement("update Trening set dato = ?,varighet=?,kategorinavn=?,tekst=? where brukernavn=? and oktnr=?");
-            //dato = ?,varighet=?,kategorinavn=?,tekst=? where brukernavn=? and oktnr=?
             setning.setString(1, t.getDato());
             setning.setInt(2, t.getVarighet());
             setning.setString(3, t.getKategori());
@@ -143,6 +157,7 @@ public class oversikt {
         } catch (SQLException e) {
             System.out.println("Feil i endreVerdier" + e);
         } finally {
+            Opprydder.settAutoCommit(forbindelse);
             Opprydder.lukkSetning(setning);
             stengForbindelse();
         }
@@ -154,7 +169,6 @@ public class oversikt {
             aapneForbindelse();
             treningsokter.add(t);
             forbindelse.setAutoCommit(false);
-            System.out.println("!!!!!KATEGORINAVN: " + t.getKategori());
             setning = forbindelse.prepareStatement("INSERT INTO trening(dato, varighet, kategorinavn, tekst, brukernavn) VALUES(DATE('" + t.getDato() + "'),?,?,?,?)");
             setning.setInt(1, t.getVarighet());
             setning.setString(2, t.getKategori());

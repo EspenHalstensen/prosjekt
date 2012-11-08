@@ -20,12 +20,26 @@ public class TreningsoktBehandler implements java.io.Serializable {
     private oversikt oversikt = new oversikt();
     private List<TreningsoktStatus> tabelldata = Collections.synchronizedList(new ArrayList<TreningsoktStatus>());
     private Treningsokt tempOkt = new Treningsokt();
+    private String nyKategori = "";
 
     public synchronized boolean getDatafins() {
         return (tabelldata.size() > 0);
     }
     /* EGENSKAP: tabelldata */
 
+    public synchronized String getNyKategori() {
+        return nyKategori;
+    }
+
+    public synchronized void setNyKategori(String nyKategori) {
+        this.nyKategori = nyKategori;
+    }
+    
+    public synchronized void fiksKategorier(){
+        oversikt.leggtilKategorier(nyKategori);
+    }
+    
+    
     public synchronized List<TreningsoktStatus> getTabelldata() {
         return tabelldata;
     }
