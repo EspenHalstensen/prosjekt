@@ -21,7 +21,13 @@ public class Treningsokt{
         this.tekst = tekst;
         this.dato = dato;
         this.oktnr = oktnr;
-        System.out.println("konstruktør 2");
+    }
+    public Treningsokt(int varighet, String kategori, String tekst,String dato){
+        this.varighet = varighet;
+        this.kategori = kategori;
+        this.tekst = tekst;
+        this.dato = dato;
+        oktnr++;
     }
     
     public Treningsokt(){

@@ -28,7 +28,6 @@ package hjelpeklasser;
   }
 
   public void setBrukernavn(String nyttBrukernavn) {
-    System.out.println("Brukernavn lest: " + nyttBrukernavn);
     brukernavn = nyttBrukernavn;
   }
 
@@ -37,7 +36,6 @@ package hjelpeklasser;
   }
 
   public void setPassord(String nyttPassord) {
-    System.out.println("Passord lest: " + nyttPassord);
     passord = nyttPassord;
   }
 

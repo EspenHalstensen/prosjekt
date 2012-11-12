@@ -18,7 +18,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import hjelpeklasser.*;
-import problemdomenet.oversikt;
 
 @Named
 @RequestScoped
@@ -51,11 +50,11 @@ class InnloggingsBean {
         ResultSet res = null;
         Tilbakemelding returverdi = Tilbakemelding.feil;
         try {
-            TreningsoktBehandler t = new TreningsoktBehandler(enBruker);
-            t.setBrukernavn();
-            t.setPassord();
             String brukernavn = enBruker.getBrukernavn();
             String passord = enBruker.getPassord();
+            TreningsoktBehandler t = new TreningsoktBehandler(enBruker);
+            t.getOversikt().setBrukernavn(brukernavn);
+            t.getOversikt().setPassord(passord);
             String sql = "select * from bruker where brukernavn = '" + brukernavn + "' and passord = '" + passord + "'";
 
             setning = forbindelse.createStatement();
@@ -64,6 +63,7 @@ class InnloggingsBean {
             if (res.next()) {
                 returverdi = Tilbakemelding.innloggingOk;
             }
+            
         } catch (SQLException e) {
             System.out.println("Feil ved loggInn(): " + e);
         } finally {
