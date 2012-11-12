@@ -1,3 +1,5 @@
+package beans;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,6 +9,8 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import problemdomenet.*;
+import hjelpeklasser.*;
 
 /**
  *
@@ -21,7 +25,13 @@ public class TreningsoktBehandler implements java.io.Serializable {
     private List<TreningsoktStatus> tabelldata = Collections.synchronizedList(new ArrayList<TreningsoktStatus>());
     private Treningsokt tempOkt = new Treningsokt();
     private String nyKategori = "";
+    private Bruker bruker = new Bruker(); 
 
+    public TreningsoktBehandler(Bruker enBruker) {
+        bruker = enBruker;
+    }
+    
+    
     public synchronized boolean getDatafins() {
         return (tabelldata.size() > 0);
     }
@@ -50,11 +60,20 @@ public class TreningsoktBehandler implements java.io.Serializable {
     }
 
     public synchronized String getBrukernavn() {
+        System.out.println("se her"+oversikt.getBrukernavn());
         return oversikt.getBrukernavn();
     }
 
     public synchronized String getPassord() {
         return oversikt.getPassord();
+    }
+    
+    public synchronized void setBrukernavn(){
+        oversikt.setBrukernavn(bruker.getBrukernavn());
+    }
+    
+    public synchronized void setPassord(){
+        oversikt.setPassord(bruker.getPassord());
     }
 
     public synchronized void setTempOkt(Treningsokt nyTempOkt) {
@@ -65,8 +84,8 @@ public class TreningsoktBehandler implements java.io.Serializable {
         return oversikt.getSum();
     }
 
-    public synchronized int getAntOkter() {
-        return oversikt.getAntOkter();
+    public synchronized int getLopenummer() {
+        return oversikt.getAntOkter()+1;
     }
     public synchronized ArrayList<String> getKategorier(){
         return oversikt.kategorier();

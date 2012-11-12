@@ -1,3 +1,5 @@
+package hjelpeklasser;
+
 
 import java.sql.*;
 

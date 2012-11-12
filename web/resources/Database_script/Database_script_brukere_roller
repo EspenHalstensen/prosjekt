@@ -1,0 +1,12 @@
+CREATE TABLE rolle(
+   brukernavn VARCHAR(10),
+   rolle      VARCHAR(10),
+   CONSTRAINT rolle_pk PRIMARY KEY(brukernavn, rolle));
+
+
+ALTER TABLE rolle
+  ADD CONSTRAINT rolle_fk1 FOREIGN KEY (brukernavn)
+  REFERENCES bruker;
+
+INSERT INTO rolle(brukernavn, rolle) VALUES('anne', 'bruker');
+INSERT INTO rolle(brukernavn, rolle) VALUES('tore', 'bruker');

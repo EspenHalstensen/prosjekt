@@ -1,6 +1,9 @@
+package problemdomenet;
 
+import hjelpeklasser.Opprydder;
 import java.util.ArrayList;
 import java.sql.*;
+import hjelpeklasser.*;
 
 /**
  *
@@ -9,9 +12,9 @@ import java.sql.*;
  */
 public class oversikt {
 
-    private String brukernavn = "anne"; //For øving10
-    ArrayList<Treningsokt> treningsokter = new ArrayList<Treningsokt>();
+    private String brukernavn = "";
     private String passord = "";
+    ArrayList<Treningsokt> treningsokter = new ArrayList<Treningsokt>();
     private ResultSet res = null;
     private PreparedStatement setning = null;
     private Connection forbindelse = null;
@@ -44,29 +47,14 @@ public class oversikt {
         }
     }
 
-    /*public oversikt(String brukernavn, String passord) {
-     this.brukernavn = brukernavn;
-     this.passord = passord;
-     try {
-     Class.forName(databasedriver);
-     forbindelse = DriverManager.getConnection(databasenavn);
-     setning = forbindelse.prepareStatement("select * from trening where brukernavn = '" + brukernavn + "'");
-     res = setning.executeQuery();
-     while (res.next()) {
-     int varighet = res.getInt("varighet");
-     String kategori = res.getString("kategorinavn");
-     String tekst = res.getString("tekst");
-     //Treningsokt(int varighet, String kategori, String tekst)
-     treningsokter.add(new Treningsokt(varighet, kategori, tekst));
-     }
-     } catch (Exception e) {
-     System.out.println("error under pålogging, konstruktør");
-     } finally {
-     Opprydder.lukkResSet(res);
-     Opprydder.lukkSetning(setning);
-     Opprydder.lukkForbindelse(forbindelse);
-     }
-     }*/
+    public void setBrukernavn(String brukernavn) {
+        this.brukernavn = brukernavn;
+    }
+
+    public void setPassord(String passord) {
+        this.passord = passord;
+    }
+
     public String getBrukernavn() {
         return brukernavn;
     }
@@ -128,7 +116,9 @@ public class oversikt {
             setning = forbindelse.prepareStatement("select kategorinavn from kategori");
             res = setning.executeQuery();
             while (res.next()) {
-                kategorier.add(res.getString(1));
+                if (!(res.getString(1).equals(""))) {
+                    kategorier.add(res.getString(1));
+                }
             }
 
         } catch (SQLException e) {
@@ -175,7 +165,7 @@ public class oversikt {
             setning.setString(4, brukernavn);
             setning.executeUpdate();
             Opprydder.lukkSetning(setning);
-             setning = forbindelse.prepareStatement("select max(oktnr) from trening");
+            setning = forbindelse.prepareStatement("select max(oktnr) from trening");
             res = setning.executeQuery();
             res.next();
             t.setOktnr(res.getInt(1));

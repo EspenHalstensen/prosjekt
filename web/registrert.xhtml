@@ -30,7 +30,7 @@
                         </h:selectOneMenu>
 
                         <f:facet name="footer">
-                            <h:outputText value="#{treningsoktBehandler.antOkter}"/>
+                            <h:outputText value="#{treningsoktBehandler.lopenummer}"/>
                         </f:facet>
                     </h:column>
                     <h:column>
@@ -67,24 +67,24 @@
                         <td><h:outputText value="#{treningsoktBehandler.brukernavn}"/></td>
                     </tr>
                     <tr>
-                        <td> #{tekster.oktnr}</td>
-                        <td><h:outputText  value="#{treningsoktBehandler.antOkter}"/></td>
+                        <td> #{tekster.lopenummer}</td>
+                        <td><h:outputText  value="#{treningsoktBehandler.lopenummer}"/></td>
                     </tr>
 
                     <tr>
                         <td>#{tekster.dato}</td> 
-                        <td><h:inputText value="#{treningsoktBehandler.tempOkt.dato}"/> <font color="#FF0000">#{treningsoktBehandler.tempOkt.datoformat}</font></td>
+                        <td><h:inputText value="#{treningsoktBehandler.tempOkt.dato}"/> <font color="black">#{treningsoktBehandler.tempOkt.datoformat}</font></td>
                     </tr>
                     <tr>
                         <td>#{tekster.varighet}</td> 
-                        <td><h:inputText value="#{treningsoktBehandler.tempOkt.varighet}"/> <font color="#FF0000">#{tekster.minutter}</font></td>
+                        <td><h:inputText value="#{treningsoktBehandler.tempOkt.varighet}"/> <font color="black">#{tekster.minutter}</font></td>
                     </tr>
                     <tr>
 
                         <td>#{tekster.kategori}</td>
                         <td><h:selectOneMenu value="#{treningsoktBehandler.tempOkt.kategori}">
                                 <f:selectItems value="#{treningsoktBehandler.kategorier}" var="c"/>
-                        </h:selectOneMenu></td>
+                            </h:selectOneMenu></td>
                     </tr>
                     <tr>
                         <td>#{tekster.tekst}</td>
@@ -92,12 +92,17 @@
                     </tr>
                     <tr>
                     </tr>
-                    </table>
-                    <td><h:commandButton value="Send" action="#{treningsoktBehandler.oppdater()}"/>
-                        <h:inputText value="#{treningsoktBehandler.nyKategori}"/>
-                        <h:commandButton value="Legg til kategori" action="#{treningsoktBehandler.fiksKategorier()}"/>
-                    </td>
-                
+                </table>
+                <table>
+                    <tr><td><h:commandButton value="Registrer" action="#{treningsoktBehandler.oppdater()}"/>
+                        <h:commandButton value="Oppdater" action="#{treningsoktBehandler.oppdater()}"/></td>
+                    </tr>
+                    <tr>
+                        <td><h:inputText value="#{treningsoktBehandler.nyKategori}"/>
+                        <h:commandButton value="Legg til kategori" action="#{treningsoktBehandler.fiksKategorier()}"/></td>
+                    </tr>
+                </table>
+
             </ui:define>
         </ui:composition>
     </body>

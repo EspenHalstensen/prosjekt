@@ -1,5 +1,5 @@
 -- Databasenavn: waplj_prosjekt
--- Brukernavn = passord = waplj
+-- Brukernavn = asd passord = waplj
 
 DROP TABLE trening;
 DROP TABLE kategori;

@@ -15,11 +15,11 @@
             <ui:define name ="content">
                 <table>
                     <tr><td>#{tekster.brukernavn}</td>
-                    <td><h:inputText value="#{treningsoktBehandler.brukernavn}"/></td></tr>
+                        <td><h:inputText value="#{innloggingsBean.enBruker.brukernavn}"/></td></tr>
                     <tr><td>#{tekster.passord}</td>
-                        <td><h:inputSecret value="#{treningsoktBehandler.passord}"/></td></tr>
+                        <td><h:inputSecret value="#{innloggingsBean.enBruker.passord}"/></td></tr>
                     <tr>
-                        <td><h:commandButton action="#{treningsoktBehandler.loggInn}" value="Logg inn"/></td>
+                        <td><h:commandButton action="#{innloggingsBean.loggInn()}" value="Logg inn"/></td>
                     </tr>
                 </table>
             </ui:define>

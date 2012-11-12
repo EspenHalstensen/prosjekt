@@ -1,3 +1,5 @@
+package problemdomenet;
+
 
 import java.io.Serializable;
 
