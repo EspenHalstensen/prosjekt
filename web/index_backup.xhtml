@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>#{tekster.tittel2}</title>
+    </h:head>
+    <body>
+        <ui:composition template="template/newTemplate.xhtml">
+            <ui:define name="top">
+                <h1>#{tekster.loginTittel}</h1> <!--fiks i tekster-->
+            </ui:define>
+            <ui:define name ="content">
+                <table>
+                    <tr><td>#{tekster.brukernavn}</td>
+                        <td><h:inputText value="#{login.enBruker.brukernavn}"/></td></tr>
+                    <tr><td>#{tekster.passord}</td>
+                        <td><h:inputSecret value="#{login.enBruker.passord}"/></td></tr>
+                    <tr>
+                        <td><h:commandButton action="#{login.loggInn()}" value="#{tekster.loginKnapp}"/></td>
+                        <td><h:commandButton action="bytt_passord" value="#{tekster.byttPassord}"/></td>
+                        
+                    </tr>
+                </table>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
+

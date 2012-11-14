@@ -7,30 +7,52 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
     <!-- Navigasjoner--> 
-    <navigation-rule>
-        <from-view-id>/index.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>innloggingOk</from-outcome>
-            <to-view-id>/registrert.xhtml</to-view-id>
+
+    <!--Protected area-->
+      <navigation-rule> 
+          <navigation-case>
+            <from-outcome>velkommen</from-outcome>
+            <to-view-id>/protected/welcome.xhtml</to-view-id>
         </navigation-case>
-         </navigation-rule>
-         <navigation-rule>
-        <from-view-id>/registrert.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>true</from-outcome>
+            <from-outcome>innloggingBrukerOk</from-outcome>
+            <to-view-id>/registrert.xhtml</to-view-id>
+        </navigation-case>7
+        <navigation-case>
+            <from-outcome>feil</from-outcome>
+            <to-view-id>/noauth.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>tilbake</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
         </navigation-case>
-    </navigation-rule>
-    
+         <navigation-case>
+            <from-outcome>bytt_passord</from-outcome>
+            <to-view-id>/byttPassord.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>passordOk</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>passordFeil</from-outcome>
+            <to-view-id>/byttPassord.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>  
     <!--Applikasjoner-->
     <application>
         <locale-config>
             <default-locale>no</default-locale>
             <supported-locale>en</supported-locale>
         </locale-config>
+        
         <resource-bundle>
-            <base-name>treningsoktTekst</base-name>
+            <base-name>tekst</base-name>
             <var>tekster</var>
+            </resource-bundle>
+            <resource-bundle>
+                <base-name>messages</base-name>
+                <var>msgs</var>
         </resource-bundle>
     </application>
 

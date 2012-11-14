@@ -5,5 +5,5 @@ package hjelpeklasser;
  */
 
 public enum Tilbakemelding {
-  innloggingOk, nyBrukerOk, epostGlemtPassordOk, feil
+  innloggingBrukerOk,innloggingAdminOk, nyBrukerOk, epostGlemtPassordOk, feil,passordFeil,passordOk
 }

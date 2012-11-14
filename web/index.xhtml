@@ -8,23 +8,15 @@
         <title>#{tekster.tittel2}</title>
     </h:head>
     <body>
-        <ui:composition template="newTemplate.xhtml">
+        <ui:composition template="template/newTemplate.xhtml">
             <ui:define name="top">
-                <h1>#{tekster.tittel}</h1>
+                <h1>#{tekster.velkommenTittel}</h1> <!--fiks i tekster-->
             </ui:define>
             <ui:define name ="content">
-                <table>
-                    <tr><td>#{tekster.brukernavn}</td>
-                        <td><h:inputText value="#{innloggingsBean.enBruker.brukernavn}"/></td></tr>
-                    <tr><td>#{tekster.passord}</td>
-                        <td><h:inputSecret value="#{innloggingsBean.enBruker.passord}"/></td></tr>
-                    <tr>
-                        <td><h:commandButton action="#{innloggingsBean.loggInn()}" value="Logg inn"/></td>
-                    </tr>
-                </table>
+                <a href ="faces/protected/welcome.xhtml">#{tekster.loginLink}</a>
+               
             </ui:define>
         </ui:composition>
-        
     </body>
 </html>
 

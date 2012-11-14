@@ -19,7 +19,7 @@ import hjelpeklasser.*;
 @Named
 @SessionScoped
 public class TreningsoktBehandler implements java.io.Serializable {
-    private oversikt oversikt = new oversikt();
+    private oversikt oversikt = new oversikt("anne","lol");
     private List<TreningsoktStatus> tabelldata = Collections.synchronizedList(new ArrayList<TreningsoktStatus>());
     private Treningsokt tempOkt = new Treningsokt();
     private String nyKategori = "";
@@ -31,6 +31,7 @@ public class TreningsoktBehandler implements java.io.Serializable {
     }
 
     public TreningsoktBehandler() {
+        System.out.println("tom konstruktør TreningsoktBehandler()");
     }
 
     public synchronized boolean getDatafins() {
@@ -113,7 +114,6 @@ public class TreningsoktBehandler implements java.io.Serializable {
 
 
         }
-        System.out.println("Utafor Oppdater() løkka");
         int indeks = tabelldata.size() - 1;
         while (indeks >= 0) {
             TreningsoktStatus ts = tabelldata.get(indeks);

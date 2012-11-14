@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+        <h:head><title>yea</title>
+        </h:head>
+        <h:body>
+            <ui:composition template="template/newTemplate.xhtml">
+                <ui:define name="content">
+                    <h3><h:outputText value="#{tekster.byttPassordTittel}"/></h3>
+                    <table>
+                        <tr>
+
+                            <td>#{tekster.brukernavn}</td>
+                        <td><h:selectOneMenu value="#{login.enBruker.brukernavn}">
+                                <f:selectItems value="#{login.brukere}" var="c"/>
+                            </h:selectOneMenu></td>
+                    </tr>
+                        <tr>
+                            <td>#{tekster.gammeltPassord}</td>
+                            <td> <h:inputSecret value="#{login.gammeltPassord}"/></td>
+                            <tr><td>#{tekster.nyttPassord}</td>
+                            <td> <h:inputSecret value="#{login.nyttPassord}"/></td></tr>
+                        </tr>
+                        <tr>
+                            <td><h:commandButton action="#{login.byttPassord()}" value="#{tekster.byttPassord}"/></td>
+                        </tr>
+                    </table>
+                </ui:define>
+            </ui:composition>
+        </h:body>
+</html>
+

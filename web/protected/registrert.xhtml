@@ -9,8 +9,8 @@
     </h:head>
     <body>
         <!-- Det som er registrert-->
-        <ui:composition template="newTemplate.xhtml">
-            <ui:define name ="content">
+        <ui:composition template="/template/newTemplate.xhtml">
+           <ui:define name ="content">
                 <h:dataTable value="#{treningsoktBehandler.tabelldata}" var="loc" rendered="#{treningsoktBehandler.datafins}">
                     <h:column>
                         <f:facet name="header" >
@@ -59,7 +59,7 @@
                     </h:column>
                 </h:dataTable>
             </ui:define>
-            <!-- Det du skal registrere-->
+            <!--Det du skal registrere-->
             <ui:define name="bottom">
                 <table>
                     <tr>
@@ -73,37 +73,7 @@
 
                     <tr>
                         <td>#{tekster.dato}</td> 
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+
                         <td><h:inputText value="#{treningsoktBehandler.tempOkt.dato}"/> <font color="black">#{treningsoktBehandler.tempOkt.datoformat}</font></td>
                     </tr>
                     <tr>
