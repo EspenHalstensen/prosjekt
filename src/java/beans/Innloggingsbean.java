@@ -126,6 +126,8 @@ class InnloggingsBean {
                 }else{
                     returverdi = Tilbakemelding.passordFeil;
                 }
+            }else{
+                returverdi = Tilbakemelding.passordFeil;
             }
 
         } catch (SQLException e) {
