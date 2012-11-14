@@ -6,4 +6,10 @@ Administrasjon:
 
 
 !Ryddighet i kode
-!
+
+
+Torsdag 14 november 2012:
+- fiks ei side for nytt passord feil, gammel passord feil og passord ok. Properties er fikset. Set enum klassen
+- fiks setTabellData
+- kommenter ut setTabellindex
+- ELLER MIGRER
