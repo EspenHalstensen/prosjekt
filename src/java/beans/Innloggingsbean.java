@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import java.util.regex.*;
 
 @Named("login")
 @RequestScoped
@@ -135,7 +136,9 @@ class InnloggingsBean {
     }
 
     public boolean sjekkPassord(String passord) {
-        char spesialTegn = '_';
+        String reg = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}$";
+        return passord.matches(reg);
+        /*char spesialTegn = '_';
         char[] passordChar = new char[nyttPassord.length()];
         if (passordChar != null) {
             for (int i = 0; i < passordChar.length; i++) {
@@ -147,7 +150,7 @@ class InnloggingsBean {
                 }
             }
         }
-        return false;
+        return false;*/
     }
 
    /* public ArrayList<String> getBrukere() {
