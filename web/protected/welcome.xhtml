@@ -10,9 +10,9 @@
     </h:head>
     <h:body>
         <h:form>
-            <ui:composition template="/template/newTemplate.xhtml">
+            <ui:composition template="/template/template.xhtml">
                 <ui:define name ="top">
-                    Velkommen #{login.name}
+                    Velkommen #{login.navn}
                 </ui:define>
                 <ui:define name="content">
                     <h:outputText value="#{tekster.informasjon}"/>

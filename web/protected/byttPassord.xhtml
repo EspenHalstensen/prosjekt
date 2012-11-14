@@ -7,16 +7,14 @@
         <h:head><title>yea</title>
         </h:head>
         <h:body>
-            <ui:composition template="/template/newTemplate.xhtml">
+            <ui:composition template="/template/template.xhtml">
                 <ui:define name="content">
                     <h3><h:outputText value="#{tekster.byttPassordTittel}"/></h3>
                     <table>
                         <tr>
 
                             <td>#{tekster.brukernavn}</td>
-                        <td><h:selectOneMenu value="#{login.enBruker.brukernavn}">
-                                <f:selectItems value="#{login.brukere}" var="c"/>
-                            </h:selectOneMenu></td>
+                            <td><h:outputText value="#{login.navn}"/></td>
                     </tr>
                         <tr>
                             <td>#{tekster.gammeltPassord}</td>
@@ -27,8 +25,6 @@
                         <tr>
                             <td><h:commandButton action="#{login.byttPassord()}" value="#{tekster.byttPassord}"/></td>
                             <td><h:commandButton action="tilbake" value="#{tekster.tilbakeKnapp}"/></td>
-                                                
-
                         </tr>
                     </table>
                 </ui:define>

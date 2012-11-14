@@ -19,20 +19,10 @@ import hjelpeklasser.*;
 @Named
 @SessionScoped
 public class TreningsoktBehandler implements java.io.Serializable {
-    private oversikt oversikt = new oversikt("anne","lol");
+    private oversikt oversikt = new oversikt(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
     private List<TreningsoktStatus> tabelldata = Collections.synchronizedList(new ArrayList<TreningsoktStatus>());
     private Treningsokt tempOkt = new Treningsokt();
     private String nyKategori = "";
-    private Bruker bruker;
-
-    public TreningsoktBehandler(Bruker bruker) {
-        oversikt = new oversikt(bruker.getBrukernavn(),bruker.getPassord());
-        this.bruker = bruker;
-    }
-
-    public TreningsoktBehandler() {
-        System.out.println("tom konstruktør TreningsoktBehandler()");
-    }
 
     public synchronized boolean getDatafins() {
         return (tabelldata.size() > 0);
@@ -62,14 +52,6 @@ public class TreningsoktBehandler implements java.io.Serializable {
 
     public synchronized String getBrukernavn() {
         return oversikt.getBrukernavn();
-    }
-
-    public synchronized void setBrukernavn(String b) {
-        oversikt.setBrukernavn(b);
-    }
-
-    public synchronized Bruker getBruker() {
-        return bruker;
     }
 
     public synchronized oversikt getOversikt() {

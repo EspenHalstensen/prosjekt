@@ -18,7 +18,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import hjelpeklasser.*;
-import java.util.ArrayList;
 import java.util.logging.Logger;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -30,30 +29,29 @@ class InnloggingsBean {
 
     @Resource(name = "jdbc/wapljressurs")
     DataSource ds;
-    private Bruker enBruker = new Bruker();
+    /*private Bruker enBruker = new Bruker();*/
     private Connection forbindelse;
     private PreparedStatement setning;
     private ResultSet res;
     //private DataSource ds;
     private InitialContext octx;
-    private String name;
+    private String navn;
      private static Logger logger = Logger.getLogger("com.corejsf");
     private String gammeltPassord = "";
     private String nyttPassord = "";
 
     public InnloggingsBean() throws NamingException {
         octx = new InitialContext();
-        //octx.bind("jdbc/wapljressurs", ds);
         ds = (DataSource) octx.lookup("java:comp/env/jdbc/wapljressurs");
     }
 
-    public String getName() {
-        if (name == null) {
+    public String getNavn() {
+        if (navn == null) {
             getUserData();
         }
-        return name == null ? "" : name;
+        return navn == null ? "" : navn;
     }
-    
+
     private void getUserData() {
       ExternalContext context 
          = FacesContext.getCurrentInstance().getExternalContext();
@@ -63,7 +61,7 @@ class InnloggingsBean {
          return;
       }
       HttpServletRequest request = (HttpServletRequest) requestObject;
-      name = request.getRemoteUser();
+      navn = request.getRemoteUser();
    }
 
     public String getNyttPassord() {
@@ -80,14 +78,6 @@ class InnloggingsBean {
 
     public void setGammeltPassord(String gammeltPassord) {
         this.gammeltPassord = gammeltPassord;
-    }
-
-    public Bruker getEnBruker() {
-        return enBruker;
-    }
-
-    public void setEnBruker(Bruker nyBruker) {
-        enBruker = nyBruker;
     }
 
     public String sjekkRolle(String brukernavn) {
@@ -112,11 +102,13 @@ class InnloggingsBean {
     public Tilbakemelding byttPassord() {
         Tilbakemelding returverdi = Tilbakemelding.passordFeil;
         try {
+            getUserData();
             aapneForbindelse();
             //Finner passordet til brukeren
             String passordet = "";
             setning = forbindelse.prepareStatement("select passord from bruker where brukernavn=?");
-            setning.setString(1, enBruker.getBrukernavn());
+            System.out.println("se her;"+navn);
+            setning.setString(1, navn);
             res = setning.executeQuery();
             res.next();
             passordet = res.getString(1);
@@ -126,7 +118,7 @@ class InnloggingsBean {
             if (sjekkPassord(passordet)) {
                 setning = forbindelse.prepareStatement("update bruker set passord = ? where brukernavn =?");
                 setning.setString(1, nyttPassord);
-                setning.setString(2, enBruker.getBrukernavn());
+                setning.setString(2, navn);
                 setning.executeUpdate();
                 returverdi = Tilbakemelding.passordOk;
             }
@@ -158,7 +150,7 @@ class InnloggingsBean {
         return false;
     }
 
-    public ArrayList<String> getBrukere() {
+   /* public ArrayList<String> getBrukere() {
         ArrayList<String> brukere = new ArrayList<String>();
         try {
             aapneForbindelse();
@@ -177,7 +169,7 @@ class InnloggingsBean {
             Opprydder.lukkSetning(setning);
         }
         return brukere;
-    }
+    }*/
 
     private void aapneForbindelse() {
         try {

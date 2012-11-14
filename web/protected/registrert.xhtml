@@ -9,7 +9,7 @@
     </h:head>
     <body>
         <!-- Det som er registrert-->
-        <ui:composition template="/template/newTemplate.xhtml">
+        <ui:composition template="/template/template.xhtml">
            <ui:define name ="content">
                 <h:dataTable value="#{treningsoktBehandler.tabelldata}" var="loc" rendered="#{treningsoktBehandler.datafins}">
                     <h:column>
@@ -103,7 +103,7 @@
                         <h:commandButton value="Legg til kategori" action="#{treningsoktBehandler.fiksKategorier()}"/></td>
                     </tr>
                     <tr>
-                        <td><h:commandButton value="Legg til kategori" action="#{treningsoktBehandler.fiksKategorier()}"/></td>
+                        <td><h:commandButton value="#{tekster.tilbakeKnapp}" action="tilbake"/></td>
                     </tr>
                 </table>
 
