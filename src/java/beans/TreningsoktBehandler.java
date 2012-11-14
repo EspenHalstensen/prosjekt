@@ -21,6 +21,7 @@ import hjelpeklasser.*;
 public class TreningsoktBehandler implements java.io.Serializable {
     private oversikt oversikt = new oversikt(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
     private List<TreningsoktStatus> tabelldata = Collections.synchronizedList(new ArrayList<TreningsoktStatus>());
+    private List<TreningsoktStatus> tabellIndex = Collections.synchronizedList(new ArrayList<TreningsoktStatus>());
     private Treningsokt tempOkt = new Treningsokt();
     private String nyKategori = "";
 
@@ -82,8 +83,16 @@ public class TreningsoktBehandler implements java.io.Serializable {
             temp.add(new TreningsoktStatus(t));
         }
         tabelldata = temp;
-
-
+    }
+    
+    @PostConstruct
+    public synchronized void setDatabaseIndeksTabell() {
+        System.out.println("setDatabaseIndeksTabell()");
+        List<TreningsoktStatus> temp = Collections.synchronizedList(new ArrayList<TreningsoktStatus>());
+        for (Treningsokt t : oversikt.sisteFemRegistrerteTreningsokter()) {
+            temp.add(new TreningsoktStatus(t));
+        }
+        tabellIndex = temp;
     }
 
     public synchronized void oppdater() {
