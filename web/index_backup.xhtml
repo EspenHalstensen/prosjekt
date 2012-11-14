@@ -13,14 +13,13 @@
                 <h1>#{tekster.loginTittel}</h1> <!--fiks i tekster-->
             </ui:define>
             <ui:define name ="content">
-                <table>
+                <table> 
                     <tr><td>#{tekster.brukernavn}</td>
                         <td><h:inputText value="#{login.enBruker.brukernavn}"/></td></tr>
                     <tr><td>#{tekster.passord}</td>
                         <td><h:inputSecret value="#{login.enBruker.passord}"/></td></tr>
                     <tr>
                         <td><h:commandButton action="#{login.loggInn()}" value="#{tekster.loginKnapp}"/></td>
-                        <td><h:commandButton action="bytt_passord" value="#{tekster.byttPassord}"/></td>
                         
                     </tr>
                 </table>

@@ -10,6 +10,9 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import problemdomenet.*;
 import hjelpeklasser.*;
+import javax.faces.context.ExternalContext;
+import javax.servlet.ServletRequest.*;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -19,12 +22,22 @@ import hjelpeklasser.*;
 @Named
 @SessionScoped
 public class TreningsoktBehandler implements java.io.Serializable {
-    private oversikt oversikt = new oversikt(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
+    private oversikt oversikt;
     private List<TreningsoktStatus> tabelldata = Collections.synchronizedList(new ArrayList<TreningsoktStatus>());
     private List<TreningsoktStatus> tabellIndex = Collections.synchronizedList(new ArrayList<TreningsoktStatus>());
     private Treningsokt tempOkt = new Treningsokt();
     private String nyKategori = "";
-
+    
+    public TreningsoktBehandler(){
+        Object requestObject = FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletRequest request = (HttpServletRequest) requestObject;
+        String navn = request.getRemoteUser();
+        if(navn==null){
+       oversikt = new oversikt();
+        }else{
+            oversikt = new oversikt(navn);
+        }
+    }
     public synchronized boolean getDatafins() {
         return (tabelldata.size() > 0);
     }
@@ -75,6 +88,12 @@ public class TreningsoktBehandler implements java.io.Serializable {
         return oversikt.kategorier();
     }
 
+    public synchronized List<TreningsoktStatus> getTabellIndex() {
+        return tabellIndex;
+    }
+    
+    
+/*
     @PostConstruct
     public synchronized void setDatabaseTabell() {
         System.out.println("setDatabaseTabell()");
@@ -83,7 +102,7 @@ public class TreningsoktBehandler implements java.io.Serializable {
             temp.add(new TreningsoktStatus(t));
         }
         tabelldata = temp;
-    }
+    }*/
     
     @PostConstruct
     public synchronized void setDatabaseIndeksTabell() {

@@ -11,30 +11,51 @@ import java.sql.*;
 public class oversikt {
 
     private String brukernavn = "";
-    private String passord = "";
     ArrayList<Treningsokt> treningsokter = new ArrayList<Treningsokt>();
     private ResultSet res = null;
     private PreparedStatement setning = null;
     private Connection forbindelse = null;
     private String databasedriver = "org.apache.derby.jdbc.ClientDriver";
     private String databasenavn = "jdbc:derby://localhost:1527/waplj_prosjekt;user=asd;password=waplj";
-    public String sqlTotalVarighet = "select sum(varighet) from trening;";
+    public String sqlTotalVarighet = "select sum(varighet) from trening";
 //Bruker med flest antall treningsminutter innenfor en spesifik treningsform
-    public String sqlViewTreningstidPaaKategoriOgPerson = "create view flestMinTreningPaaBrukernavnOgKategori(varighet,navn) as select sum(varighet), brukernavn from trening where kategorinavn  = '" + brukernavn + "' group by brukernavn;";
-    public String sqlTreningstidPaaKategoriOgPerson = "select * from flestMinTreningPaaBrukernavnOgKategori where varighet = (select max(varighet) from flestMinTreningPaaBrukernavnOgKategori);";
+    public String sqlViewTreningstidPaaKategoriOgPerson = "create view flestMinTreningPaaBrukernavnOgKategori(varighet,navn) as select sum(varighet), brukernavn from trening where kategorinavn  = '" + brukernavn + "' group by brukernavn";
+    public String sqlTreningstidPaaKategoriOgPerson = "select * from flestMinTreningPaaBrukernavnOgKategori where varighet = (select max(varighet) from flestMinTreningPaaBrukernavnOgKategori)";
 // bruker med flest treningsminutter overall
-    public String sqlViewTreningstidOverall = "create view flestMinTrening(varighet,navn) as select sum(varighet), brukernavn from trening group by brukernavn;";
-    public String sqlTreningstidOverall = "select * from flestMinTrening where varighet = (select max(varighet) from flestMinTrening);";
+    public String sqlViewTreningstidOverall = "create view flestMinTrening(varighet,navn) as select sum(varighet), brukernavn from trening group by brukernavn";
+    public String sqlTreningstidOverall = "select * from flestMinTrening where varighet = (select max(varighet) from flestMinTrening)";
 //De siste 5 registrerte treningsøktene
-    public String sqlSisteFemOkter = "select * from trening where oktnr > (select max(oktnr) from trening)-5;";
+    public String sqlSisteFemOkter = "select * from trening where oktnr > (select max(oktnr) from trening)-5";
 //Treningsøkter sortert etter total varighet
-    public String sqlViewFlestMinTreningPaaKategori = "create view flestMinTreningPaaKategori(varighet,kategorinavn) as select sum(varighet), kategorinavn from trening group by kategorinavn;";
-    public String sqlFlestMinTreningPaaKategori = "select * from flestMinTreningPaaKategori order by varighet desc;";
+    public String sqlViewFlestMinTreningPaaKategori = "create view flestMinTreningPaaKategori(varighet,kategorinavn) as select sum(varighet), kategorinavn from trening group by kategorinavn";
+    public String sqlFlestMinTreningPaaKategori = "select * from flestMinTreningPaaKategori order by varighet desc";
 
     public oversikt(String brukernavn) {
-        System.out.println("Oversikt(Brukernavn,Passord):" + brukernavn + " " + passord);
         this.brukernavn = brukernavn;
-        this.passord = passord;
+        try {
+            Class.forName(databasedriver);
+            forbindelse = DriverManager.getConnection(databasenavn);
+            setning = forbindelse.prepareStatement("select * from trening where brukernavn = ?");
+            setning.setString(1, brukernavn);
+            res = setning.executeQuery();
+            while (res.next()) {
+                int varighet = res.getInt("varighet");
+                String kategori = res.getString("kategorinavn");
+                String tekst = res.getString("tekst");
+                String dato = res.getString("dato");
+                //Treningsokt(int varighet, String kategori, String tekst)
+                treningsokter.add(new Treningsokt(varighet, kategori, tekst, dato));
+            }
+        } catch (Exception e) {
+            System.out.println("error under pålogging, konstruktør");
+        } finally {
+            Opprydder.lukkResSet(res);
+            Opprydder.lukkSetning(setning);
+            Opprydder.lukkForbindelse(forbindelse);
+        }
+    }
+    
+    public oversikt() {
         try {
             Class.forName(databasedriver);
             forbindelse = DriverManager.getConnection(databasenavn);
@@ -62,16 +83,8 @@ public class oversikt {
         this.brukernavn = brukernavn;
     }
 
-    public void setPassord(String passord) {
-        this.passord = passord;
-    }
-
     public String getBrukernavn() {
         return brukernavn;
-    }
-
-    public String getPassord() {
-        return passord;
     }
 
     public void stengForbindelse() {
@@ -241,7 +254,7 @@ public class oversikt {
 
     }
 
-    public int antTotalTreningsvarighet() {
+    /*public int antTotalTreningsvarighet() {
         // return -1 hvis fail eller tom database
         int retur = -1;
         try {
@@ -257,7 +270,7 @@ public class oversikt {
             stengForbindelse();
         }
         return retur;
-    }
+    }*/
 
     //Bruker oktnr (primærnøkkel)
     /*public void slettOkt(Treningsokt t) {
@@ -293,7 +306,7 @@ public class oversikt {
             a.add("" + res.getInt(1)); // varighet
             a.add(res.getString(2)); // kategori
         } catch (SQLException e) {
-            System.out.println("antTotalTreningsvarighet() \n " + e);
+            System.out.println("brukerMedFlestAntallTreningsminutter() \n " + e);
         } finally {
             Opprydder.lukkSetning(setning);
             stengForbindelse();
@@ -318,7 +331,7 @@ public class oversikt {
             a.add("" + res.getInt(1)); // varighet
             a.add(res.getString(2)); // kategori
         } catch (SQLException e) {
-            System.out.println("antTotalTreningsvarighet() \n " + e);
+            System.out.println("brukerMedFlestAntallTreningsminutterOverall() \n " + e);
         } finally {
             Opprydder.lukkSetning(setning);
             stengForbindelse();
@@ -335,6 +348,7 @@ public class oversikt {
             setning = forbindelse.prepareStatement(sqlSisteFemOkter);
             res = setning.executeQuery();
             while (res.next()) {
+                System.out.println("ER INNE I WHILE LØKKE");
                 //Treningsokt(int oktnr, int varighet, String kategori, String tekst,String dato)
                 //øktnr, dato, varighet, kategorinavn, tekst, brukernavn
                 int oktnr = res.getInt(1);
@@ -342,7 +356,7 @@ public class oversikt {
                 String kategori = res.getString(3);
                 String tekst = res.getString(4);
                 String dato = res.getString(5);
-
+                
                 Treningsokt temp = new Treningsokt(oktnr, varighet, dato, kategori, tekst);
                 a.add(temp);
             }

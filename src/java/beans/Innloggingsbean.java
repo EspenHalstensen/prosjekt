@@ -37,7 +37,7 @@ class InnloggingsBean {
     //private DataSource ds;
     private InitialContext octx;
     private String navn;
-     private static Logger logger = Logger.getLogger("com.corejsf");
+    private static Logger logger = Logger.getLogger("com.corejsf");
     private String gammeltPassord = "";
     private String nyttPassord = "";
 
@@ -54,16 +54,15 @@ class InnloggingsBean {
     }
 
     private void getUserData() {
-      ExternalContext context 
-         = FacesContext.getCurrentInstance().getExternalContext();
-      Object requestObject =  context.getRequest();
-      if (!(requestObject instanceof HttpServletRequest)) {
-         logger.severe("request object has type " + requestObject.getClass());
-         return;
-      }
-      HttpServletRequest request = (HttpServletRequest) requestObject;
-      navn = request.getRemoteUser();
-   }
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        Object requestObject = context.getRequest();
+        if (!(requestObject instanceof HttpServletRequest)) {
+            logger.severe("request object has type " + requestObject.getClass());
+            return;
+        }
+        HttpServletRequest request = (HttpServletRequest) requestObject;
+        navn = request.getRemoteUser();
+    }
 
     public String getNyttPassord() {
         return nyttPassord;
@@ -108,7 +107,7 @@ class InnloggingsBean {
             //Finner passordet til brukeren
             String passordet = "";
             setning = forbindelse.prepareStatement("select passord from bruker where brukernavn=?");
-            System.out.println("se her;"+navn);
+            System.out.println("se her;" + navn);
             setning.setString(1, navn);
             res = setning.executeQuery();
             res.next();
@@ -116,12 +115,17 @@ class InnloggingsBean {
             Opprydder.lukkSetning(setning);
 
             //HUSK Å SJEKK MOT KRITERIER OGSÅ
-            if (sjekkPassord(passordet)) {
-                setning = forbindelse.prepareStatement("update bruker set passord = ? where brukernavn =?");
-                setning.setString(1, nyttPassord);
-                setning.setString(2, navn);
-                setning.executeUpdate();
-                returverdi = Tilbakemelding.passordOk;
+            if (gammeltPassord.equals(passordet)) {
+                System.out.println("sjekkPassord(passordet)");
+                String reg = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}$";
+                if (nyttPassord.matches(reg)) {
+                    System.out.println();
+                    setning = forbindelse.prepareStatement("update bruker set passord = ? where brukernavn =?");
+                    setning.setString(1, nyttPassord);
+                    setning.setString(2, navn);
+                    setning.executeUpdate();
+                    returverdi = Tilbakemelding.passordOk;
+                }
             }
 
         } catch (SQLException e) {
@@ -134,46 +138,7 @@ class InnloggingsBean {
         System.out.println("SE HER:" + returverdi);
         return returverdi;
     }
-
-    public boolean sjekkPassord(String passord) {
-        String reg = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}$";
-        return passord.matches(reg);
-        /*char spesialTegn = '_';
-        char[] passordChar = new char[nyttPassord.length()];
-        if (passordChar != null) {
-            for (int i = 0; i < passordChar.length; i++) {
-                passordChar[i] = nyttPassord.charAt(i);
-                if (gammeltPassord.equals(passord)
-                        && passordChar.length <= 6
-                        && passordChar[i] == spesialTegn) {
-                    return true;
-                }
-            }
-        }
-        return false;*/
-    }
-
-   /* public ArrayList<String> getBrukere() {
-        ArrayList<String> brukere = new ArrayList<String>();
-        try {
-            aapneForbindelse();
-            setning = forbindelse.prepareStatement("select brukernavn from bruker");
-            res = setning.executeQuery();
-            while (res.next()) {
-                if (!(res.getString(1).equals(""))) {
-                    brukere.add(res.getString(1));
-                }
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Feil på getBrukere()\n" + e);
-        } finally {
-            Opprydder.lukkForbindelse(forbindelse);
-            Opprydder.lukkSetning(setning);
-        }
-        return brukere;
-    }*/
-
+    
     private void aapneForbindelse() {
         try {
             if (ds == null) {
