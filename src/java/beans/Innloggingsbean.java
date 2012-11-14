@@ -105,7 +105,7 @@ class InnloggingsBean {
             getUserData();
             aapneForbindelse();
             //Finner passordet til brukeren
-            String passordet = "";
+            String passordet;
             setning = forbindelse.prepareStatement("select passord from bruker where brukernavn=?");
             System.out.println("se her;" + navn);
             setning.setString(1, navn);
@@ -116,7 +116,7 @@ class InnloggingsBean {
 
             //HUSK Å SJEKK MOT KRITERIER OGSÅ
             if (gammeltPassord.equals(passordet)) {
-                String reg = "^(?=.*[0-9])(?=.*[#$%&@#^+=])[a-zA-Z0-9].{6,10}$";
+                String reg = "^(?=.*[0-9])(?=.*[`~!@#$%^&*()_+[\\]\\\\;\',./{}|:\"<>?])[a-zA-Z0-9].{6,10}$";
                 if (nyttPassord.matches(reg)) {
                     setning = forbindelse.prepareStatement("update bruker set passord = ? where brukernavn =?");
                     setning.setString(1, nyttPassord);
