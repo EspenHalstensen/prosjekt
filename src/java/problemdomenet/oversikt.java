@@ -357,7 +357,7 @@ public class oversikt {
                 String tekst = res.getString(4);
                 String dato = res.getString(5);
                 
-                Treningsokt temp = new Treningsokt(oktnr, varighet, dato, kategori, tekst);
+                Treningsokt temp = new Treningsokt(oktnr, varighet, kategori, tekst,dato);
                 a.add(temp);
             }
         } catch (SQLException e) {
