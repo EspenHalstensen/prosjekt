@@ -51,7 +51,7 @@
         </locale-config>
         
         <resource-bundle>
-            <base-name>tekst</base-name>
+            <base-name>properties.tekst</base-name>
             <var>tekster</var>
             </resource-bundle>
     </application>

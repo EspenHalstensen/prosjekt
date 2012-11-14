@@ -116,15 +116,15 @@ class InnloggingsBean {
 
             //HUSK Å SJEKK MOT KRITERIER OGSÅ
             if (gammeltPassord.equals(passordet)) {
-                System.out.println("sjekkPassord(passordet)");
-                String reg = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}$";
+                String reg = "^(?=.*[0-9])(?=.*[#$%&@#^+=])[a-zA-Z0-9].{6,10}$";
                 if (nyttPassord.matches(reg)) {
-                    System.out.println();
                     setning = forbindelse.prepareStatement("update bruker set passord = ? where brukernavn =?");
                     setning.setString(1, nyttPassord);
                     setning.setString(2, navn);
                     setning.executeUpdate();
                     returverdi = Tilbakemelding.passordOk;
+                }else{
+                    returverdi = Tilbakemelding.passordFeil;
                 }
             }
 
