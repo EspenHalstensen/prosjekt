@@ -41,4 +41,9 @@
    <security-role>
       <role-name>bruker</role-name>
    </security-role>
+   
+    <error-page>
+        <error-code>401</error-code>
+        <location>/index.xhtml</location>
+    </error-page>
 </web-app>

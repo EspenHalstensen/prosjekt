@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-   xmlns:h="http://java.sun.com/jsf/html"
-   xmlns:f="http://java.sun.com/jsf/core"
-   xmlns:ui="http://java.sun.com/jsf/facelets">
-<h:head>
-   <title>LOL TEST</title>
-</h:head>
-<h:body>
-   <h:form>
-      <h:panelGrid columns="2">
-         #{tekster.brukernavn}
-          <h:outputText value="#{login.name}" />
-      </h:panelGrid>
-   </h:form>
-</h:body>
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Welcome</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <ui:composition template="/template/newTemplate.xhtml">
+                <ui:define name ="top">
+                    Velkommen #{login.name}
+                </ui:define>
+                <ui:define name="content">
+                    <h:outputText value="#{tekster.informasjon}"/>
+                    <br></br>
+                    <h:graphicImage library="images" name="exercise.jpg" style="border:0px; margin-right: 1em;" height="200" width="220"/>
+                    <br></br>
+                </ui:define>
+                <ui:define name="bottom">
+                    <td><h:commandButton action="treningsDagbok" value="#{tekster.treningsDagbok}"/></td>
+                    <td><h:commandButton action="bytt_passord" value="#{tekster.byttPassord}"/></td>
+                </ui:define>
+            </ui:composition>
+        </h:form>
+    </h:body>
 </html>

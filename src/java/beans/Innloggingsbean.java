@@ -90,39 +90,6 @@ class InnloggingsBean {
         enBruker = nyBruker;
     }
 
-    public Tilbakemelding loggInn() {
-        aapneForbindelse();
-        Tilbakemelding returverdi = Tilbakemelding.feil;
-        try {
-            String brukernavn = enBruker.getBrukernavn();
-            String passord = enBruker.getPassord();
-            TreningsoktBehandler t = new TreningsoktBehandler(enBruker);
-            t.getOversikt().setBrukernavn(brukernavn);
-            t.getOversikt().setPassord(passord);
-
-
-            setning = forbindelse.prepareStatement("select * from bruker where brukernavn = ? and passord = ?");
-            setning.setString(1, brukernavn);
-            setning.setString(2, passord);
-            res = setning.executeQuery();
-
-            if (res.next() && sjekkRolle(brukernavn).equals("bruker")) {
-                returverdi = Tilbakemelding.innloggingBrukerOk;
-            } else if (res.next() && sjekkRolle(brukernavn).equals("admin")) {
-                returverdi = Tilbakemelding.innloggingAdminOk;
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Feil ved loggInn(): " + e);
-        } finally {
-            Opprydder.lukkResSet(res);
-            Opprydder.lukkSetning(setning);
-            Opprydder.lukkForbindelse(forbindelse);
-        }
-        return returverdi;
-
-    }
-
     public String sjekkRolle(String brukernavn) {
         String rolle = "";
         try {
