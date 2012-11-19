@@ -5,61 +5,46 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
-        <title>#{tekster.tittel2}</title>
+        <title>#{tekster.tittel}</title>
     </h:head>
     <h:body>
         <ui:composition template="/template/template.xhtml">
             <ui:define name="top">
-                <h1>#{tekster.velkommenTittel}</h1> <!--fiks i tekster-->
+                <h1>#{tekster.velkommenTittel}</h1>
             </ui:define>
             <ui:define name ="content">
                 <h:dataTable value="#{statistikk.tabellIndex}" var="loc">
+                    <h1>#{tekster.sisteFem}</h1>
                     <h:column>
                         <f:facet name="header" >
                             <h:outputText value="#{tekster.dato}"/>
                         </f:facet>
-                        <h:inputText value="#{loc.treningsokt.dato}"/>
-                        <f:facet name ="footer">
-                            <h:outputText value="#{tekster.antOkt}"/>
-                        </f:facet>
+                        <h:outputText value="#{loc.treningsokt.dato}"/>
                     </h:column>
+                    
                     <h:column>
                         <f:facet name="header" >
                             <h:outputText value="#{tekster.kategori}"/>
                         </f:facet>
-                        <h:selectOneMenu value="#{loc.treningsokt.kategori}">
-                        </h:selectOneMenu>
-
-                        <f:facet name="footer">
-                        </f:facet>
+                        <h:outputText value ="#{loc.treningsokt.kategori}"/>
                     </h:column>
+                    
                     <h:column>
                         <f:facet name="header" >
                             <h:outputText value="#{tekster.tekst}"/>
                         </f:facet>
-                        <h:inputText value="#{loc.treningsokt.tekst}"/>
-                        <f:facet name ="footer">
-                            <h:outputText value="Sum:"/>
-                        </f:facet>
+                        <h:outputText value="#{loc.treningsokt.tekst}"/>
                     </h:column>
+                    
                     <h:column>
                         <f:facet name="header" >
                             <h:outputText value="#{tekster.varighet}"/>
                         </f:facet>
-                        <h:inputText value="#{loc.treningsokt.varighet}"/>
-                        <f:facet name="footer">
-                        </f:facet>
+                        <h:outputText value="#{loc.treningsokt.varighet}"/>
                     </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{tekster.slett}"/>
-                        </f:facet>
-                        <h:selectBooleanCheckbox value="#{loc.skalslettes}"/>
-                    </h:column>
+                    
                 </h:dataTable>
-
                 <a href ="faces/protected/welcome.xhtml">#{tekster.loginLink}</a>
-
             </ui:define>
         </ui:composition>
     </h:body>

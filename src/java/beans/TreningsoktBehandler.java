@@ -110,14 +110,4 @@ public class TreningsoktBehandler implements java.io.Serializable {
             indeks--;
         }
     }
-
-    public void setNorsk() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.getViewRoot().setLocale(new Locale("no"));
-    }
-
-    public void setEngelsk() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.getViewRoot().setLocale(new Locale("en"));
-    }
 }

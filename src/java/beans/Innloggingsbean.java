@@ -28,13 +28,11 @@ import java.util.regex.*;
 @RequestScoped
 class InnloggingsBean {
 
-    @Resource(name = "jdbc/wapljressurs")
+    @Resource(name = "jdbc/waplj_prosjekt")
     DataSource ds;
-    /*private Bruker enBruker = new Bruker();*/
     private Connection forbindelse;
     private PreparedStatement setning;
     private ResultSet res;
-    //private DataSource ds;
     private InitialContext octx;
     private String navn;
     private static Logger logger = Logger.getLogger("com.corejsf");
@@ -44,7 +42,7 @@ class InnloggingsBean {
 
     public InnloggingsBean() throws NamingException {
         octx = new InitialContext();
-        ds = (DataSource) octx.lookup("java:comp/env/jdbc/wapljressurs");
+        ds = (DataSource) octx.lookup("java:comp/env/jdbc/waplj_prosjekt");
     }
 
     public String getNavn() {
