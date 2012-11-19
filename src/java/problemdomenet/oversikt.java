@@ -3,13 +3,21 @@ package problemdomenet;
 import hjelpeklasser.Opprydder;
 import java.util.ArrayList;
 import java.sql.*;
+import javax.annotation.Resource;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 /**
  *
- * @author havardb
+ * @author
+ * havardb
  */
 public class oversikt {
 
+    @Resource(name = "jdbc/wapljressurs")
+    DataSource ds;
+    private InitialContext octx;
     private String brukernavn = "";
     ArrayList<Treningsokt> treningsokter = new ArrayList<Treningsokt>();
     private ResultSet res = null;
@@ -29,13 +37,32 @@ public class oversikt {
 //Treningsøkter sortert etter total varighet
     public String sqlViewFlestMinTreningPaaKategori = "create view flestMinTreningPaaKategori(varighet,kategorinavn) as select sum(varighet), kategorinavn from trening group by kategorinavn";
     public String sqlFlestMinTreningPaaKategori = "select * from flestMinTreningPaaKategori order by varighet desc";
+//Konstruktør spørring    
+    public String sqlKonstruktor = "select * from trening where brukernavn = ?";
+//Legg til kategori
+    public String sqlLeggTilkategori = "insert into KATEGORI(KATEGORINAVN) values(?)";
+//Kategori spørring
+    public String sqlKategori = "select kategorinavn from kategori";
+//Oppdater Oppdater verdier
+    public String sqlOppdaterVerdier = "update Trening set dato = ?,varighet=?,kategorinavn=?,tekst=? where brukernavn=? and oktnr=?";
+//Registrere ny treningsøt
+    public String dato = "";
+    public String sqlRegistereNyTreningsokt = "INSERT INTO trening(dato, varighet, kategorinavn, tekst, brukernavn) VALUES(DATE('" + dato + "'),?,?,?,?)";
+//Finn sum spørring
+    public String sqlGetSum = "select sum(VARIGHET),count(OKTNR) from TRENING where BRUKERNAVN = ?";
+//Slett økt
+    public String sqlSlettOkt = "delete from Trening where oktnr=?";
+//Lage view
+    public String treningsform = "";
+    public String sqlView = "create view flestMinTreningPaaBrukernavnOgKategori(varighet,navn) as select sum(varighet), brukernavn from trening where kategorinavn  = '" + treningsform + "' group by brukernavn;";
 
     public oversikt(String brukernavn) {
         this.brukernavn = brukernavn;
+        setDatasource();
         try {
             Class.forName(databasedriver);
             forbindelse = DriverManager.getConnection(databasenavn);
-            setning = forbindelse.prepareStatement("select * from trening where brukernavn = ?");
+            setning = forbindelse.prepareStatement(sqlKonstruktor);
             setning.setString(1, brukernavn);
             res = setning.executeQuery();
             while (res.next()) {
@@ -47,19 +74,20 @@ public class oversikt {
                 treningsokter.add(new Treningsokt(varighet, kategori, tekst, dato));
             }
         } catch (Exception e) {
-            System.out.println("error under pålogging, konstruktør");
+            Opprydder.skrivMelding(e, "oversikt(String brukernavn)");
         } finally {
             Opprydder.lukkResSet(res);
             Opprydder.lukkSetning(setning);
             Opprydder.lukkForbindelse(forbindelse);
         }
     }
-    
+
     public oversikt() {
+        setDatasource();
         try {
             Class.forName(databasedriver);
             forbindelse = DriverManager.getConnection(databasenavn);
-            setning = forbindelse.prepareStatement("select * from trening where brukernavn = ?");
+            setning = forbindelse.prepareStatement(sqlKonstruktor);
             setning.setString(1, brukernavn);
             res = setning.executeQuery();
             while (res.next()) {
@@ -71,7 +99,7 @@ public class oversikt {
                 treningsokter.add(new Treningsokt(varighet, kategori, tekst, dato));
             }
         } catch (Exception e) {
-            System.out.println("error under pålogging, konstruktør");
+            Opprydder.skrivMelding(e, "oversikt()");
         } finally {
             Opprydder.lukkResSet(res);
             Opprydder.lukkSetning(setning);
@@ -92,14 +120,24 @@ public class oversikt {
         System.out.println("lukker databaseforbindelse\n");
     }
 
-    public void aapneForbindelse() {
+    private void aapneForbindelse() {
         try {
-            Class.forName(databasedriver);
-            forbindelse = DriverManager.getConnection(databasenavn);
-            System.out.println("Åpner dataforbindelse");
+            if (ds == null) {
+                throw new SQLException("Ingen data source");
+            }
+            forbindelse = ds.getConnection();
+            System.out.println("Tilkopling via datasource vellykket");
         } catch (Exception e) {
-            System.out.println("Trøbbel i aapneForbindelse()\n" + e);
-            Opprydder.lukkForbindelse(forbindelse);
+            Opprydder.skrivMelding(e, "aapneForbindelse");
+        }
+    }
+
+    private void setDatasource() {
+        try {
+            octx = new InitialContext();
+            ds = (DataSource) octx.lookup("java:comp/env/jdbc/wapljressurs");
+        } catch (NamingException e) {
+            Opprydder.skrivMelding(e, "setDatasource()");
         }
     }
 
@@ -121,11 +159,11 @@ public class oversikt {
     public void leggtilKategorier(String k) {
         try {
             aapneForbindelse();
-            setning = forbindelse.prepareStatement("insert into KATEGORI(KATEGORINAVN) values(?)");
+            setning = forbindelse.prepareStatement(sqlLeggTilkategori);
             setning.setString(1, k);
             setning.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Feil i leggtilKategorier()\n" + e);
+            Opprydder.skrivMelding(e, "leggtilKategorier()");
         } finally {
             Opprydder.lukkSetning(setning);
             stengForbindelse();
@@ -135,9 +173,8 @@ public class oversikt {
     public ArrayList<String> kategorier() {
         ArrayList<String> kategorier = new ArrayList<String>();
         try {
-            System.out.println("kategorier()");
             aapneForbindelse();
-            setning = forbindelse.prepareStatement("select kategorinavn from kategori");
+            setning = forbindelse.prepareStatement(sqlKategori);
             res = setning.executeQuery();
             while (res.next()) {
                 if (!(res.getString(1).equals(""))) {
@@ -146,7 +183,7 @@ public class oversikt {
             }
 
         } catch (SQLException e) {
-            System.out.println("Feil på kategorier()\n" + e);
+            Opprydder.skrivMelding(e,"kategorier()");
         } finally {
             stengForbindelse();
             Opprydder.lukkSetning(setning);
@@ -156,10 +193,9 @@ public class oversikt {
 
     public void endreVerdier(Treningsokt t) {
         try {
-            System.out.println("ENDREVERDIER()");
             aapneForbindelse();
             forbindelse.setAutoCommit(false); //unødvendig? Ikke mer enn en spørring/update
-            setning = forbindelse.prepareStatement("update Trening set dato = ?,varighet=?,kategorinavn=?,tekst=? where brukernavn=? and oktnr=?");
+            setning = forbindelse.prepareStatement(sqlOppdaterVerdier);
             setning.setString(1, t.getDato());
             setning.setInt(2, t.getVarighet());
             setning.setString(3, t.getKategori());
@@ -168,7 +204,7 @@ public class oversikt {
             setning.setInt(6, t.getOktnr());
             setning.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Feil i endreVerdier" + e);
+            Opprydder.skrivMelding(e,"endreVerdier(Treningsokt t");
         } finally {
             Opprydder.settAutoCommit(forbindelse);
             Opprydder.lukkSetning(setning);
@@ -178,10 +214,10 @@ public class oversikt {
 
     public void registrerNyOkt(Treningsokt t) {
         try {
-            System.out.println("registrerNyOkt()");
             aapneForbindelse();
             forbindelse.setAutoCommit(false);
-            setning = forbindelse.prepareStatement("INSERT INTO trening(dato, varighet, kategorinavn, tekst, brukernavn) VALUES(DATE('" + t.getDato() + "'),?,?,?,?)");
+            setning = forbindelse.prepareStatement(sqlRegistereNyTreningsokt);
+            dato = t.getDato();
             setning.setInt(1, t.getVarighet());
             setning.setString(2, t.getKategori());
             setning.setString(3, t.getTekst());
@@ -195,7 +231,7 @@ public class oversikt {
             treningsokter.add(t);
 
         } catch (Exception e) {
-            System.out.println("Error i registrer økt \n" + e);
+            Opprydder.skrivMelding(e,"registrerNyOkt(Treningsokt t");
 
         } finally {
             Opprydder.settAutoCommit(forbindelse);
@@ -214,17 +250,15 @@ public class oversikt {
         double sum = 0;
         int okter = -1;
         try {
-            System.out.println("getSum");
-            setning = forbindelse.prepareStatement("select sum(VARIGHET),count(OKTNR) from TRENING where BRUKERNAVN = ?");
+            setning = forbindelse.prepareStatement(sqlGetSum);
             setning.setString(1, brukernavn);
             res = setning.executeQuery();
             while (res.next()) {
                 sum = res.getDouble(1);
                 okter = res.getInt(2);
-                System.out.println("Total varighet/antall okter:\n" + (int) (sum / okter));
             }
         } catch (SQLException e) {
-            System.out.println("Feil i getSum()\n" + e);
+            Opprydder.skrivMelding(e,"getSum()");
         } finally {
             Opprydder.lukkSetning(setning);
             stengForbindelse();
@@ -239,14 +273,13 @@ public class oversikt {
     //Bruker oktnr (primærnøkkel)
     public void slettOkt(Treningsokt t) {
         try {
-            System.out.println("slettOkt");
             aapneForbindelse();
             treningsokter.remove(t);
-            setning = forbindelse.prepareStatement("delete from Trening where oktnr=?");
+            setning = forbindelse.prepareStatement(sqlSlettOkt);
             setning.setInt(1, t.getOktnr());
             setning.executeUpdate(); //kjører setningen og returnerer 0 (false), >0 (true)
         } catch (SQLException e) {
-            System.out.println("Feil i slettOkt\n" + e);
+            Opprydder.skrivMelding(e,"slettOkt(Treningsokt t)");
         } finally {
             Opprydder.lukkSetning(setning);
             stengForbindelse();
@@ -255,23 +288,22 @@ public class oversikt {
     }
 
     /*public int antTotalTreningsvarighet() {
-        // return -1 hvis fail eller tom database
-        int retur = -1;
-        try {
-            aapneForbindelse();
-            setning = forbindelse.prepareStatement(sqlTotalVarighet);
-            res = setning.executeQuery();
-            res.next();
-            retur = res.getInt(1);
-        } catch (SQLException e) {
-            System.out.println("antTotalTreningsvarighet() \n " + e);
-        } finally {
-            Opprydder.lukkSetning(setning);
-            stengForbindelse();
-        }
-        return retur;
-    }*/
-
+     // return -1 hvis fail eller tom database
+     int retur = -1;
+     try {
+     aapneForbindelse();
+     setning = forbindelse.prepareStatement(sqlTotalVarighet);
+     res = setning.executeQuery();
+     res.next();
+     retur = res.getInt(1);
+     } catch (SQLException e) {
+     System.out.println("antTotalTreningsvarighet() \n " + e);
+     } finally {
+     Opprydder.lukkSetning(setning);
+     stengForbindelse();
+     }
+     return retur;
+     }*/
     //Bruker oktnr (primærnøkkel)
     /*public void slettOkt(Treningsokt t) {
      try {
@@ -293,11 +325,11 @@ public class oversikt {
     //public String sqlViewTreningstidPaaKategoriOgPerson = "create view flestMinTreningPaaBrukernavnOgKategori(varighet,navn) as select sum(varighet), brukernavn from trening where kategorinavn  = '" + brukernavn + "' group by brukernavn;";
     //public String sqlTreningstidPaaKategoriOgPerson = "select * from flestMinTreningPaaBrukernavnOgKategori where varighet = (select max(varighet) from flestMinTreningPaaBrukernavnOgKategori);";
     public ArrayList brukerMedFlestAntallTreningsminutter(String treningsform) {
-        String view = "create view flestMinTreningPaaBrukernavnOgKategori(varighet,navn) as select sum(varighet), brukernavn from trening where kategorinavn  = '" + treningsform + "' group by brukernavn;";
+        this.treningsform = treningsform;
         ArrayList<String> a = new ArrayList<String>();
         try {
             aapneForbindelse();
-            setning = forbindelse.prepareStatement(view);
+            setning = forbindelse.prepareStatement(sqlView);
             setning.executeQuery();
             Opprydder.lukkSetning(setning);
             setning = forbindelse.prepareStatement(sqlTreningstidPaaKategoriOgPerson);
@@ -331,7 +363,7 @@ public class oversikt {
             a.add("" + res.getInt(1)); // varighet
             a.add(res.getString(2)); // kategori
         } catch (SQLException e) {
-            System.out.println("brukerMedFlestAntallTreningsminutterOverall() \n " + e);
+            Opprydder.skrivMelding(e,"brukerMedFlestAntallTreningsminutterOverall()");
         } finally {
             Opprydder.lukkSetning(setning);
             stengForbindelse();
@@ -340,6 +372,7 @@ public class oversikt {
     }
 // De siste 5 registrerte treningsøktene
 //public String sqlSisteFemOkter = "select * from trening where oktnr > (select max(oktnr) from trening)-5;";
+
     public ArrayList<Treningsokt> sisteFemRegistrerteTreningsokter() {
         //String view = "create view flestMinTreningPaaBrukernavnOgKategori(varighet,navn) as select sum(varighet), brukernavn from trening where kategorinavn  = '" + treningsform + "' group by brukernavn;";
         ArrayList<Treningsokt> a = new ArrayList<Treningsokt>();
@@ -348,7 +381,6 @@ public class oversikt {
             setning = forbindelse.prepareStatement(sqlSisteFemOkter);
             res = setning.executeQuery();
             while (res.next()) {
-                System.out.println("ER INNE I WHILE LØKKE");
                 //Treningsokt(int oktnr, int varighet, String kategori, String tekst,String dato)
                 //øktnr, dato, varighet, kategorinavn, tekst, brukernavn
                 int oktnr = res.getInt(1);
@@ -356,12 +388,11 @@ public class oversikt {
                 String kategori = res.getString(3);
                 String tekst = res.getString(4);
                 String dato = res.getString(5);
-                
-                Treningsokt temp = new Treningsokt(oktnr, varighet, kategori, tekst,dato);
+                Treningsokt temp = new Treningsokt(oktnr, varighet, kategori, tekst, dato);
                 a.add(temp);
             }
         } catch (SQLException e) {
-            System.out.println("antTotalTreningsvarighet() \n " + e);
+            Opprydder.skrivMelding(e,"sisteFemRegistrerteTreningsokter()");
         } finally {
             Opprydder.lukkSetning(setning);
             stengForbindelse();

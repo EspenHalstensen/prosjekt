@@ -40,6 +40,7 @@ class InnloggingsBean {
     private static Logger logger = Logger.getLogger("com.corejsf");
     private String gammeltPassord = "";
     private String nyttPassord = "";
+    private String nyttPassordBekreft = "";
 
     public InnloggingsBean() throws NamingException {
         octx = new InitialContext();
@@ -75,6 +76,13 @@ class InnloggingsBean {
     public String getGammeltPassord() {
         return gammeltPassord;
     }
+       public String getNyttPassordBekreft() {
+        return nyttPassordBekreft;
+    }
+
+    public void setNyttPassordBekreft(String nyttPassordBekreft) {
+        this.nyttPassordBekreft = nyttPassordBekreft;
+    }
 
     public void setGammeltPassord(String gammeltPassord) {
         this.gammeltPassord = gammeltPassord;
@@ -90,7 +98,7 @@ class InnloggingsBean {
             rolle = res.getString(1);
 
         } catch (SQLException e) {
-            System.out.println("feil i sjekkRolle():\n" + e);
+            Opprydder.skrivMelding(e, "sjekkRolle()");
         } finally {
             Opprydder.lukkResSet(res);
             Opprydder.lukkSetning(setning);
@@ -100,44 +108,43 @@ class InnloggingsBean {
     }
 
     public Tilbakemelding byttPassord() {
-        Tilbakemelding returverdi = Tilbakemelding.passordFeil;
+        Tilbakemelding returverdi = Tilbakemelding.feil;
         try {
             getUserData();
             aapneForbindelse();
             //Finner passordet til brukeren
-            String passordet;
+            String databasePassordet;
             setning = forbindelse.prepareStatement("select passord from bruker where brukernavn=?");
-            System.out.println("se her;" + navn);
             setning.setString(1, navn);
             res = setning.executeQuery();
             res.next();
-            passordet = res.getString(1);
+            databasePassordet = res.getString(1);
             Opprydder.lukkSetning(setning);
-
-            //HUSK Å SJEKK MOT KRITERIER OGSÅ
-            if (gammeltPassord.equals(passordet)) {
-                String reg = "^(?=.*[0-9])(?=.*[`~!@#$%^&*()_+[\\]\\\\;\',./{}|:\"<>?])[a-zA-Z0-9].{6,10}$";
-                if (nyttPassord.matches(reg)) {
+            
+             /* ekstra i kriterier om ønskelig: [\\]\\\\;\',      */
+            if (gammeltPassord.equals("") && nyttPassord.equals("")) {
+                returverdi = Tilbakemelding.passordFeilIngenInput;
+            } else if (gammeltPassord.equals(databasePassordet)) {
+                String reg = "^(?=.*[0-9])(?=.*[`~!@#$%^&*()_+./{}|:\"<>?])[a-zA-Z0-9].{6,10}$";
+                if (nyttPassord.matches(reg) && nyttPassord.equals(nyttPassordBekreft) && !nyttPassord.equals(databasePassordet)) {
                     setning = forbindelse.prepareStatement("update bruker set passord = ? where brukernavn =?");
                     setning.setString(1, nyttPassord);
                     setning.setString(2, navn);
                     setning.executeUpdate();
                     returverdi = Tilbakemelding.passordOk;
-                }else{
-                    returverdi = Tilbakemelding.passordFeil;
+                } else {
+                    returverdi = Tilbakemelding.passordFeilNytt;
                 }
-            }else{
-                returverdi = Tilbakemelding.passordFeil;
+            } else {
+                returverdi = Tilbakemelding.passordFeilGammelt;
             }
-
         } catch (SQLException e) {
-            System.out.println("Feil ved byttPassord(): " + e);
+            Opprydder.skrivMelding(e,"byttPassord()");
         } finally {
             Opprydder.lukkResSet(res);
             Opprydder.lukkSetning(setning);
             Opprydder.lukkForbindelse(forbindelse);
         }
-        System.out.println("SE HER:" + returverdi);
         return returverdi;
     }
     
@@ -149,7 +156,7 @@ class InnloggingsBean {
             forbindelse = ds.getConnection();
             System.out.println("Tilkopling via datasource vellykket");
         } catch (Exception e) {
-            System.out.println("Feil ved databasetilkopling: " + e);
+            Opprydder.skrivMelding(e, "aapneForbindelse()");
         }
     }
 }

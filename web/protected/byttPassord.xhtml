@@ -4,24 +4,24 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
-    <h:head><title>FIKS TEKST TITTEL</title>
+    <h:head><title>#{tekster.passordBytt}</title>
     </h:head>
     <h:body>
         <ui:composition template="/template/template.xhtml">
             <ui:define name="content">
                 <h3><h:outputText value="#{tekster.byttPassordTittel}"/></h3>
-                <h:outputText value='#{login.returnerHTML()}'/>
                 <table>
                     <tr>
-
                         <td>#{tekster.brukernavn}</td>
                         <td><h:outputText value="#{login.navn}"/></td>
                     </tr>
                     <tr>
-                        <td>#{tekster.gammeltPassord}</td>
+                        <td>#{tekster.passordGammelt}</td>
                         <td> <h:inputSecret value="#{login.gammeltPassord}"/></td>
-                        <tr><td>#{tekster.nyttPassord}</td>
-                            <td> <h:inputSecret value="#{login.nyttPassord}"/></td></tr>
+                        <tr><td>#{tekster.passordNytt}</td>
+                        <td> <h:inputSecret value="#{login.nyttPassord}"/></td></tr>
+                        <tr><td>#{tekster.passordBekreft}</td>
+                            <td> <h:inputSecret value="#{login.nyttPassordBekreft}"/></td></tr>
                     </tr>
                     <table>
                         <tr><td>#{tekster.passordKriterier}</td></tr>
@@ -29,8 +29,10 @@
                         <tr><td><li>#{tekster.passordTall}</li></td></tr>
                         <tr><td><li>#{tekster.passordSpesialtegn}</li></td></tr>
                         <tr><td><li>#{tekster.passordLengde}</li></td></tr>
+                        <tr><td><li>#{tekster.passordBekreftKriterier}</li></td></tr>
+                        <tr><td><li>#{tekster.passordIkkeLik}</li></td></tr>
                     </table>
-                    <tr><td><h:commandButton action="#{login.byttPassord()}" value="#{tekster.byttPassord}"/></td>
+                    <tr><td><h:commandButton action="#{login.byttPassord()}" value="#{tekster.passordBytt}"/></td>
                         <td><h:commandButton action="tilbake" value="#{tekster.tilbakeKnapp}"/></td></tr>
 
                 </table>

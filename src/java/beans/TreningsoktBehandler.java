@@ -22,22 +22,13 @@ import javax.servlet.http.HttpServletRequest;
 @Named
 @SessionScoped
 public class TreningsoktBehandler implements java.io.Serializable {
-    private oversikt oversikt;
+
+    private oversikt oversikt = new oversikt(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
     private List<TreningsoktStatus> tabelldata = Collections.synchronizedList(new ArrayList<TreningsoktStatus>());
-    private List<TreningsoktStatus> tabellIndex = Collections.synchronizedList(new ArrayList<TreningsoktStatus>());
     private Treningsokt tempOkt = new Treningsokt();
     private String nyKategori = "";
-    
-    public TreningsoktBehandler(){
-        Object requestObject = FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        HttpServletRequest request = (HttpServletRequest) requestObject;
-        String navn = request.getRemoteUser();
-        if(navn==null){
-       oversikt = new oversikt();
-        }else{
-            oversikt = new oversikt(navn);
-        }
-    }
+
+
     public synchronized boolean getDatafins() {
         return (tabelldata.size() > 0);
     }
@@ -88,12 +79,6 @@ public class TreningsoktBehandler implements java.io.Serializable {
         return oversikt.kategorier();
     }
 
-    public synchronized List<TreningsoktStatus> getTabellIndex() {
-        return tabellIndex;
-    }
-    
-    
-/*
     @PostConstruct
     public synchronized void setDatabaseTabell() {
         System.out.println("setDatabaseTabell()");
@@ -102,21 +87,10 @@ public class TreningsoktBehandler implements java.io.Serializable {
             temp.add(new TreningsoktStatus(t));
         }
         tabelldata = temp;
-    }*/
-    
-    @PostConstruct
-    public synchronized void setDatabaseIndeksTabell() {
-        System.out.println("setDatabaseIndeksTabell()");
-        List<TreningsoktStatus> temp = Collections.synchronizedList(new ArrayList<TreningsoktStatus>());
-        for (Treningsokt t : oversikt.sisteFemRegistrerteTreningsokter()) {
-            temp.add(new TreningsoktStatus(t));
-        }
-        tabellIndex = temp;
     }
 
     public synchronized void oppdater() {
         if (!tempOkt.getTekst().trim().equals("")) {
-            System.out.println("inn i Oppdater() løkka");
             Treningsokt nyOkt = new Treningsokt(tempOkt.getOktnr(), tempOkt.getVarighet(), tempOkt.getKategori(), tempOkt.getTekst(), tempOkt.getDato());
             oversikt.registrerNyOkt(nyOkt);
             tabelldata.add(new TreningsoktStatus(nyOkt));
