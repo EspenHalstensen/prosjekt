@@ -384,10 +384,11 @@ public class oversikt {
                 //Treningsokt(int oktnr, int varighet, String kategori, String tekst,String dato)
                 //øktnr, dato, varighet, kategorinavn, tekst, brukernavn
                 int oktnr = res.getInt(1);
-                int varighet = res.getInt(2);
-                String kategori = res.getString(3);
-                String tekst = res.getString(4);
-                String dato = res.getString(5);
+                String dato = res.getDate(2).toString();
+                int varighet = res.getInt(3);
+                String kategori = res.getString(4);
+                String tekst = res.getString(5);
+                
                 Treningsokt temp = new Treningsokt(oktnr, varighet, kategori, tekst, dato);
                 a.add(temp);
             }
