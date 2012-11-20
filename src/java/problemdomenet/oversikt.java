@@ -75,12 +75,13 @@ public class oversikt implements Serializable{
             setning.setString(1, brukernavn);
             res = setning.executeQuery();
             while (res.next()) {
+                int oktnr = res.getInt("oktnr");
                 int varighet = res.getInt("varighet");
                 String kategori = res.getString("kategorinavn");
                 String tekst = res.getString("tekst");
                 String dato = res.getString("dato");
-                //Treningsokt(int varighet, String kategori, String tekst)
-                treningsokter.add(new Treningsokt(varighet, kategori, tekst, dato));
+                //Treningsokt(int oktnr, int varighet, String kategori, String tekst,String dato)
+                treningsokter.add(new Treningsokt(oktnr,varighet, kategori, tekst, dato));
             }
         } catch (Exception e) {
             Opprydder.skrivMelding(e, "oversikt(String brukernavn)");
@@ -94,7 +95,7 @@ public class oversikt implements Serializable{
  * Tom konstruktør blir opprettet for å lage top5-lista i innloggingsvinduet
  */
     public oversikt() {
-        setDatasource();/*
+        setDatasource();
         try {
             Class.forName(databasedriver);
             forbindelse = DriverManager.getConnection(databasenavn);
@@ -102,11 +103,12 @@ public class oversikt implements Serializable{
             setning.setString(1, brukernavn);
             res = setning.executeQuery();
             while (res.next()) {
+                int oktnr = res.getInt("oktnr");
                 int varighet = res.getInt("varighet");
                 String kategori = res.getString("kategorinavn");
                 String tekst = res.getString("tekst");
                 String dato = res.getString("dato");
-                treningsokter.add(new Treningsokt(varighet, kategori, tekst, dato));
+                treningsokter.add(new Treningsokt(oktnr,varighet, kategori, tekst, dato));
             }
         } catch (Exception e) {
             Opprydder.skrivMelding(e, "oversikt()");
@@ -114,13 +116,13 @@ public class oversikt implements Serializable{
             Opprydder.lukkResSet(res);
             Opprydder.lukkSetning(setning);
             Opprydder.lukkForbindelse(forbindelse);
-        }*/
+        }
     }
-/*
+
     public void setBrukernavn(String brukernavn) {
         this.brukernavn = brukernavn;
     }
-*/
+
     public String getBrukernavn() {
         return brukernavn;
     }
@@ -164,7 +166,7 @@ public class oversikt implements Serializable{
     public ArrayList<Treningsokt> getAlleOkter() {
         return treningsokter;
     }
-    /*
+    
     public Treningsokt getAlleOkterEnMnd(String dato) { //"dd/MM/yyyy"
         if (treningsokter != null) {
             for (Treningsokt t : treningsokter) {
@@ -174,7 +176,7 @@ public class oversikt implements Serializable{
             }
         }
         return null;
-    }*/
+    }
     
     /**
      * 
@@ -326,10 +328,11 @@ public class oversikt implements Serializable{
     public void slettOkt(Treningsokt t) {
         try {
             aapneForbindelse();
-            treningsokter.remove(t);
+            System.out.println("SLETT ØKT nr: "+ t.getOktnr());
             setning = forbindelse.prepareStatement(sqlSlettOkt);
             setning.setInt(1, t.getOktnr());
             setning.executeUpdate(); //kjører setningen og returnerer 0 (false), >0 (true)
+            treningsokter.remove(t);
         } catch (SQLException e) {
             Opprydder.skrivMelding(e,"slettOkt(Treningsokt t)");
         } finally {
