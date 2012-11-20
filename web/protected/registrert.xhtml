@@ -74,16 +74,16 @@
                     <tr>
                         <td>#{tekster.dato}</td> 
 
-                        <td><h:inputText value="#{treningsoktBehandler.tempOkt.dato}"/> <font color="black">#{treningsoktBehandler.tempOkt.datoformat}</font></td>
+                        <td><h:inputText value="#{treningsoktBehandler.tempOkt.dato}" required="true"/> <font color="black">#{treningsoktBehandler.tempOkt.datoformat}</font></td>
                     </tr>
                     <tr>
                         <td>#{tekster.varighet}</td> 
-                        <td><h:inputText value="#{treningsoktBehandler.tempOkt.varighet}"/> <font color="black">#{tekster.minutter}</font></td>
+                        <td><h:inputText value="#{treningsoktBehandler.tempOkt.varighet}" required="true"/> <font color="black">#{tekster.minutter}</font></td>
                     </tr>
                     <tr>
 
                         <td>#{tekster.kategori}</td>
-                        <td><h:selectOneMenu value="#{treningsoktBehandler.tempOkt.kategori}">
+                        <td><h:selectOneMenu value="#{treningsoktBehandler.tempOkt.kategori}" required="true">
                                 <f:selectItems value="#{treningsoktBehandler.kategorier}" var="c"/>
                             </h:selectOneMenu></td>
                     </tr>
@@ -106,7 +106,8 @@
                         <td><h:commandButton value="#{tekster.tilbakeKnapp}" action="tilbake"/></td>
                     </tr>
                 </table>
-
+                <p></p>
+                <h:messages style="color:red"/>
             </ui:define>
         </ui:composition>
     </body>

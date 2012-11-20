@@ -23,6 +23,12 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.*;
+import javax.mail.Message.RecipientType;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 @Named("login")
 @RequestScoped
@@ -51,7 +57,7 @@ class InnloggingsBean {
         }
         return navn == null ? "" : navn;
     }
-
+     
     private void getUserData() {
         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
         Object requestObject = context.getRequest();
@@ -157,4 +163,5 @@ class InnloggingsBean {
             Opprydder.skrivMelding(e, "aapneForbindelse()");
         }
     }
+    
 }

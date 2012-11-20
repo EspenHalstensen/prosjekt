@@ -18,7 +18,7 @@ import javax.sql.DataSource;
  */
 public class oversikt implements Serializable{
 
-    @Resource(name = "jdbc/waplj_prosjekt")
+    @Resource(name = "waplj_prosjekt")
     DataSource ds;
     private InitialContext octx;
     private String brukernavn = "";
