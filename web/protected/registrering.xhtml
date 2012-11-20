@@ -22,12 +22,13 @@
 
                     <tr>
                         <td>#{tekster.dato}:</td> 
-
-                        <td><h:inputText id="#{tekster.dato}" value="#{treningsoktBehandler.tempOkt.dato}" /> <font color="black">#{treningsoktBehandler.tempOkt.datoformat}</font></td>
+                        <td><h:inputText id="#{tekster.dato}" value="#{treningsoktBehandler.tempOkt.dato}" required="true"> <font color="black">#{treningsoktBehandler.tempOkt.datoformat}</font>
+                            <f:convertDateTime pattern="#{tekster.datoformat}"/>
+                            </h:inputText></td>
                     </tr>
                     <tr>
                         <td>#{tekster.varighet}:</td> 
-                        <td><h:inputText id="#{tekster.varighet}" value="#{treningsoktBehandler.tempOkt.varighet}"  /> <font color="black">#{tekster.minutter}</font></td>
+                        <td><h:inputText id="#{tekster.varighet}" value="#{treningsoktBehandler.tempOkt.varighet}" required="true"/> <font color="black">#{tekster.minutter}</font></td>
                     </tr>
                     <tr>
 
@@ -48,10 +49,15 @@
                             <td> <h:commandButton value="#{tekster.seAlle}" action="seAlle" immediate="true"/></td>
                             <td> <h:commandButton value="#{tekster.tilbakeKnapp}" action="tilbakeRegistrering" immediate="true"/></td>
 
-                            
+
                         </td></tr></table>
                 <p></p>
-                <h:messages style="color:red"/>
+                <p><ul style="list-style:none">
+                        <li><h:message for="#{tekster.varighet}" style="color:red"/></li>
+                        <li><h:message for="#{tekster.dato}" style="color:red"/></li>
+                        <li><h:message for="#{tekster.tekst}" style="color:red"/></li>
+                    </ul></p>
+
             </ui:define>
         </ui:composition>   
     </h:body>
