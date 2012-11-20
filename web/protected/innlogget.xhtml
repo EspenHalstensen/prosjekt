@@ -12,7 +12,7 @@
         <h:form>
             <ui:composition template="/template/template.xhtml">
                 <ui:define name ="top">
-                    Velkommen #{login.navn}
+                    #{tekster.velkommen} #{login.brukernavn}
                 </ui:define>
                 <ui:define name="content">
                     <h:outputText value="#{tekster.informasjon}"/>

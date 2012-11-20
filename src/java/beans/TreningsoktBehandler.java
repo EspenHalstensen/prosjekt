@@ -28,63 +28,61 @@ public class TreningsoktBehandler implements java.io.Serializable {
     private Treningsokt tempOkt = new Treningsokt();
     private String nyKategori = "";
 
-
-    public synchronized boolean getDatafins() {
+    public boolean getDatafins() {
         return (tabelldata.size() > 0);
     }
-    /* EGENSKAP: tabelldata */
 
-    public synchronized String getNyKategori() {
+    public String getNyKategori() {
         return nyKategori;
     }
 
-    public synchronized void setNyKategori(String nyKategori) {
+    public void setNyKategori(String nyKategori) {
         this.nyKategori = nyKategori;
     }
 
-    public synchronized void fiksKategorier() {
+    public void fiksKategorier() {
         oversikt.leggtilKategorier(nyKategori);
     }
 
-    public synchronized List<TreningsoktStatus> getTabelldata() {
+    public List<TreningsoktStatus> getTabelldata() {
         return tabelldata;
     }
 
     /* EGENSKAP: tempTrans*/ // for midlertidig lagring av transaksjonsdata
-    public synchronized Treningsokt getTempOkt() {
+    public Treningsokt getTempOkt() {
         return tempOkt;
     }
 
-    public synchronized String getBrukernavn() {
+    public String getBrukernavn() {
         return oversikt.getBrukernavn();
     }
 
-    public synchronized oversikt getOversikt() {
+    public oversikt getOversikt() {
         return oversikt;
     }
 
-    public synchronized void setTempOkt(Treningsokt nyTempOkt) {
+    public void setTempOkt(Treningsokt nyTempOkt) {
         tempOkt = nyTempOkt;
     }
 
-    public synchronized double getSum() {
+    public double getSum() {
         return oversikt.getSum();
     }
 
-    public synchronized int getLopenummer() {
+    public int getLopenummer() {
         return oversikt.getAntOkter() + 1;
     }
-    
-    public synchronized int getAntOkter(){
+
+    public int getAntOkter() {
         return oversikt.getAntOkter();
     }
 
-    public synchronized ArrayList<String> getKategorier() {
+    public ArrayList<String> getKategorier() {
         return oversikt.kategorier();
     }
 
     @PostConstruct
-    public synchronized void setDatabaseTabell() {
+    public void setDatabaseTabell() {
         System.out.println("setDatabaseTabell()");
         List<TreningsoktStatus> temp = Collections.synchronizedList(new ArrayList<TreningsoktStatus>());
         for (Treningsokt t : oversikt.getAlleOkter()) {
@@ -93,24 +91,28 @@ public class TreningsoktBehandler implements java.io.Serializable {
         tabelldata = temp;
     }
 
-    public synchronized void oppdater() {
+    public void registrer() {
         if (!tempOkt.getTekst().trim().equals("")) {
             Treningsokt nyOkt = new Treningsokt(tempOkt.getOktnr(), tempOkt.getVarighet(), tempOkt.getKategori(), tempOkt.getTekst(), tempOkt.getDato());
             oversikt.registrerNyOkt(nyOkt);
             tabelldata.add(new TreningsoktStatus(nyOkt));
             tempOkt.nullstill();
-
-
         }
+    }
+
+    public void oppdater() {
         int indeks = tabelldata.size() - 1;
+        System.out.println("se her: "+indeks);
         while (indeks >= 0) {
             TreningsoktStatus ts = tabelldata.get(indeks);
+            System.out.println(ts.getTreningsokt().getTekst()+" ; se her2 : "+ts.getSkalslettes() +"indeks:"+indeks);
             if (ts.getSkalslettes()) { // sletter data, først i ...
                 oversikt.slettOkt(ts.getTreningsokt());// ... problemdomeneobj.
                 tabelldata.remove(indeks); // deretter i presentasjonsobjektet
-            } else {
-                oversikt.endreVerdier(ts.getTreningsokt());
-            }
+            } //else {
+               // System.out.println("endre verdier:"+ts.getTreningsokt().getTekst());
+               // oversikt.endreVerdier(ts.getTreningsokt());
+            //}
             indeks--;
         }
     }

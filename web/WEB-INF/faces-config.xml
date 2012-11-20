@@ -12,11 +12,11 @@
       <navigation-rule> 
           <navigation-case>
             <from-outcome>velkommen</from-outcome>
-            <to-view-id>/protected/welcome.xhtml</to-view-id>
+            <to-view-id>/protected/innlogget.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-outcome>innloggingBrukerOk</from-outcome>
-            <to-view-id>/registrert.xhtml</to-view-id>
+            <to-view-id>/registrering.xhtml</to-view-id>
         </navigation-case>7
         <navigation-case>
             <from-outcome>feil</from-outcome>
@@ -24,7 +24,7 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>tilbake</from-outcome>
-            <to-view-id>/protected/welcome.xhtml</to-view-id>
+            <to-view-id>/protected/innlogget.xhtml</to-view-id>
         </navigation-case>
          <navigation-case>
             <from-outcome>bytt_passord</from-outcome>
@@ -32,7 +32,7 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>passordOk</from-outcome>
-            <to-view-id>/protected/welcome.xhtml</to-view-id>
+            <to-view-id>/protected/innlogget.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-outcome>passordFeil</from-outcome>
@@ -40,7 +40,7 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>treningsDagbok</from-outcome>
-            <to-view-id>/protected/registrert.xhtml</to-view-id>
+            <to-view-id>/protected/registrering.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>  
     <!--Applikasjoner-->

@@ -11,21 +11,20 @@
         <title>#{tekster.tittel}</title>
     </h:head>
     <h:body>
-        <h:form>
+        <h:form id="siteCheck">
             <div class="drop-shadow curved center_content" id="wrapper">
                 <div id="top">
-                    <h:commandLink action="#{sprak.setEngelsk()}">
-                            <h:graphicImage library="images" name="engelsk.jpg" style="border:0px; margin-right: 1em;" height="20" width="30"/>
-                        </h:commandLink>
-                    <h:commandLink action="#{sprak.setNorsk()}">
-                            <h:graphicImage library="images" name="norsk.jpg" style="border:0px; margin-right: 1em;" height="20" width="30"/>
-                        </h:commandLink>
-                    <ui:insert name="top"></ui:insert>
+                    <h:commandLink action="#{sprak.setEngelsk()}" immediate="true">
+                        <h:graphicImage library="images" name="engelsk.jpg" style="border:0px; margin-right: 1em;" height="20" width="30"/>
+                    </h:commandLink>
+                    <h:commandLink action="#{sprak.setNorsk()}" immediate="true">
+                        <h:graphicImage library="images" name="norsk.jpg" style="border:0px; margin-right: 1em;" height="20" width="30"/>
+                    </h:commandLink>
                 </div>
+                <ui:insert name="top"></ui:insert>
                 <div id="content" class="center_content">
                     <ui:insert name="content"></ui:insert>
                 </div>
-
                 <div id="bottom">
                     <ui:insert name="bottom">#{tekster.kopirett}&copy;</ui:insert>
                 </div>

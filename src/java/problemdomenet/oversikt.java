@@ -48,9 +48,6 @@ public class oversikt implements Serializable{
     public String sqlKategori = "select kategorinavn from kategori";
 //Oppdater Oppdater verdier
     public String sqlOppdaterVerdier = "update Trening set dato = ?,varighet=?,kategorinavn=?,tekst=? where brukernavn=? and oktnr=?";
-//Registrere ny treningsøt
-    public String dato ="";
-    public String sqlRegistereNyTreningsokt = "INSERT INTO trening(dato, varighet, kategorinavn, tekst, brukernavn) VALUES(DATE('" + dato + "'),?,?,?,?)";
 //Finn sum spørring
     public String sqlGetSum = "select sum(VARIGHET),count(OKTNR) from TRENING where BRUKERNAVN = ?";
 //Slett økt
@@ -219,10 +216,8 @@ public class oversikt implements Serializable{
         try {
             aapneForbindelse();
             forbindelse.setAutoCommit(false);
-            dato = t.getDato();
-            System.out.println("se her:"+dato);
-            System.out.println(sqlRegistereNyTreningsokt);
-            setning = forbindelse.prepareStatement(sqlRegistereNyTreningsokt);
+            String dato = t.getDato();
+            setning = forbindelse.prepareStatement("INSERT INTO trening(dato, varighet, kategorinavn, tekst, brukernavn) VALUES(DATE('" + dato + "'),?,?,?,?)");
             setning.setInt(1, t.getVarighet());
             setning.setString(2, t.getKategori());
             setning.setString(3, t.getTekst());

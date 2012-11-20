@@ -11,11 +11,11 @@
         <from-view-id>/registrere.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>send</from-outcome>
-            <to-view-id>/registrert.xhtml</to-view-id>
+            <to-view-id>/registrering.xhtml</to-view-id>
         </navigation-case>
          </navigation-rule>
          <navigation-rule>
-        <from-view-id>/registrert.xhtml</from-view-id>
+        <from-view-id>/registrering.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>send</from-outcome>
             <to-view-id>/registrere.xhtml</to-view-id>

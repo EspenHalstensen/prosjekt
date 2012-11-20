@@ -10,6 +10,7 @@ package beans;
  * 11.
  *
  */
+import problemdomenet.Bruker;
 import java.sql.*;
 import javax.annotation.Resource;
 import javax.enterprise.context.RequestScoped;
@@ -40,116 +41,43 @@ class InnloggingsBean {
     private PreparedStatement setning;
     private ResultSet res;
     private InitialContext octx;
-    private String navn;
-    private static Logger logger = Logger.getLogger("com.corejsf");
-    private String gammeltPassord = "";
-    private String nyttPassord = "";
-    private String nyttPassordBekreft = "";
+    private Bruker bruker = new Bruker();
 
     public InnloggingsBean() throws NamingException {
         octx = new InitialContext();
         ds = (DataSource) octx.lookup("java:comp/env/jdbc/waplj_prosjekt");
     }
-
-    public String getNavn() {
-        if (navn == null) {
-            getUserData();
-        }
-        return navn == null ? "" : navn;
-    }
-     
-    private void getUserData() {
-        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-        Object requestObject = context.getRequest();
-        if (!(requestObject instanceof HttpServletRequest)) {
-            logger.severe("request object has type " + requestObject.getClass());
-            return;
-        }
-        HttpServletRequest request = (HttpServletRequest) requestObject;
-        navn = request.getRemoteUser();
+    
+    public String getBrukernavn(){
+        return bruker.getBrukernavn();
     }
 
     public String getNyttPassord() {
-        return nyttPassord;
+        return bruker.getNyttPassord();
     }
 
     public void setNyttPassord(String nyttPassord) {
-        this.nyttPassord = nyttPassord;
+        bruker.setNyttPassord(nyttPassord);
     }
 
     public String getGammeltPassord() {
-        return gammeltPassord;
+        return bruker.getGammeltPassord();
     }
        public String getNyttPassordBekreft() {
-        return nyttPassordBekreft;
+        return bruker.getNyttPassordBekreft();
     }
 
     public void setNyttPassordBekreft(String nyttPassordBekreft) {
-        this.nyttPassordBekreft = nyttPassordBekreft;
+        bruker.setNyttPassordBekreft(nyttPassordBekreft);
     }
 
     public void setGammeltPassord(String gammeltPassord) {
-        this.gammeltPassord = gammeltPassord;
+        bruker.setGammeltPassord(gammeltPassord);
     }
-
-    public String sjekkRolle(String brukernavn) {
-        String rolle = "";
-        try {
-            setning = forbindelse.prepareStatement("select rolle from rolle where brukernavn=?");
-            setning.setString(1, brukernavn);
-            res = setning.executeQuery();
-            res.next();
-            rolle = res.getString(1);
-
-        } catch (SQLException e) {
-            Opprydder.skrivMelding(e, "sjekkRolle()");
-        } finally {
-            Opprydder.lukkResSet(res);
-            Opprydder.lukkSetning(setning);
-            Opprydder.lukkForbindelse(forbindelse);
-        }
-        return rolle;
-    }
-
-    public Tilbakemelding byttPassord() {
-        Tilbakemelding returverdi = Tilbakemelding.feil;
-        try {
-            getUserData();
-            aapneForbindelse();
-            //Finner passordet til brukeren
-            String databasePassordet;
-            setning = forbindelse.prepareStatement("select passord from bruker where brukernavn=?");
-            setning.setString(1, navn);
-            res = setning.executeQuery();
-            res.next();
-            databasePassordet = res.getString(1);
-            Opprydder.lukkSetning(setning);
-            
-             /* ekstra i kriterier om ønskelig: [\\]\\\\;\',      */
-            if (gammeltPassord.equals("") && nyttPassord.equals("")) {
-                returverdi = Tilbakemelding.passordFeilIngenInput;
-            } else if (gammeltPassord.equals(databasePassordet)) {
-                String reg = "^(?=.*[0-9])(?=.*[`~!@#$%^&*()_+./{}|:\"<>?])[a-zA-Z0-9].{6,10}$";
-                if (nyttPassord.matches(reg) && nyttPassord.equals(nyttPassordBekreft) && !nyttPassord.equals(databasePassordet)) {
-                    setning = forbindelse.prepareStatement("update bruker set passord = ? where brukernavn =?");
-                    setning.setString(1, nyttPassord);
-                    setning.setString(2, navn);
-                    setning.executeUpdate();
-                    returverdi = Tilbakemelding.passordOk;
-                } else {
-                    returverdi = Tilbakemelding.passordFeilNytt;
-                }
-            } else {
-                returverdi = Tilbakemelding.passordFeilGammelt;
-            }
-        } catch (SQLException e) {
-            Opprydder.skrivMelding(e,"byttPassord()");
-        } finally {
-            Opprydder.lukkResSet(res);
-            Opprydder.lukkSetning(setning);
-            Opprydder.lukkForbindelse(forbindelse);
-        }
-        return returverdi;
+    
+    public Tilbakemelding byttPassord(){
+        aapneForbindelse();
+        return bruker.byttPassord(setning, res, forbindelse);
     }
     
     private void aapneForbindelse() {
