@@ -15,7 +15,14 @@ public class Treningsokt{
     private String kategori;
     private String tekst;
     
-    
+    /**
+     * 
+     * @param oktnr
+     * @param varighet
+     * @param kategori
+     * @param tekst
+     * @param dato 
+     */
     public Treningsokt(int oktnr, int varighet, String kategori, String tekst,String dato){
         this.varighet = varighet;
         this.kategori = kategori;
@@ -23,6 +30,13 @@ public class Treningsokt{
         this.dato = dato;
         this.oktnr = oktnr;
     }
+    /**
+     * 
+     * @param varighet
+     * @param kategori
+     * @param tekst
+     * @param dato 
+     */
     public Treningsokt(int varighet, String kategori, String tekst,String dato){
         this.varighet = varighet;
         this.kategori = kategori;
@@ -30,7 +44,9 @@ public class Treningsokt{
         this.dato = dato;
         oktnr++;
     }
-    
+    /**
+     * Konstruktør som lager en treningsøkt med tomme verdier og dagens dato
+     */
     public Treningsokt(){
         nullstill();
     }
@@ -50,8 +66,6 @@ public class Treningsokt{
         this.oktnr = oktnr;
     }
 
-    
-    
 
     /**
      * @return the dato
@@ -103,6 +117,9 @@ public class Treningsokt{
         this.tekst = tekst;
     }
     
+    /**
+     * Setter objektvariablene til "tomme" verdier og datot til dagens dato.
+     */
     public synchronized void nullstill(){
         varighet = 0;
         dato = new SimpleDateFormat(datoformat).format(new GregorianCalendar().getTime());

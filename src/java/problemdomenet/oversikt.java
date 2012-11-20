@@ -58,7 +58,13 @@ public class oversikt implements Serializable{
 //Lage view
     public String treningsform = "";
     public String sqlView = "create view flestMinTreningPaaBrukernavnOgKategori(varighet,navn) as select sum(varighet), brukernavn from trening where kategorinavn  = '" + treningsform + "' group by brukernavn;";
-
+    
+    /**
+     * Konstruktøren tar inn et brukernavn, lager en forbindelse til databasen 
+     * og bygger opp en arraylist over brukerens treningsøkter.
+     * 
+     * @param brukernavn 
+     */
     public oversikt(String brukernavn) {
         this.brukernavn = brukernavn;
         setDatasource();
@@ -84,9 +90,11 @@ public class oversikt implements Serializable{
             Opprydder.lukkForbindelse(forbindelse);
         }
     }
-
+/**
+ * Tom konstruktør blir opprettet for å lage top5-lista i innloggingsvinduet
+ */
     public oversikt() {
-        setDatasource();
+        setDatasource();/*
         try {
             Class.forName(databasedriver);
             forbindelse = DriverManager.getConnection(databasenavn);
@@ -98,7 +106,6 @@ public class oversikt implements Serializable{
                 String kategori = res.getString("kategorinavn");
                 String tekst = res.getString("tekst");
                 String dato = res.getString("dato");
-                //Treningsokt(int varighet, String kategori, String tekst)
                 treningsokter.add(new Treningsokt(varighet, kategori, tekst, dato));
             }
         } catch (Exception e) {
@@ -107,22 +114,26 @@ public class oversikt implements Serializable{
             Opprydder.lukkResSet(res);
             Opprydder.lukkSetning(setning);
             Opprydder.lukkForbindelse(forbindelse);
-        }
+        }*/
     }
-
+/*
     public void setBrukernavn(String brukernavn) {
         this.brukernavn = brukernavn;
     }
-
+*/
     public String getBrukernavn() {
         return brukernavn;
     }
-
+/**
+ * Lukker databaseforbindelsen.
+ */
     public void stengForbindelse() {
         Opprydder.lukkForbindelse(forbindelse);
         System.out.println("lukker databaseforbindelse\n");
     }
-
+/**
+ * Oppretter forbindelse til databasen.
+ */
     private void aapneForbindelse() {
         try {
             if (ds == null) {
@@ -134,7 +145,9 @@ public class oversikt implements Serializable{
             Opprydder.skrivMelding(e, "aapneForbindelse");
         }
     }
-
+/**
+ * Oppretter forbindelse til datasource
+ */
     private void setDatasource() {
         try {
             octx = new InitialContext();
@@ -143,11 +156,15 @@ public class oversikt implements Serializable{
             Opprydder.skrivMelding(e, "setDatasource()");
         }
     }
-
+    
+    /**
+     * 
+     * @return arraylist over treningsøkter som ble laget i konstruktøren
+     */
     public ArrayList<Treningsokt> getAlleOkter() {
         return treningsokter;
     }
-
+    /*
     public Treningsokt getAlleOkterEnMnd(String dato) { //"dd/MM/yyyy"
         if (treningsokter != null) {
             for (Treningsokt t : treningsokter) {
@@ -157,8 +174,13 @@ public class oversikt implements Serializable{
             }
         }
         return null;
-    }
-
+    }*/
+    
+    /**
+     * 
+     * @param k - kategori
+     * legger til en ny kategori i databasen
+     */
     public void leggtilKategorier(String k) {
         try {
             aapneForbindelse();
@@ -172,7 +194,10 @@ public class oversikt implements Serializable{
             stengForbindelse();
         }
     }
-
+    /**
+     * Lager en arraylist av kategorier ut fra databasen
+     * @return ArrayList
+     */
     public ArrayList<String> kategorier() {
         ArrayList<String> kategorier = new ArrayList<String>();
         try {
@@ -193,7 +218,13 @@ public class oversikt implements Serializable{
         }
         return kategorier;
     }
-
+    
+    /**
+     * 
+     * @param t - Treningsøkt
+     * Tar inn en treningsøkt som parameter og oppdaterer denne økta i databasen
+     * 
+     */
     public void endreVerdier(Treningsokt t) {
         try {
             aapneForbindelse();
@@ -214,7 +245,13 @@ public class oversikt implements Serializable{
             stengForbindelse();
         }
     }
-
+/**
+ * 
+ * @param t - Treningsøkt
+ * Tar inn en treningsøkt som parameter og legger den til i både databasen
+ * og i arraylista som vises for brukeren
+ * 
+ */
     public void registrerNyOkt(Treningsokt t) {
         try {
             aapneForbindelse();
@@ -245,11 +282,17 @@ public class oversikt implements Serializable{
             Opprydder.lukkSetning(setning);
         }
     }
-
+    /**
+     * Antall økter på brukeren
+     * @return Int
+     */
     public int getAntOkter() {
         return treningsokter.size();
     }
-
+    /**
+     * Returnerer et snitt av varigheten på treningsøktene
+     * @return Int
+     */
     public int getSum() {
         aapneForbindelse();
         double sum = 0;
@@ -275,7 +318,11 @@ public class oversikt implements Serializable{
         }
     }
 
-    //Bruker oktnr (primærnøkkel)
+    /**
+     * @param t - Treningsøkt
+     * Tar inn en treningsøkt og sletter denne fra database og arraylisten over
+     * treningsøkter
+     */
     public void slettOkt(Treningsokt t) {
         try {
             aapneForbindelse();
@@ -377,7 +424,11 @@ public class oversikt implements Serializable{
     }
 // De siste 5 registrerte treningsøktene
 //public String sqlSisteFemOkter = "select * from trening where oktnr > (select max(oktnr) from trening)-5;";
-
+    /**
+     * Genererer en arraylist over treningsøkter som inneholder de 5 siste 
+     * registrerte treningsøktene i databasen.
+     * @return ArrayList
+     */
     public ArrayList<Treningsokt> sisteFemRegistrerteTreningsokter() {
         //String view = "create view flestMinTreningPaaBrukernavnOgKategori(varighet,navn) as select sum(varighet), brukernavn from trening where kategorinavn  = '" + treningsform + "' group by brukernavn;";
         ArrayList<Treningsokt> a = new ArrayList<Treningsokt>();
