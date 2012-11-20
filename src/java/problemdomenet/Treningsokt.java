@@ -9,11 +9,12 @@ import java.util.GregorianCalendar;
  */
 public class Treningsokt{
     private int oktnr;
-    private String dato;
+    private final String datoformat = "yyyy-MM-dd";
+    private String dato = new SimpleDateFormat(datoformat).format(new GregorianCalendar().getTime());
     private int varighet;
     private String kategori;
     private String tekst;
-    private final String datoformat = "yyyy-MM-dd";
+    
     
     public Treningsokt(int oktnr, int varighet, String kategori, String tekst,String dato){
         this.varighet = varighet;

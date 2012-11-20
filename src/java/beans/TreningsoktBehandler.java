@@ -74,6 +74,10 @@ public class TreningsoktBehandler implements java.io.Serializable {
     public synchronized int getLopenummer() {
         return oversikt.getAntOkter() + 1;
     }
+    
+    public synchronized int getAntOkter(){
+        return oversikt.getAntOkter();
+    }
 
     public synchronized ArrayList<String> getKategorier() {
         return oversikt.kategorier();

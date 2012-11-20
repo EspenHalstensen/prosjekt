@@ -13,36 +13,36 @@
                 <h1>#{tekster.velkommenTittel}</h1>
             </ui:define>
             <ui:define name ="content">
-                <h:dataTable value="#{statistikk.tabellIndex}" var="loc">
-                    <h1>#{tekster.sisteFem}</h1>
+                <h1>#{tekster.sisteFem}</h1>
+                <h:dataTable value="#{statistikk.tabellIndex}" var="loc" style="border:2px solid grey;padding: 10px;margin: 10px">
                     <h:column>
                         <f:facet name="header" >
                             <h:outputText value="#{tekster.dato}"/>
                         </f:facet>
                         <h:outputText value="#{loc.treningsokt.dato}"/>
                     </h:column>
-                    
+
                     <h:column>
                         <f:facet name="header" >
                             <h:outputText value="#{tekster.kategori}"/>
                         </f:facet>
                         <h:outputText value ="#{loc.treningsokt.kategori}"/>
                     </h:column>
-                    
+
                     <h:column>
                         <f:facet name="header" >
                             <h:outputText value="#{tekster.tekst}"/>
                         </f:facet>
                         <h:outputText value="#{loc.treningsokt.tekst}"/>
                     </h:column>
-                    
+
                     <h:column>
                         <f:facet name="header" >
                             <h:outputText value="#{tekster.varighet}"/>
                         </f:facet>
                         <h:outputText value="#{loc.treningsokt.varighet}"/>
                     </h:column>
-                    
+
                 </h:dataTable>
                 <a href ="faces/protected/welcome.xhtml">#{tekster.loginLink}</a>
             </ui:define>

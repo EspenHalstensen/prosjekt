@@ -1,8 +1,11 @@
 package problemdomenet;
 
 import hjelpeklasser.Opprydder;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 import javax.annotation.Resource;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -13,9 +16,9 @@ import javax.sql.DataSource;
  * @author
  * havardb
  */
-public class oversikt {
+public class oversikt implements Serializable{
 
-    @Resource(name = "jdbc/wapljressurs")
+    @Resource(name = "jdbc/waplj_prosjekt")
     DataSource ds;
     private InitialContext octx;
     private String brukernavn = "";
@@ -46,7 +49,7 @@ public class oversikt {
 //Oppdater Oppdater verdier
     public String sqlOppdaterVerdier = "update Trening set dato = ?,varighet=?,kategorinavn=?,tekst=? where brukernavn=? and oktnr=?";
 //Registrere ny treningsøt
-    public String dato = "";
+    public String dato ="";
     public String sqlRegistereNyTreningsokt = "INSERT INTO trening(dato, varighet, kategorinavn, tekst, brukernavn) VALUES(DATE('" + dato + "'),?,?,?,?)";
 //Finn sum spørring
     public String sqlGetSum = "select sum(VARIGHET),count(OKTNR) from TRENING where BRUKERNAVN = ?";
@@ -135,7 +138,7 @@ public class oversikt {
     private void setDatasource() {
         try {
             octx = new InitialContext();
-            ds = (DataSource) octx.lookup("java:comp/env/jdbc/wapljressurs");
+            ds = (DataSource) octx.lookup("java:comp/env/jdbc/waplj_prosjekt");
         } catch (NamingException e) {
             Opprydder.skrivMelding(e, "setDatasource()");
         }
@@ -216,8 +219,10 @@ public class oversikt {
         try {
             aapneForbindelse();
             forbindelse.setAutoCommit(false);
-            setning = forbindelse.prepareStatement(sqlRegistereNyTreningsokt);
             dato = t.getDato();
+            System.out.println("se her:"+dato);
+            System.out.println(sqlRegistereNyTreningsokt);
+            setning = forbindelse.prepareStatement(sqlRegistereNyTreningsokt);
             setning.setInt(1, t.getVarighet());
             setning.setString(2, t.getKategori());
             setning.setString(3, t.getTekst());
@@ -242,7 +247,7 @@ public class oversikt {
     }
 
     public int getAntOkter() {
-        return treningsokter.get(treningsokter.size() - 1).getOktnr();
+        return treningsokter.size();
     }
 
     public int getSum() {
