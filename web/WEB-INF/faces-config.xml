@@ -16,15 +16,19 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>innloggingBrukerOk</from-outcome>
-            <to-view-id>/registrering.xhtml</to-view-id>
-        </navigation-case>7
-        <navigation-case>
-            <from-outcome>feil</from-outcome>
-            <to-view-id>/noauth.xhtml</to-view-id>
+            <to-view-id>/registrering.rxhtml</to-view-id>
         </navigation-case>
         <navigation-case>
-            <from-outcome>tilbake</from-outcome>
+            <from-outcome>tilbakeRegistrering</from-outcome>
             <to-view-id>/protected/innlogget.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>tilbakePassord</from-outcome>
+            <to-view-id>/protected/innlogget.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>tilbakeRegistrert</from-outcome>
+            <to-view-id>/protected/registrering.xhtml</to-view-id>
         </navigation-case>
          <navigation-case>
             <from-outcome>bytt_passord</from-outcome>
@@ -32,16 +36,33 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>passordOk</from-outcome>
-            <to-view-id>/protected/innlogget.xhtml</to-view-id>
+            <to-view-id>/protected/byttePassordOk.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-outcome>passordFeil</from-outcome>
             <to-view-id>/protected/byttPassord.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
+            <from-outcome>passordFeilNytt</from-outcome>
+            <to-view-id>/protected/byttePassordFeilNytt.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>passordFeilGammelt</from-outcome>
+            <to-view-id>/protected/byttePassordFeilGammelt.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>passordFeilIngenInput</from-outcome>
+            <to-view-id>/protected/byttePassordFeilIngenInput.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>treningsDagbok</from-outcome>
             <to-view-id>/protected/registrering.xhtml</to-view-id>
         </navigation-case>
+         <navigation-case>
+            <from-outcome>seAlle</from-outcome>
+            <to-view-id>/protected/registrert.xhtml</to-view-id>
+        </navigation-case>
+         
     </navigation-rule>  
     <!--Applikasjoner-->
     <application>

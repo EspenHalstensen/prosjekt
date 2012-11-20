@@ -26,7 +26,11 @@ public class TreningsoktStatus implements Serializable {
     public synchronized boolean getSkalslettes() {
         return skalslettes;
     }
-
+/**
+ * Denne variablen endres når vi endrer checkboxen i klassen registrert.xhtml
+ * Videre brukes denne for å slette økter som blir "checket" fra denne checkboxen
+ * @param skalslettes 
+ */
     public void setSkalslettes(boolean skalslettes) {
         this.skalslettes = skalslettes;
     }

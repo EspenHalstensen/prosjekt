@@ -28,10 +28,21 @@ public class TreningsoktBehandler implements java.io.Serializable {
     private Treningsokt tempOkt = new Treningsokt();
     private String nyKategori = "";
 
+    /**
+     * Denne metoden sjekker om det er data i tabellen, denne brukes i registrering.xhtml
+     * @return boolean
+     */
     public boolean getDatafins() {
-        return (tabelldata.size() > 0);
+        return (tabelldata.size() >0);
     }
-
+    /**
+     * Denne metoden sjekker om det ikke er data i tabellen, denne brukes i registrering.xhtml
+     * @return 
+     */
+    public boolean getDataIkkeFins() {
+        return (tabelldata.size() <= 0);
+    }
+    
     public String getNyKategori() {
         return nyKategori;
     }
@@ -48,7 +59,6 @@ public class TreningsoktBehandler implements java.io.Serializable {
         return tabelldata;
     }
 
-    /* EGENSKAP: tempTrans*/ // for midlertidig lagring av transaksjonsdata
     public Treningsokt getTempOkt() {
         return tempOkt;
     }
@@ -80,10 +90,11 @@ public class TreningsoktBehandler implements java.io.Serializable {
     public ArrayList<String> getKategorier() {
         return oversikt.kategorier();
     }
-
+    /**
+     * Denne metoden lager datatabellen som er lik databasen på registrert.xhtml bildet
+     */
     @PostConstruct
     public void setDatabaseTabell() {
-        System.out.println("setDatabaseTabell()");
         List<TreningsoktStatus> temp = Collections.synchronizedList(new ArrayList<TreningsoktStatus>());
         for (Treningsokt t : oversikt.getAlleOkter()) {
             temp.add(new TreningsoktStatus(t));
@@ -91,6 +102,9 @@ public class TreningsoktBehandler implements java.io.Serializable {
         tabelldata = temp;
     }
 
+    /**
+     * Denne metoden brukes for knapp i registrert.xhtml, for å registrere
+     */
     public void registrer() {
         if (!tempOkt.getTekst().trim().equals("")) {
             Treningsokt nyOkt = new Treningsokt(tempOkt.getOktnr(), tempOkt.getVarighet(), tempOkt.getKategori(), tempOkt.getTekst(), tempOkt.getDato());
@@ -99,20 +113,19 @@ public class TreningsoktBehandler implements java.io.Serializable {
             tempOkt.nullstill();
         }
     }
-
+    /**
+     * Denne metoden brukes for knapp i registrert.xhtml, for å oppdatere og slette økter som blir avkrysset
+     */
     public void oppdater() {
         int indeks = tabelldata.size() - 1;
-        System.out.println("se her: "+indeks);
         while (indeks >= 0) {
             TreningsoktStatus ts = tabelldata.get(indeks);
-            System.out.println(ts.getTreningsokt().getTekst()+" ; se her2 : "+ts.getSkalslettes() +"indeks:"+indeks);
             if (ts.getSkalslettes()) { // sletter data, først i ...
                 oversikt.slettOkt(ts.getTreningsokt());// ... problemdomeneobj.
                 tabelldata.remove(indeks); // deretter i presentasjonsobjektet
-            } //else {
-               // System.out.println("endre verdier:"+ts.getTreningsokt().getTekst());
-               // oversikt.endreVerdier(ts.getTreningsokt());
-            //}
+            } else {
+              oversikt.endreVerdier(ts.getTreningsokt());
+            }
             indeks--;
         }
     }

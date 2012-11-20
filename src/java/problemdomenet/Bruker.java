@@ -10,9 +10,10 @@ import java.util.logging.Logger;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.sql.DataSource;
 
 /*
- * Bruker.java  -  Eksempel dbBrukere - leksjon 11.
+ * @author havardDB
  */
 public class Bruker {
 
@@ -28,14 +29,9 @@ public class Bruker {
         }
         return brukernavn == null ? "" : brukernavn;
     }
-
+    
     /**
-     * Henter
-     * ut
-     * data
-     * fra
-     * pålogget
-     * bruker
+     * Henter ut brukerdata fra den personen som er innlogget
      */
     private void getBrukerData() {
         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
@@ -75,13 +71,27 @@ public class Bruker {
     public void setNyttPassordBekreft(String nyttPassordBekreft) {
         this.nyttPassordBekreft = nyttPassordBekreft;
     }
-
-    public Tilbakemelding byttPassord(PreparedStatement setning,ResultSet res, Connection forbindelse) {
+/**
+ * Denne metoden bytter passord, her er det flere kriterier som må følges
+ * Kriteriene er skrevet som en streng som deretter brukes i en String.matches metode
+ * (?=.*[0-9]) = minst et tall fra 0-9
+ * (?=.*[`~!@#$%^&*()_+./{}|:\"<>?]) = minst et av disse tegnene
+ * [a-zA-Z0-9] = ellers lovelige tegn
+ * .{6,10} = lovelig lengde fra 6 til 10
+ * Videre er det if-setninger som sjekker om passordene er de samme eller om det nye er likt det gamle
+ * @param setning
+ * @param res
+ * @param forbindelse
+ * 
+ * @return 
+ */
+    public Tilbakemelding byttPassord(PreparedStatement setning, ResultSet res, Connection forbindelse) {
         Tilbakemelding returverdi = Tilbakemelding.feil;
         try {
             getBrukerData();
             //Finner passordet til brukeren
             String databasePassordet;
+            //forbindelse = ds.getConnection();
             setning = forbindelse.prepareStatement("select passord from bruker where brukernavn=?");
             setning.setString(1, brukernavn);
             res = setning.executeQuery();

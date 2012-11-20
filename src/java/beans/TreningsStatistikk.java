@@ -9,7 +9,7 @@ import javax.inject.Named;
 import problemdomenet.*;
 
 /**
- *
+ *Denne klassen brukes for å få opp litt statistikk i første vindu
  * @author
  * havardb
  */
@@ -24,7 +24,10 @@ public class TreningsStatistikk {
     public List<TreningsoktStatus> getTabellIndex() {
         return tabellIndex;
     }
-
+    /**
+     * Denne metoden skal lager en oversikt som vi bruker første gangen startsiden starter
+     * Denne petoden har @PostConstruct for å kjøre med en gang siden loades og beanen brukes
+     */
     @PostConstruct
     public synchronized void setDatabaseIndeksTabell() {
         System.out.println("setDatabaseIndeksTabell()");

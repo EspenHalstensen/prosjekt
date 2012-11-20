@@ -5,62 +5,11 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
-        <title>#{tekster.tittel2}</title>
+        <title>#{tekster.tittel}</title>
     </h:head>
-    <body>
-        <!-- Det som er registrert-->
+    <h:body>
         <ui:composition template="/template/template.xhtml">
-           <ui:define name ="content">
-                <h:dataTable value="#{treningsoktBehandler.tabelldata}" var="loc" rendered="#{treningsoktBehandler.datafins}" >
-                    <h:column>
-                        <f:facet name="header" >
-                            <h:outputText value="#{tekster.dato}"/>
-                        </f:facet>
-                        <h:inputText value="#{loc.treningsokt.dato}" immediate="true"/>
-                        <f:facet name ="footer">
-                            <h:outputText value="#{tekster.antOkt}"/>
-                        </f:facet>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header" >
-                            <h:outputText value="#{tekster.kategori}"/>
-                        </f:facet>
-                        <h:selectOneMenu value="#{loc.treningsokt.kategori}" immediate="true">
-                            <f:selectItems value="#{treningsoktBehandler.kategorier}" var="c"/>
-                        </h:selectOneMenu>
-
-                        <f:facet name="footer">
-                            <h:outputText value="#{treningsoktBehandler.antOkter}"/>
-                        </f:facet>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header" >
-                            <h:outputText value="#{tekster.tekst}"/>
-                        </f:facet>
-                        <h:inputText value="#{loc.treningsokt.tekst}" immediate="true"/>
-                        <f:facet name ="footer">
-                            <h:outputText value="Sum:"/>
-                        </f:facet>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header" >
-                            <h:outputText value="#{tekster.varighet}"/>
-                        </f:facet>
-                        <h:inputText value="#{loc.treningsokt.varighet}" immediate="true"/>
-                        <f:facet name="footer">
-                            <h:outputText value="#{treningsoktBehandler.sum}"/>
-                        </f:facet>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{tekster.slett}"/>
-                        </f:facet>
-                        <h:selectBooleanCheckbox value ="#{loc.skalslettes}" immediate="true"/>
-                    </h:column>
-                </h:dataTable>
-            </ui:define>
-            <!--Det du skal registrere-->
-            <ui:define name="bottom">
+            <ui:define name="content">
                 <table>
                     <tr>
                         <td>#{tekster.brukernavn}:</td>
@@ -94,20 +43,17 @@
                     <tr>
                     </tr>
                 </table>
-                <table>
-                    <tr><td><h:commandButton id="registrer" value="Registrer" action="#{treningsoktBehandler.registrer()}"/>
-                            <h:commandButton value="Oppdater" action="#{treningsoktBehandler.oppdater()}" immediate="true"/></td>
-                    </tr>
-                    <tr>
-                        <td><h:inputText value="#{treningsoktBehandler.nyKategori}"/>
-                            <h:commandButton value="Legg til kategori" action="#{treningsoktBehandler.fiksKategorier()}" immediate="true"/></td>
-                    </tr>
-                    <tr>
-                        <td><h:commandButton value="#{tekster.tilbakeKnapp}" action="tilbake" immediate="true"/></td>
-                    </tr>
-                </table>
+                <table><!--FIKS TEKSTER-->
+                    <tr><td><h:commandButton value="#{tekster.Registrer}" action="#{treningsoktBehandler.registrer()}"/>
+                            <td> <h:commandButton value="#{tekster.seAlle}" action="seAlle" immediate="true"/></td>
+                            <td> <h:commandButton value="#{tekster.tilbakeKnapp}" action="tilbakeRegistrering" immediate="true"/></td>
+
+                            
+                        </td></tr></table>
+                <p></p>
+                <h:messages style="color:red"/>
             </ui:define>
-        </ui:composition>
-    </body>
+        </ui:composition>   
+    </h:body>
 </html>
 

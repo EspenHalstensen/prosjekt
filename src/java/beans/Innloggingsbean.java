@@ -43,12 +43,16 @@ class InnloggingsBean {
     private InitialContext octx;
     private Bruker bruker = new Bruker();
 
+    /**
+     * Konstruktøren setter opp datasource oppkobling
+     * @throws NamingException 
+     */
     public InnloggingsBean() throws NamingException {
         octx = new InitialContext();
         ds = (DataSource) octx.lookup("java:comp/env/jdbc/waplj_prosjekt");
     }
-    
-    public String getBrukernavn(){
+
+    public String getBrukernavn() {
         return bruker.getBrukernavn();
     }
 
@@ -63,7 +67,8 @@ class InnloggingsBean {
     public String getGammeltPassord() {
         return bruker.getGammeltPassord();
     }
-       public String getNyttPassordBekreft() {
+
+    public String getNyttPassordBekreft() {
         return bruker.getNyttPassordBekreft();
     }
 
@@ -74,12 +79,14 @@ class InnloggingsBean {
     public void setGammeltPassord(String gammeltPassord) {
         bruker.setGammeltPassord(gammeltPassord);
     }
-    
-    public Tilbakemelding byttPassord(){
+
+    public Tilbakemelding byttPassord() {
         aapneForbindelse();
         return bruker.byttPassord(setning, res, forbindelse);
     }
-    
+    /**
+     * Åpner forbindelse til datasource,bruker denne før vi skal byttepassord
+     */
     private void aapneForbindelse() {
         try {
             if (ds == null) {
@@ -91,5 +98,4 @@ class InnloggingsBean {
             Opprydder.skrivMelding(e, "aapneForbindelse()");
         }
     }
-    
 }

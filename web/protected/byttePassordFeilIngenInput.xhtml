@@ -10,7 +10,7 @@
         <ui:composition template="/template/template.xhtml">
             <ui:define name="content">
                 <h3><h:outputText value="#{tekster.byttPassordTittel}"/></h3>
-                <h:outputText value="#{tekster.passordOk}"/>
+                <h:outputText value='#{tekster.passordFeilIngenInput}'/>
                 <p><h:commandButton value="#{tekster.tilbakeKnapp}" action="bytt_passord"/></p>
             </ui:define>
         </ui:composition>

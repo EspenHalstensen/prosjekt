@@ -13,7 +13,7 @@
                 <table>
                     <tr>
                         <td>#{tekster.brukernavn}:</td>
-                        <td><h:outputText value="#{login.navn}"/></td>
+                        <td><h:outputText value="#{login.brukernavn}"/></td>
                     </tr>
                     <tr>
                         <td>#{tekster.passordGammelt}:</td>
@@ -33,7 +33,7 @@
                         <tr><td><li>#{tekster.passordIkkeLik}</li></td></tr>
                     </table>
                     <tr><td><h:commandButton action="#{login.byttPassord()}" value="#{tekster.passordBytt}"/></td>
-                        <td><h:commandButton action="tilbake" value="#{tekster.tilbakeKnapp}"/></td></tr>
+                        <td><h:commandButton action="tilbakePassord" value="#{tekster.tilbakeKnapp}"/></td></tr>
 
                 </table>
 

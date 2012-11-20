@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>#{tekster.tittel}</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name ="content">
+                <h:outputText style="size: 100px" value="Det er ingen treningsøkter registrert" rendered="#{treningsoktBehandler.dataIkkeFins}"/>
+                <h:dataTable value="#{treningsoktBehandler.tabelldata}" var="loc" rendered="#{treningsoktBehandler.datafins}" >
+                    <h:column>
+                        <f:facet name="header" >
+                            <h:outputText value="#{tekster.dato}"/>
+                        </f:facet>
+                        <h:inputText value="#{loc.treningsokt.dato}"/>
+                        <f:facet name ="footer">
+                            <h:outputText value="#{tekster.antOkt}"/>
+                        </f:facet>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header" >
+                            <h:outputText value="#{tekster.kategori}"/>
+                        </f:facet>
+                        <h:selectOneMenu value="#{loc.treningsokt.kategori}">
+                            <f:selectItems value="#{treningsoktBehandler.kategorier}" var="c"/>
+                        </h:selectOneMenu>
+
+                        <f:facet name="footer">
+                            <h:outputText value="#{treningsoktBehandler.antOkter}"/>
+                        </f:facet>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header" >
+                            <h:outputText value="#{tekster.tekst}"/>
+                        </f:facet>
+                        <h:inputText value="#{loc.treningsokt.tekst}"/>
+                        <f:facet name ="footer">
+                            <h:outputText value="Sum:"/>
+                        </f:facet>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header" >
+                            <h:outputText value="#{tekster.varighet}"/>
+                        </f:facet>
+                        <h:inputText value="#{loc.treningsokt.varighet}"/>
+                        <f:facet name="footer">
+                            <h:outputText value="#{treningsoktBehandler.sum}"/>
+                        </f:facet>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{tekster.slett}"/>
+                        </f:facet>
+                        <h:selectBooleanCheckbox value ="#{loc.skalslettes}"/>
+                    </h:column>
+                </h:dataTable>
+                <table>
+                    <tr>
+                        <td>
+                            <h:inputText value="#{treningsoktBehandler.nyKategori}"/>
+                            <h:commandButton value="Legg til kategori" action="#{treningsoktBehandler.fiksKategorier()}"/>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>
+                            <h:commandButton value="#{tekster.oppdater}" action="#{treningsoktBehandler.oppdater()}"/>
+                        </td>
+                        <td>
+                            <h:commandButton value="#{tekster.tilbakeKnapp}" action="tilbakeRegistrert"/>
+                        </td>
+                    </tr>
+                </table>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
