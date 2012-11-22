@@ -22,8 +22,8 @@
 
                     <tr>
                         <td>#{tekster.dato}:</td> 
-                        <td><h:inputText id="#{tekster.dato}" value="#{treningsoktBehandler.tempOkt.dato}" required="true" requiredMessage="#{tekster.requiredDato}" converterMessage="#{tekster.converterDato}#{treningsoktBehandler.tempOkt.datoformat}"> 
-                            </h:inputText><font color="black">#{treningsoktBehandler.tempOkt.datoformat}</font><h:message for="#{tekster.dato}" style="color:red"/></td>
+                        <td><h:inputText id="#{tekster.dato}" value="#{treningsoktBehandler.tempOkt.dato}" required="true" requiredMessage="#{tekster.requiredDato}"> 
+                            </h:inputText><font color="black">#{treningsoktBehandler.tempOkt.datoformat}</font><h:message for="#{tekster.dato}" style="color:red"/><font color="red">#{tekster.converterDato}#{treningsoktBehandler.tempOkt.datoformat}</font></td>
                     </tr>
                     <tr>
                         <td>#{tekster.varighet}:</td> 

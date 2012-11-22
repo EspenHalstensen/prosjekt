@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -29,7 +30,7 @@ public class Bruker {
         }
         return brukernavn == null ? "" : brukernavn;
     }
-    
+
     /**
      * Henter ut brukerdata fra den personen som er innlogget
      */
@@ -71,20 +72,20 @@ public class Bruker {
     public void setNyttPassordBekreft(String nyttPassordBekreft) {
         this.nyttPassordBekreft = nyttPassordBekreft;
     }
-/**
- * Denne metoden bytter passord, her er det flere kriterier som må følges
- * Kriteriene er skrevet som en streng som deretter brukes i en String.matches metode
- * (?=.*[0-9]) = minst et tall fra 0-9
- * (?=.*[`~!@#$%^&*()_+./{}|:\"<>?]) = minst et av disse tegnene
- * [a-zA-Z0-9] = ellers lovelige tegn
- * .{6,10} = lovelig lengde fra 6 til 10
- * Videre er det if-setninger som sjekker om passordene er de samme eller om det nye er likt det gamle
- * @param setning
- * @param res
- * @param forbindelse
- * 
- * @return 
- */
+
+    /**
+     * Denne metoden bytter passord, her er det flere kriterier som må følges 
+     * Kriteriene er skrevet som en streng som deretter brukes i en String.matches metode
+     * (?=.*[0-9]) = minst et tall fra 0-9 
+     * (?=.*[`~!@#$%^&*()_+./{}|:\"<>?]) =  minst  et av disse tegnene
+     * [a-zA-Z0-9] = ellers lovelige tegn
+     * .{6,10  = lovelig lengde fra 6 til 10 
+     * Videre er det if-setninger som sjekker om passordene er de  samme eller om det nye er likt det gamle 
+     * @param setning @param res
+     * @param forbindelse
+     *
+     * @return
+     */
     public Tilbakemelding byttPassord(PreparedStatement setning, ResultSet res, Connection forbindelse) {
         Tilbakemelding returverdi = Tilbakemelding.feil;
         try {
@@ -103,8 +104,7 @@ public class Bruker {
             if (gammeltPassord.equals("") && nyttPassord.equals("")) {
                 returverdi = Tilbakemelding.passordFeilIngenInput;
             } else if (gammeltPassord.equals(databasePassordet)) {
-                String reg = "^(?=.*[0-9])(?=.*[`~!@#$%^&*()_+./{}|:\"<>?])[a-zA-Z0-9].{6,10}$";
-                if (nyttPassord.matches(reg) && nyttPassord.equals(nyttPassordBekreft) && !nyttPassord.equals(databasePassordet)) {
+                if (sjekkPassordKriterier(nyttPassord) && nyttPassord.equals(nyttPassordBekreft) && !nyttPassord.equals(databasePassordet)) {
                     setning = forbindelse.prepareStatement("update bruker set passord = ? where brukernavn =?");
                     setning.setString(1, nyttPassord);
                     setning.setString(2, brukernavn);
@@ -123,6 +123,55 @@ public class Bruker {
             Opprydder.lukkSetning(setning);
             Opprydder.lukkForbindelse(forbindelse);
         }
+        return returverdi;
+    }
+
+    public boolean sjekkPassordKriterier(String nyttPassord) {
+        String reg = "^(?=.*[0-9])(?=.*[`~!@#$%^&*()_+./{}|:\"<>?])[a-zA-Z0-9].{6,10}$";
+        return (nyttPassord.matches(reg)) ? true : false;
+    }
+    /**
+     * PåBegynt kode som det ikke ble tid nok til å fullføre.
+     * @param setning
+     * @param res
+     * @param forbindelse
+     * @param brukernavn
+     * @param passord
+     * @return 
+     */
+    public Tilbakemelding opprettBruker(PreparedStatement setning, ResultSet res, Connection forbindelse, String brukernavn, String passord) {
+        Tilbakemelding returverdi = Tilbakemelding.nyBrukerIkkeOk;
+        try {
+            getBrukerData();
+            setning = forbindelse.prepareStatement("select brukernavn from bruker");
+            res = setning.executeQuery();
+            while (res.next()) {
+                if (res.getString(1).equalsIgnoreCase(brukernavn)){ returverdi = Tilbakemelding.nyBrukerikkeOkPassord;
+                }
+            }
+            if(sjekkPassordKriterier(passord)){
+                    setning = forbindelse.prepareStatement("insert into rolle (brukernavn,rolle) values(?,?)");
+                    setning.setString(1, brukernavn);
+                    setning.setString(2, "bruker");
+                    setning.executeUpdate();
+                    Opprydder.lukkSetning(setning);
+                    setning = forbindelse.prepareStatement("insert into bruker(brukernavn,passord) values(?,?)");
+                    setning.setString(1, brukernavn);
+                    setning.setString(2, passord);
+                    setning.executeUpdate();
+                    returverdi = Tilbakemelding.nyBrukerOk;
+               }else{
+                    returverdi = Tilbakemelding.nyBrukerIkkeOk;
+            }
+        } catch (SQLException e) {
+            Opprydder.skrivMelding(e, "opprettbruker()");
+        } finally {
+            Opprydder.lukkResSet(res);
+            Opprydder.lukkSetning(setning);
+            Opprydder.lukkForbindelse(forbindelse);
+
+        }
+        System.out.println(returverdi);
         return returverdi;
     }
 }

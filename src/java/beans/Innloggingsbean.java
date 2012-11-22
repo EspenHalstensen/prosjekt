@@ -42,6 +42,8 @@ class InnloggingsBean {
     private ResultSet res;
     private InitialContext octx;
     private Bruker bruker = new Bruker();
+    private String nybrukernavn = "";
+    private String nybrukerpassord ="";
 
     /**
      * Konstruktøren setter opp datasource oppkobling
@@ -83,6 +85,27 @@ class InnloggingsBean {
     public Tilbakemelding byttPassord() {
         aapneForbindelse();
         return bruker.byttPassord(setning, res, forbindelse);
+    }
+
+    public String getNybrukernavn() {
+        return nybrukernavn;
+    }
+
+    public void setNybrukernavn(String nybrukernavn) {
+        this.nybrukernavn = nybrukernavn;
+    }
+
+    public String getNybrukerpassord() {
+        return nybrukerpassord;
+    }
+
+    public void setNybrukerpassord(String nybrukerpassord) {
+        this.nybrukerpassord = nybrukerpassord;
+    }
+    
+    public void opprettBruker(){
+        aapneForbindelse();
+        bruker.opprettBruker(setning, res, forbindelse, nybrukernavn, nybrukerpassord);
     }
     /**
      * Åpner forbindelse til datasource,bruker denne før vi skal byttepassord

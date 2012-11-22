@@ -1,46 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns="http://java.sun.com/xml/ns/javaee"
-      xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
          http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-      version="2.5">
-   <servlet>
-      <servlet-name>Faces Servlet</servlet-name>
-      <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-   </servlet>
-   <servlet-mapping>
-      <servlet-name>Faces Servlet</servlet-name>
-      <url-pattern>*.xhtml</url-pattern>
-      <url-pattern>/faces/*</url-pattern>
-   </servlet-mapping>
-   <welcome-file-list>
-      <welcome-file>index.xhtml</welcome-file>
-   </welcome-file-list>
-   <context-param>
-      <param-name>javax.faces.PROJECT_STAGE</param-name>
-      <param-value>Development</param-value>
-   </context-param>
+         version="2.5">
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+        <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>/index.xhtml</welcome-file>
+    </welcome-file-list>
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
 
-   <security-constraint>
-      <web-resource-collection>
-         <web-resource-name>Protected Pages</web-resource-name>
-         <url-pattern>/faces/protected/*</url-pattern>
-         <url-pattern>/protected/*</url-pattern>
-      </web-resource-collection>
-      <auth-constraint>
-         <role-name>bruker</role-name>
-      </auth-constraint>
-   </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Protected Pages</web-resource-name>
+            <url-pattern>/faces/protected/*</url-pattern>
+            <url-pattern>/protected/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>bruker</role-name>
+        </auth-constraint>
+    </security-constraint>
 
-   <login-config>
-      <auth-method>BASIC</auth-method>
-      <realm-name>waplj_realm</realm-name>
-   </login-config>
 
-   <security-role>
-      <role-name>bruker</role-name>
-   </security-role>
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>waplj_realm</realm-name>
+    </login-config>
+
+    <security-role>
+        <role-name>bruker</role-name>
+    </security-role>
    
     <error-page>
         <error-code>401</error-code>

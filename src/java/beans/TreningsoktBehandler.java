@@ -30,19 +30,21 @@ public class TreningsoktBehandler implements java.io.Serializable {
 
     /**
      * Denne metoden sjekker om det er data i tabellen, denne brukes i registrering.xhtml
-     * @return boolean
+     * @return
+     * boolean
      */
     public boolean getDatafins() {
-        return (tabelldata.size() >0);
+        return (tabelldata.size() > 0);
     }
+
     /**
      * Denne metoden sjekker om det ikke er data i tabellen, denne brukes i registrering.xhtml
-     * @return 
+     * @return
      */
     public boolean getDataIkkeFins() {
         return (tabelldata.size() <= 0);
     }
-    
+
     public String getNyKategori() {
         return nyKategori;
     }
@@ -90,6 +92,7 @@ public class TreningsoktBehandler implements java.io.Serializable {
     public ArrayList<String> getKategorier() {
         return oversikt.kategorier();
     }
+
     /**
      * Denne metoden lager datatabellen som er lik databasen på registrert.xhtml bildet
      */
@@ -104,15 +107,24 @@ public class TreningsoktBehandler implements java.io.Serializable {
 
     /**
      * Denne metoden brukes for knapp i registrert.xhtml, for å registrere
+     * Vi har laget en liten date check her, dette ble gjort fordi vi ikke hadde tid til å skrive om alle klassene våre til Date objekter
+     * for date istedet for String, vet at det finnes en fin sjekk for passord validering, men det ble rett og slett ikke tid
      */
-    public void registrer() {
+    public Tilbakemelding registrer() {
+        Tilbakemelding returverdi = Tilbakemelding.registreringIkkeOk;
         if (!tempOkt.getTekst().trim().equals("")) {
             Treningsokt nyOkt = new Treningsokt(tempOkt.getOktnr(), tempOkt.getVarighet(), tempOkt.getKategori(), tempOkt.getTekst(), tempOkt.getDato());
-            oversikt.registrerNyOkt(nyOkt);
-            tabelldata.add(new TreningsoktStatus(nyOkt));
-            tempOkt.nullstill();
-        }
+            if ((nyOkt.getDato().length() == 10)) {
+                oversikt.registrerNyOkt(nyOkt);
+                tabelldata.add(new TreningsoktStatus(nyOkt));
+                tempOkt.nullstill();
+                returverdi = Tilbakemelding.registreringOk;
+            }else{
+                returverdi = Tilbakemelding.registreringIkkeOk;
+            }
+        }return returverdi;
     }
+
     /**
      * Denne metoden brukes for knapp i registrert.xhtml, for å oppdatere og slette økter som blir avkrysset
      */
@@ -124,7 +136,7 @@ public class TreningsoktBehandler implements java.io.Serializable {
                 oversikt.slettOkt(ts.getTreningsokt());// ... problemdomeneobj.
                 tabelldata.remove(indeks); // deretter i presentasjonsobjektet
             } else {
-              oversikt.endreVerdier(ts.getTreningsokt());
+                oversikt.endreVerdier(ts.getTreningsokt());
             }
             indeks--;
         }

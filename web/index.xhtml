@@ -44,7 +44,11 @@
                     </h:column>
 
                 </h:dataTable>
-                <a href ="faces/protected/innlogget.xhtml">#{tekster.loginLink}</a>
+                <table>
+                    <tr><td><a href ="faces/protected/innlogget.xhtml">#{tekster.loginLink}</a></td></tr>
+                    <!--Ny bruker er påbegynt, men ikke tid til å fullføre -->
+                    <tr><td><a href="faces/nybruker.xhtml">#{tekster.nybrukerLink}</a></td></tr>
+                </table>
             </ui:define>
         </ui:composition>
     </h:body>

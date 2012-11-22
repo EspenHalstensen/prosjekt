@@ -1,129 +1,205 @@
 package problemdomenet;
 
-
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Formatter;
 import java.util.GregorianCalendar;
+import org.apache.derby.client.am.DateTime;
+
 /**
  *
- * @author Amund
+ * @author
+ * Amund
  */
-public class Treningsokt{
+public class Treningsokt {
+
     private int oktnr;
     private final String datoformat = "yyyy-MM-dd";
     private String dato = new SimpleDateFormat(datoformat).format(new GregorianCalendar().getTime());
     private int varighet;
     private String kategori;
     private String tekst;
-    
+
     /**
-     * 
-     * @param oktnr
-     * @param varighet
-     * @param kategori
-     * @param tekst
-     * @param dato 
+     *
+     * @param
+     * oktnr
+     * @param
+     * varighet
+     * @param
+     * kategori
+     * @param
+     * tekst
+     * @param
+     * dato
      */
-    public Treningsokt(int oktnr, int varighet, String kategori, String tekst,String dato){
+    public Treningsokt(int oktnr, int varighet, String kategori, String tekst, String dato) {
         this.varighet = varighet;
         this.kategori = kategori;
         this.tekst = tekst;
         this.dato = dato;
         this.oktnr = oktnr;
     }
+
     /**
-     * 
-     * @param varighet
-     * @param kategori
-     * @param tekst
-     * @param dato 
+     *
+     * @param
+     * varighet
+     * @param
+     * kategori
+     * @param
+     * tekst
+     * @param
+     * dato
      */
-    public Treningsokt(int varighet, String kategori, String tekst,String dato){
+    public Treningsokt(int varighet, String kategori, String tekst, String dato) {
+        System.out.println("ikke tom konstruktør");
         this.varighet = varighet;
         this.kategori = kategori;
         this.tekst = tekst;
         this.dato = dato;
         oktnr++;
     }
+
     /**
-     * Konstruktør som lager en treningsøkt med tomme verdier og dagens dato
+     * Konstruktør
+     * som
+     * lager
+     * en
+     * treningsøkt
+     * med
+     * tomme
+     * verdier
+     * og
+     * dagens
+     * dato
      */
-    public Treningsokt(){
+    public Treningsokt() {
         nullstill();
     }
-            
-    public String getDatoformat(){ return datoformat.toLowerCase(); }
+
+    public String getDatoformat() {
+        return datoformat.toLowerCase();
+    }
+
     /**
-     * @return the oktnr
+     * @return
+     * the
+     * oktnr
      */
     public int getOktnr() {
         return oktnr;
     }
 
     /**
-     * @param oktnr the oktnr to set
+     * @param
+     * oktnr
+     * the
+     * oktnr
+     * to
+     * set
      */
     public void setOktnr(int oktnr) {
         this.oktnr = oktnr;
     }
 
-
     /**
-     * @return the dato
+     * @return
+     * the
+     * dato
      */
     public String getDato() {
         return dato;
     }
 
     /**
-     * @param dato the dato to set
+     * @param
+     * dato
+     * the
+     * dato
+     * to
+     * set
      */
     public void setDato(String dato) {
         this.dato = dato;
     }
 
     /**
-     * @return the varighet
+     * @return
+     * the
+     * varighet
      */
     public int getVarighet() {
         return varighet;
     }
 
     /**
-     * @param varighet the varighet to set
+     * @param
+     * varighet
+     * the
+     * varighet
+     * to
+     * set
      */
     public void setVarighet(int varighet) {
         this.varighet = varighet;
     }
 
     /**
-     * @return the kategori
+     * @return
+     * the
+     * kategori
      */
     public String getKategori() {
         return kategori;
     }
 
-    public void setKategori(String k){ this.kategori = k; }
+    public void setKategori(String k) {
+        this.kategori = k;
+    }
+
     /**
-     * @return the tekst
+     * @return
+     * the
+     * tekst
      */
     public String getTekst() {
         return tekst;
     }
 
     /**
-     * @param tekst the tekst to set
+     * @param
+     * tekst
+     * the
+     * tekst
+     * to
+     * set
      */
     public void setTekst(String tekst) {
         this.tekst = tekst;
     }
-    
+
     /**
-     * Setter objektvariablene til "tomme" verdier og datot til dagens dato.
+     * Setter
+     * objektvariablene
+     * til
+     * "tomme"
+     * verdier
+     * og
+     * datot
+     * til
+     * dagens
+     * dato.
      */
-    public synchronized void nullstill(){
+    public synchronized void nullstill() {
         varighet = 0;
         dato = new SimpleDateFormat(datoformat).format(new GregorianCalendar().getTime());
         tekst = "";
         kategori = "";
+    }
+
+    public static void main(String[] args) {
     }
 }

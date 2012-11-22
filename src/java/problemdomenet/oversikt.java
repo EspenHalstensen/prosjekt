@@ -66,8 +66,7 @@ public class oversikt implements Serializable{
         this.brukernavn = brukernavn;
         setDatasource();
         try {
-            Class.forName(databasedriver);
-            forbindelse = DriverManager.getConnection(databasenavn);
+            aapneForbindelse();
             setning = forbindelse.prepareStatement(sqlKonstruktor);
             setning.setString(1, brukernavn);
             res = setning.executeQuery();
@@ -336,44 +335,6 @@ public class oversikt implements Serializable{
         }
 
     }
-
-    /*public int antTotalTreningsvarighet() {
-     // return -1 hvis fail eller tom database
-     int retur = -1;
-     try {
-     aapneForbindelse();
-     setning = forbindelse.prepareStatement(sqlTotalVarighet);
-     res = setning.executeQuery();
-     res.next();
-     retur = res.getInt(1);
-     } catch (SQLException e) {
-     System.out.println("antTotalTreningsvarighet() \n " + e);
-     } finally {
-     Opprydder.lukkSetning(setning);
-     stengForbindelse();
-     }
-     return retur;
-     }*/
-    //Bruker oktnr (primærnøkkel)
-    /*public void slettOkt(Treningsokt t) {
-     try {
-     System.out.println("slettOkt");
-     aapneForbindelse();
-     treningsokter.remove(t);
-     setning = forbindelse.prepareStatement("delete from Trening where oktnr=?");
-     setning.setInt(1, t.getOktnr());
-     setning.executeUpdate(); //kjører setningen og returnerer 0 (false), >0 (true)
-     } catch (SQLException e) {
-     System.out.println("Feil i slettOkt\n" + e);
-     } finally {
-     Opprydder.lukkSetning(setning);
-     stengForbindelse();
-     }
-
-     }*/
-    // Bruker med flest antall treningsminutter innenfor en spesifik treningsform
-    //public String sqlViewTreningstidPaaKategoriOgPerson = "create view flestMinTreningPaaBrukernavnOgKategori(varighet,navn) as select sum(varighet), brukernavn from trening where kategorinavn  = '" + brukernavn + "' group by brukernavn;";
-    //public String sqlTreningstidPaaKategoriOgPerson = "select * from flestMinTreningPaaBrukernavnOgKategori where varighet = (select max(varighet) from flestMinTreningPaaBrukernavnOgKategori);";
     public ArrayList brukerMedFlestAntallTreningsminutter(String treningsform) {
         this.treningsform = treningsform;
         ArrayList<String> a = new ArrayList<String>();
@@ -454,7 +415,4 @@ public class oversikt implements Serializable{
         }
         return a;
     }
-// Treningsøkter sortert etter total varighet
-//public String sqlViewFlestMinTreningPaaKategori = "create view flestMinTreningPaaKategori(varighet,kategorinavn) as select sum(varighet), kategorinavn from trening group by kategorinavn;";
-//public String sqlFlestMinTreningPaaKategori = "select * from flestMinTreningPaaKategori order by varighet desc;";
 }

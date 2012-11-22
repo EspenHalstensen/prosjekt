@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title><font style="color:red">#{tekster.nyBrukerIkkeOkTittel}</font></title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="top">
+                <h1>#{tekster.nyBrukerTittel}</h1>
+                #{tekster.nyBrukerInformasjon}
+            </ui:define>
+            <ui:define name ="content">
+                <table>
+                    <tr>
+                        <td>#{tekster.brukernavn}</td>
+                        <td><h:inputText id="nyBrukernavn" value="#{login.nybrukernavn}" required="true" requiredMessage="#{tekster.nyBrukernavnRequired}"/>
+                            <h:message for="nyBrukernavn" style="color:red"/>
+                        </td>
+
+                        <tr><td>#{tekster.passord}</td>
+                        <td><h:inputText id="nyPassord" value="#{login.nybrukerpassord}" required="true" requiredMessage="#{tekster.nyPassordRequired}"/>
+                            <h:message for="nyPassord" style="color:red"/>
+                        </td></tr>
+                    </tr>
+                </table>
+                <table>
+                    <tr><td><u><b>#{tekster.passordKriterier}</b></u></td></tr>
+                    <tr><td><li>#{tekster.passordBokstaver}</li></td></tr>
+                    <tr><td><li>#{tekster.passordTall}</li></td></tr>
+                    <tr><td><li>#{tekster.passordSpesialtegn}</li></td></tr>
+                    <tr><td><li>#{tekster.passordLengde}</li></td></tr>
+                    <tr><td><li>#{tekster.passordBekreftKriterier}</li></td></tr>
+                    <tr><td><li>#{tekster.passordIkkeLik}</li></td></tr>
+                </table>
+                <table><h:commandButton value="#{tekster.registrerBruker}" action="#{login.opprettBruker()}"/>
+                    <h:commandButton value="#{tekster.tilbakeKnapp}" action="/index.xhtml" immediate="true"/>
+
+                </table>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

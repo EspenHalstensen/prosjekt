@@ -15,10 +15,6 @@
             <to-view-id>/protected/innlogget.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
-            <from-outcome>innloggingBrukerOk</from-outcome>
-            <to-view-id>/registrering.rxhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
             <from-outcome>tilbakeRegistrering</from-outcome>
             <to-view-id>/protected/innlogget.xhtml</to-view-id>
         </navigation-case>
@@ -62,6 +58,27 @@
             <from-outcome>seAlle</from-outcome>
             <to-view-id>/protected/registrert.xhtml</to-view-id>
         </navigation-case>
+         <navigation-case>
+            <from-outcome>registreringIkkeOk</from-outcome>
+            <to-view-id>/protected/registreringMedFeil.xhtml</to-view-id>
+        </navigation-case>
+         <navigation-case>
+            <from-outcome>registreringOk</from-outcome>
+            <to-view-id>/protected/registrering.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>nyBrukerOk</from-outcome>
+            <to-view-id>/velkommenNyBruker.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>nyBrukerIkkeOk</from-outcome>
+            <to-view-id>/nybrukerIkkeOk.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>nyBrukerikkeOkPassord</from-outcome>
+            <to-view-id>/nybrukerIkkeOkPassord.xhtml</to-view-id>
+        </navigation-case>
+        
          
     </navigation-rule>  
     <!--Applikasjoner-->
