@@ -143,13 +143,10 @@ public class Bruker {
         Tilbakemelding returverdi = Tilbakemelding.nyBrukerIkkeOk;
         try {
             getBrukerData();
-            setning = forbindelse.prepareStatement("select brukernavn from bruker");
+            setning = forbindelse.prepareStatement("select brukernavn from bruker where brukernavn = ?");
+            setning.setString(1, brukernavn);
             res = setning.executeQuery();
-            while (res.next()) {
-                if (res.getString(1).equalsIgnoreCase(brukernavn)){ returverdi = Tilbakemelding.nyBrukerikkeOkPassord;
-                }
-            }
-            if(sjekkPassordKriterier(passord)){
+            if(!res.next() && sjekkPassordKriterier(passord)){
                     setning = forbindelse.prepareStatement("insert into rolle (brukernavn,rolle) values(?,?)");
                     setning.setString(1, brukernavn);
                     setning.setString(2, "bruker");
