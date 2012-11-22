@@ -7,10 +7,24 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
     <!-- Navigasjoner--> 
-
-    <!--Protected area-->
-      <navigation-rule> 
-          <navigation-case>
+    <navigation-rule> 
+        <navigation-case>
+            <from-outcome>nyBrukerOk</from-outcome>
+            <to-view-id>velkommenNyBruker.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>hjemmeside</from-outcome>
+            <to-view-id>index.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>nyBrukerIkkeOk</from-outcome>
+            <to-view-id>nyBrukerikkeOk.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>nyBrukerikkeOkPassord</from-outcome>
+            <to-view-id>nyBrukerikkeOkPassord.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>velkommen</from-outcome>
             <to-view-id>/protected/innlogget.xhtml</to-view-id>
         </navigation-case>
@@ -26,7 +40,7 @@
             <from-outcome>tilbakeRegistrert</from-outcome>
             <to-view-id>/protected/registrering.xhtml</to-view-id>
         </navigation-case>
-         <navigation-case>
+        <navigation-case>
             <from-outcome>bytt_passord</from-outcome>
             <to-view-id>/protected/byttPassord.xhtml</to-view-id>
         </navigation-case>
@@ -54,30 +68,19 @@
             <from-outcome>treningsDagbok</from-outcome>
             <to-view-id>/protected/registrering.xhtml</to-view-id>
         </navigation-case>
-         <navigation-case>
+        <navigation-case>
             <from-outcome>seAlle</from-outcome>
             <to-view-id>/protected/registrert.xhtml</to-view-id>
         </navigation-case>
-         <navigation-case>
+        <navigation-case>
             <from-outcome>registreringIkkeOk</from-outcome>
             <to-view-id>/protected/registreringMedFeil.xhtml</to-view-id>
         </navigation-case>
-         <navigation-case>
+        <navigation-case>
             <from-outcome>registreringOk</from-outcome>
             <to-view-id>/protected/registrering.xhtml</to-view-id>
         </navigation-case>
-        <navigation-case>
-            <from-outcome>nyBrukerOk</from-outcome>
-            <to-view-id>/velkommenNyBruker.xhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>nyBrukerIkkeOk</from-outcome>
-            <to-view-id>/nybrukerIkkeOk.xhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>nyBrukerikkeOkPassord</from-outcome>
-            <to-view-id>/nybrukerIkkeOkPassord.xhtml</to-view-id>
-        </navigation-case>
+        
         
          
     </navigation-rule>  
@@ -91,7 +94,7 @@
         <resource-bundle>
             <base-name>properties.tekst</base-name>
             <var>tekster</var>
-            </resource-bundle>
+        </resource-bundle>
     </application>
 
 </faces-config>

@@ -168,7 +168,6 @@ public class Bruker {
             Opprydder.lukkForbindelse(forbindelse);
 
         }
-        System.out.println(returverdi);
         return returverdi;
     }
 }
